@@ -41,7 +41,7 @@ class _PopupMenuExampleState extends State<PopupMenuExample> {
         Container(
           width: widget.containerWidth,
           height: 40,
-          color: ColorPalette.grey,
+          color: ColorPalette.lightGreen,
           child: TextFormField(
             controller: inputController,
             onChanged: (value) {
