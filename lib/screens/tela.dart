@@ -6,6 +6,13 @@ class InitialScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const PopupMenuExample();
+    return const Scaffold(
+      body: Center(
+        child: PopupMenuExample(
+          condicao: 'calculus',
+          containerWidth: 303,
+        ),
+      ),
+    );
   }
 }
