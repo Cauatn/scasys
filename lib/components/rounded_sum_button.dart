@@ -14,7 +14,7 @@ class _AddButtonState extends State<AddButton> {
     return ElevatedButton(
       onPressed: () {},
       style: ElevatedButton.styleFrom(
-        backgroundColor: ColorPalette.greyButton,
+        backgroundColor: ColorPalette.grey,
         padding: const EdgeInsets.only(left: 0, right: 0, top: 12, bottom: 12),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(60),
