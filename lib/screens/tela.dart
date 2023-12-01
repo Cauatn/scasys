@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:scasys_1/components/register_box.dart';
+import 'package:scasys_1/components/text_input.dart';
 
 class InitialScreen extends StatelessWidget {
   const InitialScreen({super.key});
@@ -7,7 +7,7 @@ class InitialScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: UserBox(),
+      body: TextInputBox(),
     );
   }
 }

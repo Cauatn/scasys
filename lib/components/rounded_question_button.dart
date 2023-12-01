@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:scasys_1/commons/colors.dart';
 
-class AddButton extends StatefulWidget {
-  const AddButton({super.key});
+class QuestionButton extends StatefulWidget {
+  const QuestionButton({super.key});
 
   @override
-  State<AddButton> createState() => _AddButtonState();
+  State<QuestionButton> createState() => _QuestionButtonState();
 }
 
-class _AddButtonState extends State<AddButton> {
+class _QuestionButtonState extends State<QuestionButton> {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
@@ -21,7 +21,7 @@ class _AddButtonState extends State<AddButton> {
         ),
       ),
       child: const Icon(
-        Icons.add_circle_outline,
+        Icons.question_mark_outlined,
         color: ColorPalette.textColor,
         size: 35,
       ),

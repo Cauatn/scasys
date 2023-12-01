@@ -7,7 +7,7 @@ class GreenBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 5.8,
-      height: 37,
+      height: 40,
       decoration: const BoxDecoration(color: Colors.green),
     );
   }

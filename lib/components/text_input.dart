@@ -16,13 +16,14 @@ class _TextInputBoxState extends State<TextInputBox> {
       children: [
         const GreenBox(),
         Container(
-          width: 500,
-          height: 37,
+          width: 303,
+          height: 40,
+          color: ColorPalette.textFieldBg,
           child: TextFormField(
             cursorColor: ColorPalette.darkGreen,
             cursorWidth: 3,
             style: const TextStyle(
-              color: Colors.black,
+              color: ColorPalette.textColor,
             ),
             decoration: const InputDecoration(
               contentPadding: EdgeInsets.only(left: 10, bottom: 10),
