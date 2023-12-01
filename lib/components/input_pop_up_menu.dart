@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scasys_1/commons/colors.dart';
 import 'package:scasys_1/components/green_box.dart';
 
 /// Flutter code sample for [PopupMenuButton].
@@ -53,7 +54,7 @@ class _PopupMenuExampleState extends State<PopupMenuExample> {
           ),
         ),
         Container(
-          color: const Color.fromRGBO(217, 217, 217, 100),
+          color: ColorPalette.grey,
           child: PopupMenuButton(
               onSelected: (SampleItem item) {
                 setState(() {

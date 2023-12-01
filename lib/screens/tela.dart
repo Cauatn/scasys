@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scasys_1/components/input_pop_up_menu.dart';
+import 'package:scasys_1/components/register_box.dart';
 
 class InitialScreen extends StatelessWidget {
   const InitialScreen({super.key});
@@ -9,7 +10,7 @@ class InitialScreen extends StatelessWidget {
     return const Scaffold(
       body: Center(
         child: PopupMenuExample(
-          condicao: 'calculus',
+          condicao: 'fase',
           containerWidth: 303,
         ),
       ),
