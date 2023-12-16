@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:scasys_1/commons/colors.dart';
 import 'package:scasys_1/components/green_box.dart';
 
-class TextInputBox extends StatefulWidget {
-  const TextInputBox({super.key});
+class TextInput extends StatefulWidget {
+  const TextInput({super.key});
 
   @override
-  State<TextInputBox> createState() => _TextInputBoxState();
+  State<TextInput> createState() => _TextInputState();
 }
 
-class _TextInputBoxState extends State<TextInputBox> {
+class _TextInputState extends State<TextInput> {
   @override
   Widget build(BuildContext context) {
     return Row(
