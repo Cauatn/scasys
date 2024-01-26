@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { useContext, useState } from "react";
-import { ItemsContext } from "@/context/ItemsContext";
+import { ItemsContext, MeuContextoProps } from "@/context/ItemsContext";
 import { Link } from "react-router-dom";
 import {
 	Table,
@@ -14,43 +14,20 @@ import {
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-
-interface itemProp {
-	fase?: string;
-	nome: string;
-	etapa: string;
-	especificidade: string;
-}
+import { ItemProp } from "@/interfaces/interface";
 
 function SixaETP() {
-	const data: itemProp[] = [
-		{
-			fase: "Inicial",
-			nome: "CuSO4.5H20",
-			etapa: "preparo de solução",
-			especificidade: "reagente inicial",
-		},
-		{
-			nome: "CuSO4.5H20",
-			etapa: "preparo de solução",
-			especificidade: "reagente inicial",
-		},
-		{
-			nome: "CuSO4.5H20",
-			etapa: "preparo de solução",
-			especificidade: "reagente inicial",
-		},
-		{
-			nome: "CuSO4.5H20",
-			etapa: "preparo de solução",
-			especificidade: "reagente inicial",
-		},
-		{
-			nome: "CuSO4.5H20",
-			etapa: "preparo de solução",
-			especificidade: "reagente inicial",
-		},
-	];
+	const contexto = useContext(ItemsContext);
+	//const { items, setItemEspecificidade, setItemNome } =
+	//	useContext(ItemsContext);
+
+	if (!contexto) {
+		return <div>a</div>;
+	}
+
+	const items = contexto.items;
+	const setItemEspecificidade = contexto.setItemEspecificidade;
+	const setItemNome = contexto.setItemNome;
 
 	return (
 		<div className="flex max-w-2xl m-auto gap-x-24 justify-between mt-8">
@@ -61,13 +38,22 @@ function SixaETP() {
 						<Label htmlFor="especificidade" className="pl-2">
 							Especificidade :
 						</Label>
-						<Input id="especificidade" placeholder="Especificidade" />
+						<Input
+							id="especificidade"
+							placeholder="Especificidade"
+							onChange={(event) => setItemEspecificidade(event.target.value)}
+						/>
 					</div>
 					<div className="flex flex-col gap-3">
 						<Label htmlFor="Item" className="pl-2">
 							Item :
 						</Label>
-						<Input id="Item" placeholder="Item" />
+
+						<Input
+							id="Item"
+							placeholder="Item"
+							onChange={(event) => setItemNome(event.target.value)}
+						/>
 					</div>
 					<div className="flex flex-col gap-3">
 						<Label htmlFor="Formula" className="pl-2">
@@ -94,16 +80,16 @@ function SixaETP() {
 						</TableRow>
 					</TableHeader>
 					<TableBody>
-						{data.map((e) => {
+						{items.map((e) => {
 							return (
-								<TableRow key={e.nome}>
+								<TableRow key={e.Item}>
 									<TableCell className="font-medium">{e.fase}</TableCell>
 									<TableCell className="font-medium">{e.etapa}</TableCell>
 									<TableCell className="font-medium">
 										{e.especificidade}
 									</TableCell>
 									<TableCell className="font-medium text-right">
-										{e.nome}
+										{e.Item}
 									</TableCell>
 								</TableRow>
 							);

@@ -14,7 +14,7 @@ import {
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { DropdownMenu } from "@radix-ui/react-dropdown-menu";
+import { DropdownMenu, Item } from "@radix-ui/react-dropdown-menu";
 import {
 	DropdownMenuContent,
 	DropdownMenuGroup,
@@ -28,51 +28,28 @@ import {
 	TriangleUpIcon,
 } from "@radix-ui/react-icons";
 import { Textarea } from "@/components/ui/textarea";
-
-interface itemProp {
-	fase?: string;
-	nome: string;
-	etapa: string;
-	especificidade: string;
-}
+import { ItemProp } from "@/interfaces/interface";
 
 function EightaETP() {
 	const [isOpen, setIsOpen] = useState(false);
 	const [quantityOrValue, setQuantityOrValue] = useState(1);
 	const [selectedValue, setSelectedItem] = useState<string>("selecione aqui");
 
+	const contexto = useContext(ItemsContext);
+	if (!contexto) {
+		//const { items, setItemEspecificidade, setItemNome } =
+		//	useContext(ItemsContext);
+
+		return <div>a</div>;
+	}
+
+	const items = contexto.items;
+	const adicionarItem = contexto.adicionarItem;
+
 	function setItem(e: Event) {
 		const target = e.target as HTMLDivElement;
 		setSelectedItem(target.textContent ?? "unknown");
 	}
-	const data: itemProp[] = [
-		{
-			fase: "Inicial",
-			nome: "CuSO4.5H20",
-			etapa: "preparo de solução",
-			especificidade: "reagente inicial",
-		},
-		{
-			nome: "CuSO4.5H20",
-			etapa: "preparo de solução",
-			especificidade: "reagente inicial",
-		},
-		{
-			nome: "CuSO4.5H20",
-			etapa: "preparo de solução",
-			especificidade: "reagente inicial",
-		},
-		{
-			nome: "CuSO4.5H20",
-			etapa: "preparo de solução",
-			especificidade: "reagente inicial",
-		},
-		{
-			nome: "CuSO4.5H20",
-			etapa: "preparo de solução",
-			especificidade: "reagente inicial",
-		},
-	];
 
 	return (
 		<div className="flex max-w-fit m-auto gap-x-24 justify-between mt-8">
@@ -151,7 +128,13 @@ function EightaETP() {
 							Adicionar novo item ao inventario?
 						</Label>
 						<Link to={"/inventario=1"}>
-							<Button>Sim</Button>
+							<Button
+								onClick={() => {
+									adicionarItem();
+								}}
+							>
+								Sim
+							</Button>
 						</Link>
 						<Link to={"/inventario=1"}>
 							<Button>Não</Button>
@@ -172,16 +155,16 @@ function EightaETP() {
 						</TableRow>
 					</TableHeader>
 					<TableBody>
-						{data.map((e, i) => {
+						{items.map((e) => {
 							return (
-								<TableRow key={e.nome}>
+								<TableRow key={e.Item}>
 									<TableCell className="font-medium">{e.fase}</TableCell>
 									<TableCell className="font-medium">{e.etapa}</TableCell>
 									<TableCell className="font-medium">
 										{e.especificidade}
 									</TableCell>
 									<TableCell className="font-medium text-right">
-										{e.nome}
+										{e.Item}
 									</TableCell>
 								</TableRow>
 							);

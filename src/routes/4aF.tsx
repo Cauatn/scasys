@@ -30,56 +30,26 @@ import {
 	DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 
-interface ProcedimentoProp {
-	id: number;
-	nome: string;
-	modoDeCalculo: string;
-}
-
-interface itemProp {
-	fase?: string;
-	nome: string;
-	etapa: string;
-	especificidade: string;
-}
-
 function FouraF() {
-	const { procedimentos } = useContext(ItemsContext);
 	const [selectedValue, setSelectedItem] = useState<string>("selecione aqui");
+
+	const contexto = useContext(ItemsContext);
+	if (!contexto) {
+		//const { items, setItemEspecificidade, setItemNome } =
+		//	useContext(ItemsContext);
+
+		return <div>a</div>;
+	}
+
+	const items = contexto.items;
+	const setItemFase = contexto.setItemFase;
+
 	function setItem(e: Event) {
 		const target = e.target as HTMLDivElement;
 		setSelectedItem(target.textContent ?? "unknown");
 	}
-	const [isOpen, setIsOpen] = useState(false);
 
-	const data: itemProp[] = [
-		{
-			fase: "Inicial",
-			nome: "CuSO4.5H20",
-			etapa: "preparo de solução",
-			especificidade: "reagente inicial",
-		},
-		{
-			nome: "CuSO4.5H20",
-			etapa: "preparo de solução",
-			especificidade: "reagente inicial",
-		},
-		{
-			nome: "CuSO4.5H20",
-			etapa: "preparo de solução",
-			especificidade: "reagente inicial",
-		},
-		{
-			nome: "CuSO4.5H20",
-			etapa: "preparo de solução",
-			especificidade: "reagente inicial",
-		},
-		{
-			nome: "CuSO4.5H20",
-			etapa: "preparo de solução",
-			especificidade: "reagente inicial",
-		},
-	];
+	const [isOpen, setIsOpen] = useState(false);
 
 	return (
 		<div className="flex max-w-2xl m-auto gap-x-24 justify-between mt-8">
@@ -117,7 +87,7 @@ function FouraF() {
 				</div>
 				<div>
 					<Link to={"/inventario=2"}>
-						<Button>Proxima</Button>
+						<Button onClick={() => setItemFase(selectedValue)}>Proxima</Button>
 					</Link>
 				</div>
 			</div>
@@ -133,16 +103,16 @@ function FouraF() {
 						</TableRow>
 					</TableHeader>
 					<TableBody>
-						{data.map((e) => {
+						{items.map((e) => {
 							return (
-								<TableRow key={e.nome}>
+								<TableRow key={e.Item}>
 									<TableCell className="font-medium">{e.fase}</TableCell>
 									<TableCell className="font-medium">{e.etapa}</TableCell>
 									<TableCell className="font-medium">
 										{e.especificidade}
 									</TableCell>
 									<TableCell className="font-medium text-right">
-										{e.nome}
+										{e.Item}
 									</TableCell>
 								</TableRow>
 							);

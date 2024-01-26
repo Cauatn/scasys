@@ -8,7 +8,6 @@ import {
 	TableBody,
 	TableCaption,
 	TableCell,
-	TableFooter,
 	TableHead,
 	TableHeader,
 	TableRow,
@@ -17,48 +16,26 @@ import {
 import { Input } from "@/components/ui/input";
 import { PlusIcon } from "@radix-ui/react-icons";
 
-interface itemProp {
-	fase?: string;
-	nome: string;
-	etapa: string;
-	especificidade: string;
-}
-
 function FiveaETP() {
-	const data: itemProp[] = [
-		{
-			fase: "Inicial",
-			nome: "CuSO4.5H20",
-			etapa: "preparo de solução",
-			especificidade: "reagente inicial",
-		},
-		{
-			nome: "CuSO4.5H20",
-			etapa: "preparo de solução",
-			especificidade: "reagente inicial",
-		},
-		{
-			nome: "CuSO4.5H20",
-			etapa: "preparo de solução",
-			especificidade: "reagente inicial",
-		},
-		{
-			nome: "CuSO4.5H20",
-			etapa: "preparo de solução",
-			especificidade: "reagente inicial",
-		},
-		{
-			nome: "CuSO4.5H20",
-			etapa: "preparo de solução",
-			especificidade: "reagente inicial",
-		},
-	];
+	const contexto = useContext(ItemsContext);
+	if (!contexto) {
+		//const { items, setItemEspecificidade, setItemNome } =
+		//	useContext(ItemsContext);
+
+		return <div>a</div>;
+	}
+
+	const items = contexto.items;
+	const setItemEtapa = contexto.setItemEtapa;
 
 	return (
 		<div className="flex max-w-2xl m-auto gap-x-24 justify-between mt-8">
 			<div className="flex flex-col w-full gap-8">
 				<h1 className="text-2xl font-bold w-full"> Fase de Inventario</h1>
-				<Input placeholder="Forneça o nome para etapa" />
+				<Input
+					placeholder="Forneça o nome para etapa"
+					onChange={(event) => setItemEtapa(event.target.value)}
+				/>
 				<div className="inline-flex content-center items-center justify-start gap-6">
 					<span className="w-44">Número de repetições :</span>
 					<Input type="number" className="w-16" defaultValue={0} />
@@ -87,16 +64,16 @@ function FiveaETP() {
 						</TableRow>
 					</TableHeader>
 					<TableBody>
-						{data.map((e) => {
+						{items.map((e) => {
 							return (
-								<TableRow key={e.nome}>
+								<TableRow key={e.Item}>
 									<TableCell className="font-medium">{e.fase}</TableCell>
 									<TableCell className="font-medium">{e.etapa}</TableCell>
 									<TableCell className="font-medium">
 										{e.especificidade}
 									</TableCell>
 									<TableCell className="font-medium text-right">
-										{e.nome}
+										{e.Item}
 									</TableCell>
 								</TableRow>
 							);
