@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 
-import { ItemsContext } from "@/context/ItemsContext";
+import { ItemsContext, useItemContext } from "@/context/ItemsContext";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Input } from "@/components/ui/input";
@@ -22,7 +22,7 @@ import {
 import { TriangleDownIcon, TriangleUpIcon } from "@radix-ui/react-icons";
 
 function TrheeaNDP() {
-	const { procedimentos, novoProcedimento } = useContext(ItemsContext);
+	const { procedimentos, novoProcedimento } = useItemContext();
 	const [isOpen, setIsOpen] = useState(false);
 	const [selectedValue, setSelectedItem] = useState<string>("selecione aqui");
 	const [procedimento, setProcedimento] = useState<string>("");

@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { useContext, useState } from "react";
-import { ItemsContext } from "@/context/ItemsContext";
+import { ItemsContext, useItemContext } from "@/context/ItemsContext";
 
 import { Link } from "react-router-dom";
 import {
@@ -17,16 +17,7 @@ import { Input } from "@/components/ui/input";
 import { PlusIcon } from "@radix-ui/react-icons";
 
 function FiveaETP() {
-	const contexto = useContext(ItemsContext);
-	if (!contexto) {
-		//const { items, setItemEspecificidade, setItemNome } =
-		//	useContext(ItemsContext);
-
-		return <div>a</div>;
-	}
-
-	const items = contexto.items;
-	const setItemEtapa = contexto.setItemEtapa;
+	const { items, setItemEtapa } = useItemContext();
 
 	return (
 		<div className="flex max-w-2xl m-auto gap-x-24 justify-between mt-8">

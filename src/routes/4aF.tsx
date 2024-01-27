@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { useContext, useState } from "react";
-import { ItemsContext } from "@/context/ItemsContext";
+import { ItemsContext, useItemContext } from "@/context/ItemsContext";
 import { Link } from "react-router-dom";
 import {
 	Table,
@@ -33,16 +33,7 @@ import {
 function FouraF() {
 	const [selectedValue, setSelectedItem] = useState<string>("selecione aqui");
 
-	const contexto = useContext(ItemsContext);
-	if (!contexto) {
-		//const { items, setItemEspecificidade, setItemNome } =
-		//	useContext(ItemsContext);
-
-		return <div>a</div>;
-	}
-
-	const items = contexto.items;
-	const setItemFase = contexto.setItemFase;
+	const { items, setItemFase } = useItemContext();
 
 	function setItem(e: Event) {
 		const target = e.target as HTMLDivElement;

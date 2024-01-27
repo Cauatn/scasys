@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { useContext, useState } from "react";
-import { ItemsContext } from "@/context/ItemsContext";
+import { ItemsContext, useItemContext } from "@/context/ItemsContext";
 import { Link } from "react-router-dom";
 import {
 	Table,
@@ -35,16 +35,7 @@ function EightaETP() {
 	const [quantityOrValue, setQuantityOrValue] = useState(1);
 	const [selectedValue, setSelectedItem] = useState<string>("selecione aqui");
 
-	const contexto = useContext(ItemsContext);
-	if (!contexto) {
-		//const { items, setItemEspecificidade, setItemNome } =
-		//	useContext(ItemsContext);
-
-		return <div>a</div>;
-	}
-
-	const items = contexto.items;
-	const adicionarItem = contexto.adicionarItem;
+	const { items, adicionarItem } = useItemContext();
 
 	function setItem(e: Event) {
 		const target = e.target as HTMLDivElement;

@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { useContext, useState } from "react";
-import { ItemsContext, MeuContextoProps } from "@/context/ItemsContext";
+import { useItemContext } from "@/context/ItemsContext";
 import { Link } from "react-router-dom";
 import {
 	Table,
@@ -14,20 +13,9 @@ import {
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ItemProp } from "@/interfaces/interface";
 
 function SixaETP() {
-	const contexto = useContext(ItemsContext);
-	//const { items, setItemEspecificidade, setItemNome } =
-	//	useContext(ItemsContext);
-
-	if (!contexto) {
-		return <div>a</div>;
-	}
-
-	const items = contexto.items;
-	const setItemEspecificidade = contexto.setItemEspecificidade;
-	const setItemNome = contexto.setItemNome;
+	const { items, setItemEspecificidade, setItemNome } = useItemContext();
 
 	return (
 		<div className="flex max-w-2xl m-auto gap-x-24 justify-between mt-8">

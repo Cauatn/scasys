@@ -2,24 +2,28 @@ import {
 	Dispatch,
 	SetStateAction,
 	createContext,
-	useEffect,
+	useContext,
 	useState,
 } from "react";
 
-interface ProcedimentoProp {
+type ProcedimentoProp = {
 	id: number;
 	nome: string;
 	modoDeCalculo: string;
-}
+};
 
-interface ItemsProp {
+type ItemsProp = {
 	fase?: string;
 	etapa?: string;
 	especificidade: string;
 	Item: string;
-}
+};
 
-export interface MeuContextoProps {
+type ItemProviderProps = {
+	children: React.ReactNode;
+};
+
+export type ItemsContext = {
 	items: ItemsProp[];
 	procedimentos: ProcedimentoProp[];
 	novoProcedimento: (novoProcedimento: string, modoDeCalculo: string) => void;
@@ -28,14 +32,11 @@ export interface MeuContextoProps {
 	setItemFase: Dispatch<SetStateAction<string>>;
 	setItemEtapa: Dispatch<SetStateAction<string>>;
 	setItemEspecificidade: Dispatch<SetStateAction<string>>;
-}
+};
 
-export const ItemsContext = createContext<MeuContextoProps | undefined>(
-	undefined,
-);
+export const ItemsContext = createContext<ItemsContext | null>(null);
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-export const ItemsProvider = ({ children }: unknown | any) => {
+export const ItemsProvider = ({ children }: ItemProviderProps) => {
 	const [procedimentos, setProcedimentos] = useState<ProcedimentoProp[]>([]);
 	const [items, setItems] = useState<ItemsProp[]>([]);
 
@@ -89,3 +90,13 @@ export const ItemsProvider = ({ children }: unknown | any) => {
 		</ItemsContext.Provider>
 	);
 };
+
+export function useItemContext() {
+	const contexto = useContext(ItemsContext);
+
+	if (!contexto) {
+		throw new Error("useItemContext precisa estar em seu respectivo provieder");
+	}
+
+	return contexto;
+}
