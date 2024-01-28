@@ -1,27 +1,16 @@
 import {
+	ItemProviderProps,
+	ItemsProp,
+	ProcedimentoProp,
+} from "@/interfaces/interface";
+
+import {
 	Dispatch,
 	SetStateAction,
 	createContext,
 	useContext,
 	useState,
 } from "react";
-
-type ProcedimentoProp = {
-	id: number;
-	nome: string;
-	modoDeCalculo: string;
-};
-
-type ItemsProp = {
-	fase?: string;
-	etapa?: string;
-	especificidade: string;
-	Item: string;
-};
-
-type ItemProviderProps = {
-	children: React.ReactNode;
-};
 
 export type ItemsContext = {
 	items: ItemsProp[];
