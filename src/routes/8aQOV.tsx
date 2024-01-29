@@ -28,7 +28,6 @@ import {
 	TriangleUpIcon,
 } from "@radix-ui/react-icons";
 import { Textarea } from "@/components/ui/textarea";
-import { ItemProp } from "@/interfaces/interface";
 
 function EightaETP() {
 	const [isOpen, setIsOpen] = useState(false);
@@ -127,8 +126,14 @@ function EightaETP() {
 								Sim
 							</Button>
 						</Link>
-						<Link to={"/inventario=1"}>
-							<Button>Não</Button>
+						<Link to={"/inventario=5"}>
+							<Button
+								onClick={() => {
+									adicionarItem();
+								}}
+							>
+								Não
+							</Button>
 						</Link>
 					</div>
 				</div>
