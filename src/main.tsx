@@ -36,11 +36,16 @@ import { NineTeenaC } from "./routes/19aC.tsx";
 import { NineaPGR } from "./routes/9aPGR.tsx";
 import { AuthenticationPage } from "./routes/authentication/page.tsx";
 
-// biome-ignore lint/style/noNonNullAssertion: <explanation>
-ReactDOM.createRoot(document.getElementById("root")!).render(
-	<React.StrictMode>
-		<ItemsProvider>
-			<RouterProvider router={router} />
-		</ItemsProvider>
-	</React.StrictMode>,
-);
+const rootElement = document.getElementById("root");
+
+if (rootElement) {
+	ReactDOM.createRoot(rootElement).render(
+		<React.StrictMode>
+			<ItemsProvider>
+				<RouterProvider router={router} />
+			</ItemsProvider>
+		</React.StrictMode>,
+	);
+} else {
+	console.error("Root element with ID 'root' not found in the DOM");
+}
