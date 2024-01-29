@@ -17,9 +17,11 @@ const router = createBrowserRouter([
 			{ path: "/inventario=2", element: <FiveaETP /> },
 			{ path: "/inventario=3", element: <SixaETP /> },
 			{ path: "/inventario=4", element: <EightaETP /> },
+			{ path: "/inventario=5", element: <NineaPGR /> },
 			{ path: "/metrical=25", element: <TwentyFivePCTDA /> },
 			{ path: "/metrical=20", element: <TwentyaCDE /> },
 			{ path: "/metrical=19", element: <NineTeenaC /> },
+			{ path: "/form", element: <AuthenticationPage /> },
 		],
 	},
 ]);
@@ -31,6 +33,8 @@ import { EightaETP } from "./routes/8aQOV.tsx";
 import { TwentyFivePCTDA } from "./routes/25aPCDTA.tsx";
 import { TwentyaCDE } from "./routes/20aCDE.tsx";
 import { NineTeenaC } from "./routes/19aC.tsx";
+import { NineaPGR } from "./routes/9aPGR.tsx";
+import { AuthenticationPage } from "./routes/authentication/page.tsx";
 
 // biome-ignore lint/style/noNonNullAssertion: <explanation>
 ReactDOM.createRoot(document.getElementById("root")!).render(
