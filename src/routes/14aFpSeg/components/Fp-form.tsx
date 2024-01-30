@@ -9,17 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipProvider,
-	TooltipTrigger,
-} from "@/components/ui/tooltip";
-import {
-	QuestionMarkIcon,
-	TriangleDownIcon,
-	TriangleUpIcon,
-} from "@radix-ui/react-icons";
+import { TriangleDownIcon, TriangleUpIcon } from "@radix-ui/react-icons";
 import { useState } from "react";
 
 function Fpform() {
@@ -30,6 +20,7 @@ function Fpform() {
 		const target = e.target as HTMLDivElement;
 		setSelectedItem(target.textContent ?? "unknown");
 	}
+
 	return (
 		<div className="flex flex-col space-y-4">
 			<div className="inline-flex space-x-8 items-center justify-start">

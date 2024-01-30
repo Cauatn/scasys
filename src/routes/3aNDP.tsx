@@ -1,6 +1,3 @@
-import { useContext, useEffect, useState } from "react";
-
-import { ItemsContext, useItemContext } from "@/context/ItemsContext";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Input } from "@/components/ui/input";
@@ -20,6 +17,9 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { TriangleDownIcon, TriangleUpIcon } from "@radix-ui/react-icons";
+import { useItemContext } from "@/context/ItemsContext";
+import { useState } from "react";
+import { Label } from "@radix-ui/react-dropdown-menu";
 
 function TrheeaNDP() {
 	const { procedimentos, novoProcedimento } = useItemContext();
@@ -33,16 +33,21 @@ function TrheeaNDP() {
 	}
 
 	return (
-		<div className="h-screen flex flex-row max-w-[925px] m-auto mt-4 gap-4">
+		<div className="bg-white p-6 max-w-4xl m-auto h-screen space-y-8">
+			<div className="flex items-center space-x-4 mb-6">
+				<div className="flex-grow">
+					<h1 className="text-2xl font-bold">SCASYS</h1>
+				</div>
+			</div>
 			<div className="flex content-center justify-center w-full ">
 				<div className="flex flex-col gap-6">
 					<div className="flex flex-col gap-4">
 						<div className="flex flex-row gap-4 items-center">
-							<p>
+							<Label className="font-bold">
 								Forneça um nome para o
 								<br />
 								procedimento, a ser avaliado:
-							</p>
+							</Label>
 							<Input
 								placeholder="Forneça um nome"
 								className="h-9 w-30 pl-2"
