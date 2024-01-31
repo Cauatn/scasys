@@ -28,6 +28,8 @@ const router = createBrowserRouter([
 			{ path: "/form", element: <AuthenticationPage /> },
 			{ path: "/13", element: <ThirteenaFeSeg /> },
 			{ path: "/14", element: <FourteenFpSeg /> },
+			{ path: "/15", element: <Fifeteen /> },
+			{ path: "/17", element: <SeventeenFcSeg /> },
 		],
 	},
 ]);
@@ -47,6 +49,8 @@ import { TwelveaCMH } from "./routes/12aCMH.tsx";
 import { ThirteenaFeSeg } from "./routes/13aFESeg/Page.tsx";
 import { FourteenFpSeg } from "./routes/14aFpSeg/Page.tsx";
 import EightaPerg from "./routes/85aPR.tsx";
+import SeventeenFcSeg from "./routes/17aFcSeg/Page.tsx";
+import Fifeteen from "./routes/15aFFSeg/Page.tsx";
 
 const rootElement = document.getElementById("root");
 
