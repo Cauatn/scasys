@@ -12,7 +12,8 @@ const router = createBrowserRouter([
 		path: "/",
 		element: <App />,
 		children: [
-			{ path: "/", element: <TrheeaNDP /> },
+			{ path: "/authentication", element: <AuthenticationPage /> },
+			{ path: "/procedure", element: <TrheeaNDP /> },
 			{ path: "/inventario=1", element: <FouraF /> },
 			{ path: "/inventario=2", element: <FiveaETP /> },
 			{ path: "/inventario=3", element: <SixaETP /> },
@@ -25,11 +26,13 @@ const router = createBrowserRouter([
 			{ path: "/metrical=25", element: <TwentyFivePCTDA /> },
 			{ path: "/metrical=20", element: <TwentyaCDE /> },
 			{ path: "/metrical=19", element: <NineTeenaC /> },
-			{ path: "/form", element: <AuthenticationPage /> },
 			{ path: "/13", element: <ThirteenaFeSeg /> },
 			{ path: "/14", element: <FourteenFpSeg /> },
+			{ path: "/16", element: <SixteenFgSeg /> },
 			{ path: "/15", element: <Fifeteen /> },
 			{ path: "/17", element: <SeventeenFcSeg /> },
+			{ path: "/26", element: <TwentySixaPRI /> },
+			{ path: "/27", element: <TwentySevenaCR /> },
 		],
 	},
 ]);
@@ -51,6 +54,9 @@ import { FourteenFpSeg } from "./routes/14aFpSeg/Page.tsx";
 import EightaPerg from "./routes/85aPR.tsx";
 import SeventeenFcSeg from "./routes/17aFcSeg/Page.tsx";
 import Fifeteen from "./routes/15aFFSeg/Page.tsx";
+import SixteenFgSeg from "./routes/16aFgSeg/Page.tsx";
+import TwentySixaPRI from "./routes/26aPRI/Page.tsx";
+import TwentySevenaCR from "./routes/27aCR/Page.tsx";
 
 const rootElement = document.getElementById("root");
 
