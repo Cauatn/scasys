@@ -126,14 +126,8 @@ function EightaETP() {
 								Sim
 							</Button>
 						</Link>
-						<Link to={"/inventario=5"}>
-							<Button
-								onClick={() => {
-									adicionarItem();
-								}}
-							>
-								Não
-							</Button>
+						<Link to={"/inventario=6"}>
+							<Button>Não</Button>
 						</Link>
 					</div>
 				</div>

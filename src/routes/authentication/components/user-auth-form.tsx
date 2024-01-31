@@ -4,6 +4,7 @@ import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -86,11 +87,11 @@ function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 						/>
 					</div>
 					<Button disabled={isLoading}>
-						{isLoading && (
+						{/*isLoading && (
 							//<Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
 							<div>{""}</div>
-						)}
-						Registrar
+						)*/}
+						<Link to={"/inventario=1"}>Registrar</Link>
 					</Button>
 				</div>
 			</form>
