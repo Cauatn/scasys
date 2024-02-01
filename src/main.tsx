@@ -15,8 +15,6 @@ import { TwentyFivePCTDA } from "./routes/25aPCDTA.tsx";
 import { TwentyaCDE } from "./routes/20aCDE.tsx";
 import { NineTeenaC } from "./routes/19aC.tsx";
 import { AuthenticationPage } from "./routes/authentication/page.tsx";
-import { TenaEACT } from "./routes/10aECT.tsx";
-import { ElevenaACT } from "./routes/11aACT.tsx";
 import { TwelveaCMH } from "./routes/12aCMH.tsx";
 import { ThirteenaFeSeg } from "./routes/13aFESeg/Page.tsx";
 import { FourteenFpSeg } from "./routes/14aFpSeg/Page.tsx";
@@ -27,6 +25,9 @@ import SixteenFgSeg from "./routes/16aFgSeg/Page.tsx";
 import TwentySixaPRI from "./routes/26aPRI/Page.tsx";
 import TwentySevenaCR from "./routes/27aCR/Page.tsx";
 import TenaPPWG from "./routes/10aPPWG/Page.tsx";
+import Component from "./routes/10aECT/Page.tsx";
+import TenaECT from "./routes/10aECT/Page.tsx";
+import ElevenaACT from "./routes/11aACT/Pages.tsx";
 
 const router = createBrowserRouter([
 	{
@@ -41,7 +42,7 @@ const router = createBrowserRouter([
 			{ path: "/4", element: <EightaPerg /> },
 			{ path: "/5", element: <EightaETP /> },
 			{ path: "/6", element: <TenaPPWG /> },
-			{ path: "/7", element: <TenaEACT /> },
+			{ path: "/7", element: <TenaECT /> },
 			{ path: "/8", element: <ElevenaACT /> },
 			{ path: "/9", element: <TwelveaCMH /> },
 			{ path: "/10", element: <TwentyFivePCTDA /> },
@@ -54,6 +55,7 @@ const router = createBrowserRouter([
 			{ path: "/17", element: <SeventeenFcSeg /> },
 			{ path: "/26", element: <TwentySixaPRI /> },
 			{ path: "/27", element: <TwentySevenaCR /> },
+			{ path: "/teste", element: <Component /> },
 		],
 	},
 ]);
