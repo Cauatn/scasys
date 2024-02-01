@@ -1,6 +1,10 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { TriangleDownIcon, TriangleUpIcon } from "@radix-ui/react-icons";
+import {
+	ArrowLeftIcon,
+	TriangleDownIcon,
+	TriangleUpIcon,
+} from "@radix-ui/react-icons";
 import {
 	DropdownMenu,
 	DropdownMenuTrigger,
@@ -15,6 +19,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { FeForm } from "./components/FeForm";
+import { Link } from "react-router-dom";
 
 function ThirteenaFeSeg() {
 	const [isOpen, setIsOpen] = useState(false);
@@ -26,8 +31,19 @@ function ThirteenaFeSeg() {
 	}
 
 	return (
-		<div className="flex flex-col gap-8 max-w-2xl m-auto mt-10 h-vh w-fit">
-			<div className="inline-flex gap-9 items-center">
+		<div className="mx-auto max-w-4xl bg-white p-6 shadow-lg space-y-6 h-screen">
+			<div className="flex items-center space-x-4 mb-6">
+				<Button className="flex items-center space-x-2" variant="ghost">
+					<ArrowLeftIcon className="w-5 h-5" />
+					<Link to={"/inventario=1"}>
+						<span>Retornar</span>
+					</Link>
+				</Button>
+				<div className="flex-grow">
+					<h1 className="text-2xl font-bold">SCASYS</h1>
+				</div>
+			</div>
+			<div className="inline-flex gap-9 items-center ">
 				<h1 className="text-2xl font-bold w-full">
 					Segurança ⚠️
 					<br />

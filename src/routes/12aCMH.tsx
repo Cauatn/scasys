@@ -1,6 +1,10 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { TriangleDownIcon, TriangleUpIcon } from "@radix-ui/react-icons";
+import {
+	ArrowLeftIcon,
+	TriangleDownIcon,
+	TriangleUpIcon,
+} from "@radix-ui/react-icons";
 import {
 	DropdownMenu,
 	DropdownMenuTrigger,
@@ -16,12 +20,13 @@ import {
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { Link } from "react-router-dom";
 
 function TwelveaCMH() {
 	const [isOpen, setIsOpen] = useState(false);
 	const [selectedValue, setSelectedItem] = useState<string>("Composto 1");
-    //essa linha pra quando for implementar a logica
-    const [value, setValue] = useState(false);
+	//essa linha pra quando for implementar a logica
+	const [value, setValue] = useState(false);
 
 	function setItem(e: Event) {
 		const target = e.target as HTMLDivElement;
@@ -29,10 +34,23 @@ function TwelveaCMH() {
 	}
 
 	return (
-		<div className="h-screen flex flex-row max-w-2xl m-auto mt-4 gap-4">
+		<div className="mx-auto max-w-4xl bg-white p-6 shadow-lg space-y-6 h-screen">
+			<div className="flex items-center space-x-4 mb-6">
+				<Button className="flex items-center space-x-2" variant="ghost">
+					<ArrowLeftIcon className="w-5 h-5" />
+					<Link to={"/inventario=1"}>
+						<span>Retornar</span>
+					</Link>
+				</Button>
+				<div className="flex-grow">
+					<h1 className="text-2xl font-bold">SCASYS</h1>
+				</div>
+			</div>
 			<div className="flex content-center justify-center w-full">
 				<div className="flex flex-col w-fit gap-8">
-					<h1 className="text-2xl font-bold w-full">Carcinogenicidade e mutagenicidade</h1>
+					<h1 className="text-2xl font-bold w-full">
+						Carcinogenicidade e mutagenicidade
+					</h1>
 					<div className="space-y-4">
 						<h1>Compostos químicos</h1>
 						<DropdownMenu>
@@ -68,14 +86,22 @@ function TwelveaCMH() {
 						</DropdownMenu>
 					</div>
 					<div className="flex justify-between w-full items-center space-x-4">
-                        <p>
-                            Apresenta potencial Cancerigeno ou mutagênico?
-                        </p>
-                        <ToggleGroup type="single" defaultValue="n">
-                            <ToggleGroupItem  value="s" className="data-[state=on]:bg-green-400 w-10 h-10 border rounded-md">S</ToggleGroupItem>
-                            <ToggleGroupItem  value="n" className="data-[state=on]:bg-green-400 w-10 h-10 border rounded-md">N</ToggleGroupItem>
-                        </ToggleGroup>
-                    </div>
+						<p>Apresenta potencial Cancerigeno ou mutagênico?</p>
+						<ToggleGroup type="single" defaultValue="n">
+							<ToggleGroupItem
+								value="s"
+								className="data-[state=on]:bg-green-400 w-10 h-10 border rounded-md"
+							>
+								S
+							</ToggleGroupItem>
+							<ToggleGroupItem
+								value="n"
+								className="data-[state=on]:bg-green-400 w-10 h-10 border rounded-md"
+							>
+								N
+							</ToggleGroupItem>
+						</ToggleGroup>
+					</div>
 					<div className="inline-flex items-center gap-2 w-[434px] justify-start">
 						<Label htmlFor="Fontb">Fonte: </Label>
 						<Input

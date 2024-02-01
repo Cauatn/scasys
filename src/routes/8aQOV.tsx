@@ -23,11 +23,13 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
+	ArrowLeftIcon,
 	PlusIcon,
 	TriangleDownIcon,
 	TriangleUpIcon,
 } from "@radix-ui/react-icons";
 import { Textarea } from "@/components/ui/textarea";
+import { ItemsTable } from "@/components/Items-table";
 
 function EightaETP() {
 	const [isOpen, setIsOpen] = useState(false);
@@ -42,8 +44,17 @@ function EightaETP() {
 	}
 
 	return (
-		<div className="flex max-w-fit m-auto gap-x-24 justify-between mt-8">
-			<div className="flex flex-col    gap-4 w-full max-w-[425px]">
+		<div className="bg-white p-6 max-w-4xl m-auto space-y-8">
+			<div className="flex items-center space-x-4 mb-6">
+				<Button className="flex items-center space-x-2" variant="ghost">
+					<ArrowLeftIcon className="w-5 h-5" />
+					<span>Retornar</span>
+				</Button>
+				<div className="flex-grow">
+					<h1 className="text-2xl font-bold">SCASYS</h1>
+				</div>
+			</div>
+			<div className="flex flex-col w-full gap-4">
 				<h1 className="text-2xl font-bold w-full"> Fase de Inventario</h1>
 				<div className="flex flex-col gap-4 mt-4 mb-4 ">
 					{Array.from({ length: quantityOrValue }, (_, index) => (
@@ -132,36 +143,7 @@ function EightaETP() {
 					</div>
 				</div>
 			</div>
-
-			<div>
-				<Table className="w-fit border">
-					<TableCaption>A list of your recent invoices.</TableCaption>
-					<TableHeader>
-						<TableRow>
-							<TableHead>Fase</TableHead>
-							<TableHead>Etapa procedimental</TableHead>
-							<TableHead>Especificidade</TableHead>
-							<TableHead>Item</TableHead>
-						</TableRow>
-					</TableHeader>
-					<TableBody>
-						{items.map((e) => {
-							return (
-								<TableRow key={e.Item}>
-									<TableCell className="font-medium">{e.fase}</TableCell>
-									<TableCell className="font-medium">{e.etapa}</TableCell>
-									<TableCell className="font-medium">
-										{e.especificidade}
-									</TableCell>
-									<TableCell className="font-medium text-right">
-										{e.Item}
-									</TableCell>
-								</TableRow>
-							);
-						})}
-					</TableBody>
-				</Table>
-			</div>
+			<ItemsTable />
 		</div>
 	);
 }

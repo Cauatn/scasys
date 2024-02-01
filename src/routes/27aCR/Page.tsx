@@ -91,7 +91,7 @@ export default function TwentySevenaCR() {
 									</label>
 									<Input id="menup" placeholder="Insira aqui" type="text" />
 								</div>
-								<div className="flex justify-end">
+								<div className="flex justify-end size-fit items-end">
 									<Link to={"/28"}>
 										<Button className="bg-green-500 text-white mt-2">
 											Proximo
