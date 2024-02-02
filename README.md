@@ -1,30 +1,34 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<p align="center">
+    <img width="450" src="https://github.com/Cauatn/scasys/assets/39890456/23afe9aa-c93b-4a0e-ba18-095af54ea27d" alt="Material Bread logo">
+</p>
 
-Currently, two official plugins are available:
+# scasys
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Trata-se de um software intuitivo, que, de acordo com etapas pré-definidas, permite ao usuário a obtenção de resultados a partir de cálculos matemáticos e conversões de unidades, realizadas por meio do código fonte do programa de computador (PC), fornecendo valores numéricos que são associados a impactos ambientais, com estrutura similar à de Avaliação do Ciclo de Vida de produtos químicos.
 
-## Expanding the ESLint configuration
+## Stack utilizada
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+**Front-end:** React + Ts +Vite, TailwindCSS
 
-- Configure the top-level `parserOptions` property like this:
+**Back-end:** Node
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+
+## Instalando localmente
+
+clone o repositorio
+
+```bash
+  git clone https://github.com/Cauatn/scasys.git
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Entre no diretorio e baixe as dependências
+
+```bash
+  cd my-project
+  npm install
+```
+e inicialize com
+```bash
+  npm run dev
+```
