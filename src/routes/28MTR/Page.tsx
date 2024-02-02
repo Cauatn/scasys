@@ -12,9 +12,9 @@ import { SelectContent } from "@radix-ui/react-select";
 import { SVGProps } from "react";
 import { JSX } from "react/jsx-runtime";
 
-export default function EighteenNSeg() {
+export default function TwentyEightaCR() {
 	return (
-		<div className="bg-white p-6 max-w-4xl m-auto h-screen space-y-8">
+		<div className="bg-white p-6 max-w-4xl m-auto h-screen space-y-8 ">
 			<div className="flex items-center space-x-4 mb-6">
 				<Button className="flex items-center space-x-2" variant="ghost">
 					<ArrowLeftIcon className="w-5 h-5" />
@@ -24,61 +24,60 @@ export default function EighteenNSeg() {
 					<h1 className="text-2xl font-bold">SCASYS</h1>
 				</div>
 			</div>
-			<div className="container mx-auto px-6 py-8">
+			<div className="container mx-auto px-6 py-8 flex items-center justify-center">
 				<div className="flex flex-col lg:flex-row lg:space-x-8">
-					<div className="flex-1">
+					<div className="flex-1 ">
 						<div className="mb-6 space-y-2">
-							<h2 className="text-lg font-semibold text-gray-900">Segurança</h2>
+							<h2 className="text-lg font-semibold text-gray-900">
+								Metrica ambiental holística
+							</h2>
 							<div className="flex items-center justify-between">
 								<label
 									className="text-sm font-medium text-gray-700"
 									htmlFor="corrosion-factor"
 								>
-									Items de segurança empregados
+									(por breve descrição de tiver)
 								</label>
 								<CircleIcon className="h-5 w-5 text-gray-400" />
 							</div>
 						</div>
 						<div className="space-y-6">
 							<div className="flex flex-col space-y-2">
-								<Label className="text-sm font-medium text-gray-700">
-									Composto Químico
-								</Label>
-								<Select>
-									<SelectTrigger id="residue-set">
-										<SelectValue placeholder="Selecione o composto" />
-									</SelectTrigger>
-									<SelectContent position="popper">
-										<SelectItem value="option1">Option 1</SelectItem>
-										<SelectItem value="option2">Option 2</SelectItem>
-									</SelectContent>
-								</Select>
-							</div>
-							<div className="inline-flex space-x-4 items-center space-y-2">
 								<label
 									className="text-sm font-medium text-gray-700"
 									htmlFor="corrosion-rate"
 								>
-									Número maximo de itens de segunrança empregados
+									Duração (Tempo) total do procedimento
 								</label>
 								<div className="inline-flex items-center space-x-4">
 									<Input
-										id="corrosion-rate"
-										placeholder="Insira aqui"
-										className="max-w-28"
+										placeholder="Digite aqui"
 										type="number"
+										className="max-w-44"
 									/>
+									<Select>
+										<SelectTrigger id="residue-set" className="max-w-40">
+											<SelectValue placeholder="Duração" />
+										</SelectTrigger>
+										<SelectContent position="popper">
+											<SelectItem value="option1">Dias</SelectItem>
+											<SelectItem value="option2">Horas</SelectItem>
+											<SelectItem value="option3">Minutos</SelectItem>
+											<SelectItem value="option4">segundos</SelectItem>
+										</SelectContent>
+									</Select>
+									<div className="mt-3 sm:mt-0 sm:ml-3">
+										<Button variant="secondary">?</Button>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div className="mt-8 flex justify-end">
-					<Link to={""}>
-						<Button className="bg-green-500 text-white">Proximo</Button>
-					</Link>
-				</div>
 			</div>
+			<Link to={""} className="flex justify-end max-w-4xl mr-8">
+				<Button className="bg-green-500 text-white">Proximo</Button>
+			</Link>
 		</div>
 	);
 }

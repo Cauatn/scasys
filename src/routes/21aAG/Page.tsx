@@ -12,7 +12,7 @@ import { SelectContent } from "@radix-ui/react-select";
 import { SVGProps } from "react";
 import { JSX } from "react/jsx-runtime";
 
-export default function EighteenNSeg() {
+export default function TwentyOneaAG() {
 	return (
 		<div className="bg-white p-6 max-w-4xl m-auto h-screen space-y-8">
 			<div className="flex items-center space-x-4 mb-6">
@@ -28,13 +28,15 @@ export default function EighteenNSeg() {
 				<div className="flex flex-col lg:flex-row lg:space-x-8">
 					<div className="flex-1">
 						<div className="mb-6 space-y-2">
-							<h2 className="text-lg font-semibold text-gray-900">Segurança</h2>
+							<h2 className="text-lg font-semibold text-gray-900">
+								Aquecimento global
+							</h2>
 							<div className="flex items-center justify-between">
 								<label
 									className="text-sm font-medium text-gray-700"
 									htmlFor="corrosion-factor"
 								>
-									Items de segurança empregados
+									(por breve descrição de tiver)
 								</label>
 								<CircleIcon className="h-5 w-5 text-gray-400" />
 							</div>
@@ -54,31 +56,53 @@ export default function EighteenNSeg() {
 									</SelectContent>
 								</Select>
 							</div>
-							<div className="inline-flex space-x-4 items-center space-y-2">
+							<div className="flex flex-col space-y-2">
 								<label
 									className="text-sm font-medium text-gray-700"
 									htmlFor="corrosion-rate"
 								>
-									Número maximo de itens de segunrança empregados
+									Massa de CO2 equivalente
 								</label>
 								<div className="inline-flex items-center space-x-4">
-									<Input
-										id="corrosion-rate"
-										placeholder="Insira aqui"
-										className="max-w-28"
-										type="number"
-									/>
+									<Select>
+										<SelectTrigger id="residue-set">
+											<SelectValue placeholder="Escolha" />
+										</SelectTrigger>
+										<SelectContent position="popper">
+											<SelectItem value="option1">
+												A partir da fonte biblíográfica
+											</SelectItem>
+											<SelectItem value="option1">
+												A partir da fórmula química
+											</SelectItem>
+										</SelectContent>
+									</Select>
+									<div className="mt-3 sm:mt-0 sm:ml-3">
+										<Button variant="secondary">?</Button>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-				<div className="mt-8 flex justify-end">
-					<Link to={""}>
-						<Button className="bg-green-500 text-white">Proximo</Button>
-					</Link>
+					<div className="flex-1 flex items-end">
+						<div className="flex flex-col space-y-2 w-full">
+							<label
+								className="text-sm font-medium text-gray-700"
+								htmlFor="bibliographic-source"
+							>
+								Fonte bibliográfica
+							</label>
+							<Input
+								id="bibliographic-source"
+								placeholder="Digite a fonte bibliográfica"
+							/>
+						</div>
+					</div>
 				</div>
 			</div>
+			<Link to={""} className="flex justify-end max-w-4xl mr-8">
+				<Button className="bg-green-500 text-white">Proximo</Button>
+			</Link>
 		</div>
 	);
 }

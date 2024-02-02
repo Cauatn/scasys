@@ -21,7 +21,7 @@ import { useItemContext } from "@/context/ItemsContext";
 import { useState } from "react";
 import { Label } from "@radix-ui/react-dropdown-menu";
 
-function TrheeaNDP() {
+export default function TrheeaNDP() {
 	const { procedimentos, novoProcedimento } = useItemContext();
 	const [isOpen, setIsOpen] = useState(false);
 	const [selectedValue, setSelectedItem] = useState<string>("selecione aqui");
@@ -124,5 +124,3 @@ function TrheeaNDP() {
 		</div>
 	);
 }
-
-export { TrheeaNDP };

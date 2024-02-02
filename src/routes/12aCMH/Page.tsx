@@ -22,7 +22,7 @@ import { useState } from "react";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Link } from "react-router-dom";
 
-function TwelveaCMH() {
+export default function TwelveaCMH() {
 	const [isOpen, setIsOpen] = useState(false);
 	const [selectedValue, setSelectedItem] = useState<string>("Composto 1");
 	//essa linha pra quando for implementar a logica
@@ -34,7 +34,7 @@ function TwelveaCMH() {
 	}
 
 	return (
-		<div className="mx-auto max-w-4xl bg-white p-6 shadow-lg space-y-6 h-screen">
+		<div className="mx-auto max-w-4xl bg-white p-6 space-y-6 h-screen">
 			<div className="flex items-center space-x-4 mb-6">
 				<Button className="flex items-center space-x-2" variant="ghost">
 					<ArrowLeftIcon className="w-5 h-5" />
@@ -113,8 +113,9 @@ function TwelveaCMH() {
 					</div>
 				</div>
 			</div>
+			<Link to={""} className="flex justify-end max-w-4xl mr-8">
+				<Button className="bg-green-500 text-white">Proximo</Button>
+			</Link>
 		</div>
 	);
 }
-
-export { TwelveaCMH };

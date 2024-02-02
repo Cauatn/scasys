@@ -31,7 +31,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { ItemsTable } from "@/components/Items-table";
 
-function EightaETP() {
+export default function EightaETP() {
 	const [isOpen, setIsOpen] = useState(false);
 	const [quantityOrValue, setQuantityOrValue] = useState(1);
 	const [selectedValue, setSelectedItem] = useState<string>("selecione aqui");
@@ -147,5 +147,3 @@ function EightaETP() {
 		</div>
 	);
 }
-
-export { EightaETP };
