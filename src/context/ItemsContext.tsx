@@ -82,7 +82,7 @@ export const ItemsProvider = ({ children }: ItemProviderProps) => {
 
 export function useItemContext() {
 	const contexto = useContext(ItemsContext);
-
+	console.log(contexto);
 	if (!contexto) {
 		throw new Error("useItemContext precisa estar em seu respectivo provieder");
 	}

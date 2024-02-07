@@ -1,11 +1,9 @@
 import { Button } from "@/components/ui/button";
-import { useContext, useState } from "react";
-import { ItemsContext, useItemContext } from "@/context/ItemsContext";
+import { useItemContext } from "@/context/ItemsContext";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { DropdownMenu, Item } from "@radix-ui/react-dropdown-menu";
+import { ItemsTable } from "@/components/Items-table";
 import {
   DropdownMenuContent,
   DropdownMenuGroup,
@@ -13,14 +11,16 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { DropdownMenu } from "@radix-ui/react-dropdown-menu";
 import {
   ArrowLeftIcon,
   PlusIcon,
   TriangleDownIcon,
   TriangleUpIcon,
 } from "@radix-ui/react-icons";
-import { Textarea } from "@/components/ui/textarea";
-import { ItemsTable } from "@/components/Items-table";
 
 export default function EightaETP() {
   const [isOpen, setIsOpen] = useState(false);

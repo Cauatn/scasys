@@ -72,5 +72,10 @@
   }
   body {
     @apply bg-background text-foreground;
+    max-height: 100vh;
+    height: 100vh;
+  }
+  main {
+    height: 100vh;
   }
 }
