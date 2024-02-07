@@ -12,8 +12,21 @@ import { CircleIcon } from "@radix-ui/react-icons";
 import { SelectContent } from "@radix-ui/react-select";
 import { useForm } from "react-hook-form";
 
+import { z } from "zod"
+import {zodResolver} from "@hookform/resolvers/zod"
+
+const HolistMetricalSchema = z.object({
+  time: z.string().transform(Number),
+  duration: z.string()
+})
+
+type HolistMetricalSchema = z.infer<typeof HolistMetricalSchema>
+
 export default function TwentyEightaCR() {
-	const { register, handleSubmit } = useForm();
+	const { register, handleSubmit, setValue } = useForm(
+		{resolver: zodResolver(HolistMetricalSchema)}
+	);
+	
 	const navigate = useNavigate();
 
 	function handleFormSubmit(data: any) {
@@ -59,17 +72,20 @@ export default function TwentyEightaCR() {
 											placeholder="Digite aqui"
 											type="number"
 											className="max-w-44"
-											{...register("total-duration")}
+											{...register('time')}
 										/>
-										<Select>
-											<SelectTrigger id="residue-set" className="max-w-40">
+										<Select 
+											onValueChange={(value) => setValue('duration', value)} 
+											defaultValue="horas"
+										>
+											<SelectTrigger id="duration" className="max-w-40" >
 												<SelectValue placeholder="Duração" />
 											</SelectTrigger>
 											<SelectContent position="popper">
-												<SelectItem value="option1">Dias</SelectItem>
-												<SelectItem value="option2">Horas</SelectItem>
-												<SelectItem value="option3">Minutos</SelectItem>
-												<SelectItem value="option4">segundos</SelectItem>
+												<SelectItem value="dias" >Dias</SelectItem>
+												<SelectItem value="horas">Horas</SelectItem>
+												<SelectItem value="minutos">Minutos</SelectItem>
+												<SelectItem value="segundos">segundos</SelectItem>
 											</SelectContent>
 										</Select>
 										<div className="mt-3 sm:mt-0 sm:ml-3">
@@ -83,7 +99,8 @@ export default function TwentyEightaCR() {
 				</div>
 				<Button
 					className="bg-green-500 text-white"
-					onClick={() => navigate("")}
+					type="submit"
+					
 				>
 					Proximo
 				</Button>

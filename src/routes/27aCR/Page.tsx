@@ -1,6 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -9,15 +9,37 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { SelectContent } from "@radix-ui/react-select";
-import { ArrowLeftIcon, CircleIcon } from "@radix-ui/react-icons";
-import { SVGProps } from "react";
+import {  CircleIcon } from "@radix-ui/react-icons";
+import { HintQuestion } from "@/components/hint-question";
+
+import { z } from "zod"
+import {zodResolver} from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form";
+
+const ResourcesConsumptionSchema = z.object({
+  mtcd: z.number().transform(Number),
+  rzt: z.string().transform(Number),
+  menup: z.string().transform(Number),
+})
+
+type ResourcesConsumptionSchema = z.infer<typeof ResourcesConsumptionSchema>
 
 export default function TwentySevenaCR() {
+  const { register, handleSubmit, setValue } = useForm(
+		{resolver: zodResolver(ResourcesConsumptionSchema)}
+	);
+	
+	const navigate = useNavigate();
+
+	function handleFormSubmit(data: any) {
+		console.log(data);
+	}
+
   return (
     <div className="bg-white p-6 max-w-4xl m-auto h-screen space-y-8">
-      <div className="max-w-2xl mx-auto px-6 py-8">
         <div className="flex flex-col lg:flex-row lg:space-x-8">
-          <div className="flex-1">
+          <form onSubmit={handleSubmit(handleFormSubmit)}>
+            <div className="flex-1">
             <div className="mb-6 space-y-2">
               <h2 className="text-lg font-semibold text-gray-900">
                 Consumo de recursos
@@ -27,7 +49,7 @@ export default function TwentySevenaCR() {
                   className="text-sm font-medium text-gray-700"
                   htmlFor="corrosion-factor"
                 >
-                  {""}
+                  O cálculo da submetrica (RC) :
                 </label>
                 <CircleIcon className="h-5 w-5 text-gray-400" />
               </div>
@@ -54,21 +76,20 @@ export default function TwentySevenaCR() {
                     htmlFor="mtcd"
                   >
                     <span>mtcd</span>
-                    <FileQuestionIcon />
+                    <HintQuestion/>
                   </label>
-
-                  <Input id="mtcd" placeholder="Insira aqui" type="text" />
+                  <Input id="mtcd" placeholder="Insira aqui" type="number" {...register("mtcd")} min="0"/>
                 </div>
                 <div className="flex flex-col space-y-2 items-center">
                   <label
                     className="text-sm font-medium text-gray-700 inline-flex space-x-2"
-                    htmlFor="mtcd"
+                    htmlFor="rzt"
                   >
                     <span>Razao de recursos renovaveis total</span>
-                    <FileQuestionIcon />
+                    <HintQuestion/>
                   </label>
 
-                  <Input id="mtcd" placeholder="Insira aqui" type="text" />
+                  <Input id="rzt" placeholder="Insira aqui" type="number" {...register("rzt")} min="0"/>
                 </div>
               </div>
               <div className="inline-flex space-x-2 justify-between">
@@ -78,46 +99,24 @@ export default function TwentySevenaCR() {
                     htmlFor="menup"
                   >
                     <span>menup</span>
-                    <FileQuestionIcon />
+                   <HintQuestion/>
                   </label>
-                  <Input id="menup" placeholder="Insira aqui" type="text" />
+                  <Input id="menup" placeholder="Insira aqui" type="number" {...register("menup")} min="0"/>
                 </div>
                 <div className="flex justify-end size-fit items-end">
-                  <Link to={"/rc/2"}>
-                    <Button className="bg-green-500 text-white mt-2">
+                  <Button  
+                    className="bg-green-500 text-white mt-2"
+                    type="submit"
+                    //onClick={()=>navigate("/rc/2")}
+                  >
                       Proximo
                     </Button>
-                  </Link>
                 </div>
               </div>
             </div>
           </div>
+          </form>
         </div>
-      </div>
-    </div>
-  );
-}
-
-function FileQuestionIcon(
-  props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>
-) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <title>{""}</title>
-      <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
-      <path d="M10 10.3c.2-.4.5-.8.9-1a2.1 2.1 0 0 1 2.6.4c.3.4.5.8.5 1.3 0 1.3-2 2-2 2" />
-      <path d="M12 17h.01" />
-    </svg>
+       </div>
   );
 }
