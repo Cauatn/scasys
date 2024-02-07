@@ -1,6 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -17,7 +17,7 @@ import {zodResolver} from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form";
 
 const ResourcesConsumptionSchema = z.object({
-  mtcd: z.number().transform(Number),
+  mtcd: z.string().transform(Number),
   rzt: z.string().transform(Number),
   menup: z.string().transform(Number),
 })
@@ -25,7 +25,7 @@ const ResourcesConsumptionSchema = z.object({
 type ResourcesConsumptionSchema = z.infer<typeof ResourcesConsumptionSchema>
 
 export default function TwentySevenaCR() {
-  const { register, handleSubmit, setValue } = useForm(
+  const { register, handleSubmit } = useForm(
 		{resolver: zodResolver(ResourcesConsumptionSchema)}
 	);
 	
@@ -33,10 +33,11 @@ export default function TwentySevenaCR() {
 
 	function handleFormSubmit(data: any) {
 		console.log(data);
+    navigate("/rc/2")
 	}
 
   return (
-    <div className="bg-white p-6 max-w-4xl m-auto h-screen space-y-8">
+    <div className="bg-white max-w-4xl m-auto h-screen space-y-8">
         <div className="flex flex-col lg:flex-row lg:space-x-8">
           <form onSubmit={handleSubmit(handleFormSubmit)}>
             <div className="flex-1">
@@ -78,7 +79,7 @@ export default function TwentySevenaCR() {
                     <span>mtcd</span>
                     <HintQuestion/>
                   </label>
-                  <Input id="mtcd" placeholder="Insira aqui" type="number" {...register("mtcd")} min="0"/>
+                  <Input id="mtcd" placeholder="Insira aqui" type="number" {...register("mtcd")} min="0" required/>
                 </div>
                 <div className="flex flex-col space-y-2 items-center">
                   <label
@@ -88,8 +89,7 @@ export default function TwentySevenaCR() {
                     <span>Razao de recursos renovaveis total</span>
                     <HintQuestion/>
                   </label>
-
-                  <Input id="rzt" placeholder="Insira aqui" type="number" {...register("rzt")} min="0"/>
+                  <Input id="rzt" placeholder="Insira aqui" type="number" {...register("rzt")} min="0" required/>
                 </div>
               </div>
               <div className="inline-flex space-x-2 justify-between">
@@ -101,16 +101,15 @@ export default function TwentySevenaCR() {
                     <span>menup</span>
                    <HintQuestion/>
                   </label>
-                  <Input id="menup" placeholder="Insira aqui" type="number" {...register("menup")} min="0"/>
+                  <Input id="menup" placeholder="Insira aqui" type="number" {...register("menup")} min="0" required/>
                 </div>
                 <div className="flex justify-end size-fit items-end">
                   <Button  
                     className="bg-green-500 text-white mt-2"
                     type="submit"
-                    //onClick={()=>navigate("/rc/2")}
                   >
-                      Proximo
-                    </Button>
+                    Proximo
+                  </Button>
                 </div>
               </div>
             </div>

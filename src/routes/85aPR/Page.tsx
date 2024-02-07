@@ -13,6 +13,8 @@ import { SVGProps, useState } from "react";
 import { Link } from "react-router-dom";
 import { JSX } from "react/jsx-runtime";
 
+
+
 export default function EightaPerg() {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -139,35 +141,12 @@ export default function EightaPerg() {
           </div>
         )}
         <div className="flex justify-end">
-          <Link to={"/inventario/4"} className="flex justify-end">
+          <Link to={"/inventario/5"} className="flex justify-end">
             <Button className="bg-green-400 w-44">Próximo</Button>
           </Link>
         </div>
       </div>
     </>
-  );
-}
-
-function ArrowLeftIcon(
-  props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>
-) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <title>{""}</title>
-      <path d="m12 19-7-7 7-7" />
-      <path d="M19 12H5" />
-    </svg>
   );
 }
 

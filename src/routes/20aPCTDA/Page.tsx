@@ -1,7 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { ArrowLeftIcon, CircleIcon } from "@radix-ui/react-icons";
+import { CircleIcon } from "@radix-ui/react-icons";
 import {
   Select,
   SelectContent,
@@ -10,10 +9,38 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+
+const cptdaSchema = z.object({
+  volume: z.string().transform(Number),
+  temperature: z.string().transform(Number),
+  waterTemperature: z.string().transform(Number),
+  discardedWaterTemperature: z.string().transform(Number),
+  volumeUnity: z.string(),
+  ambientUnityTemperature: z.string(),
+  waterTemperatureUnity: z.string(),
+})
+
+type cptdaSchema = z.infer<typeof cptdaSchema>;
+
 export default function TwentyFivePCTDA() {
+  const { register, handleSubmit, setValue } = useForm({
+    resolver: zodResolver(cptdaSchema),
+  });
+
+  const navigate = useNavigate();
+
+  function handleFormSubmit(data: any) {
+    console.log(data);
+    navigate("/pri/1")
+  }
   return (
-    <div className="bg-white p-6 max-w-4xl m-auto h-screen ">
-      <div className="grid grid-cols-2 gap-8 mt-6">
+    <div className="bg-white p-6 pt-0 max-w-3xl flex flex-col items-end mx-auto">
+      <form onSubmit={handleSubmit(handleFormSubmit)}>
+        <div className="grid grid-cols-2 gap-8 mt-6">
         <div>
           <div className="mb-6 space-y-2">
             <h2 className="text-lg font-semibold text-gray-900">
@@ -29,25 +56,22 @@ export default function TwentyFivePCTDA() {
               <CircleIcon className="h-5 w-5 text-gray-400" />
             </div>
           </div>
-
           <div className="mb-4">
             <label
               className="block text-sm font-medium text-gray-700 mb-1"
-              htmlFor="enthalpy"
+              htmlFor="volume"
             >
               Volume total consumido de água:
             </label>
             <div className="inline-flex space-x-4">
-              <Input id="enthalpy" placeholder="Volume" />
-              <Select>
-                <SelectTrigger id="residue-set">
+              <Input required id="volume" placeholder="Volume" {...register("volume")}/>
+              <Select required onValueChange={(value) => setValue("volumeUnity", value)}>
+                <SelectTrigger id="volume-unity">
                   <SelectValue placeholder="Unidade" />
                 </SelectTrigger>
                 <SelectContent position="popper">
-                  <SelectItem value="option1">Kg</SelectItem>
-                  <SelectItem value="option2">g</SelectItem>
-                  <SelectItem value="option3">L</SelectItem>
-                  <SelectItem value="option4">mol</SelectItem>
+                  <SelectItem value="L">L</SelectItem>
+                  <SelectItem value="ml">ml</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -60,22 +84,21 @@ export default function TwentyFivePCTDA() {
               Temperatura do ambiente
             </label>
             <div className="inline-flex items-center space-x-4">
-              <Input id="explosion-limit" placeholder="Temperatura" />
-              <Select>
-                <SelectTrigger id="residue-set">
+              <Input required id="explosion-limit" placeholder="Temperatura" {...register("temperature")}/>
+              <Select required onValueChange={(value) => setValue("ambientUnityTemperature", value)}>
+                <SelectTrigger id="temperature-unity">
                   <SelectValue placeholder="Unidade" />
                 </SelectTrigger>
                 <SelectContent position="popper">
-                  <SelectItem value="option1">Kg</SelectItem>
-                  <SelectItem value="option2">g</SelectItem>
-                  <SelectItem value="option3">L</SelectItem>
-                  <SelectItem value="option4">mol</SelectItem>
+                  <SelectItem value="K">Kelvin</SelectItem>
+                  <SelectItem value="C">°C</SelectItem>
+                  <SelectItem value="Fah">Fah</SelectItem>
                 </SelectContent>
               </Select>
             </div>
           </div>
         </div>
-        <div className="flex flex-col justify-end">
+        <div className="flex flex-col justify-end items-end">
           <div>
             <div className="mb-4">
               <label
@@ -85,16 +108,15 @@ export default function TwentyFivePCTDA() {
                 Temperatura da água do ambiente
               </label>
               <div className="inline-flex items-center space-x-4">
-                <Input id="explosion-limit" placeholder="Temperatura" />
-                <Select>
+                <Input required  id="explosion-limit" placeholder="Temperatura" {...register("waterTemperature")}/>
+                <Select required onValueChange={(value) => setValue("waterTemperatureUnity", value)}>
                   <SelectTrigger id="residue-set">
                     <SelectValue placeholder="Unidade" />
                   </SelectTrigger>
                   <SelectContent position="popper">
-                    <SelectItem value="option1">Kg</SelectItem>
-                    <SelectItem value="option2">g</SelectItem>
-                    <SelectItem value="option3">L</SelectItem>
-                    <SelectItem value="option4">mol</SelectItem>
+                    <SelectItem value="K">Kelvin</SelectItem>
+                  <SelectItem value="C">°C</SelectItem>
+                  <SelectItem value="Fah">Fah</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -102,21 +124,20 @@ export default function TwentyFivePCTDA() {
             <div className="mb-4">
               <label
                 className="block text-sm font-medium text-gray-700 mb-1"
-                htmlFor="explosion-limit"
+                htmlFor="disc-w"
               >
                 Temperatura da água descartada
               </label>
               <div className="inline-flex items-center space-x-4">
-                <Input id="explosion-limit" placeholder="Temperatura" />
-                <Select>
-                  <SelectTrigger id="residue-set">
+                <Input required id="disc-w" placeholder="Temperatura" {...register("discardedWaterTemperature")} />
+                <Select required onValueChange={(value) => setValue("discardedWaterTemperatureUnity", value)}>
+                  <SelectTrigger id="disc-w">
                     <SelectValue placeholder="Unidade" />
                   </SelectTrigger>
                   <SelectContent position="popper">
-                    <SelectItem value="option1">Kg</SelectItem>
-                    <SelectItem value="option2">g</SelectItem>
-                    <SelectItem value="option3">L</SelectItem>
-                    <SelectItem value="option4">mol</SelectItem>
+                    <SelectItem value="K">Kelvin</SelectItem>
+                  <SelectItem value="C">°C</SelectItem>
+                  <SelectItem value="Fah">Fah</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -124,9 +145,8 @@ export default function TwentyFivePCTDA() {
           </div>
         </div>
       </div>
-      <Link to={"/pri/1"} className="flex justify-end">
-        <Button className="bg-[#4CAF50] text-white">Proxima</Button>
-      </Link>
+      <Button type="submit" className="bg-green-500 text-white">Proxima</Button>
+      </form>
     </div>
   );
 }
