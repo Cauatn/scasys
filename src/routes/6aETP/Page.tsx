@@ -42,15 +42,15 @@ export function SixaETP() {
 						<Input id="Formula" placeholder="Formula" />
 					</div>
 				</div>
+			</div>
+			<div>
+				<ItemsTable />
+			</div>
 				<div className="flex justify-end">
 					<Link to={"/inventario=4"}>
 						<Button className="bg-green-400">Proxima</Button>
 					</Link>
 				</div>
-			</div>
-			<div>
-				<ItemsTable />
-			</div>
 		</div>
 	);
 }

@@ -9,41 +9,6 @@ import EightaPerg from "./routes/85aPR/Page";
 import NotFound from "./routes/NotFound/Page";
 import { AuthenticationPage } from "./routes/authentication/page";
 
-// const router = createBrowserRouter([
-// 	{
-// 		path: "/",
-// 		element: <App />,
-// 		children: [
-// 			{ path: "/", element: <AuthenticationPage /> },
-// 			{ path: "/procedure", element: <TrheeaNDP /> },
-// 			{ path: "/4", element: <FouraF /> },
-// 			{ path: "/5", element: <FiveaETP /> },
-// 			{ path: "/6", element: <SixaETP /> },
-// 			{ path: "/7", element: <EightaPerg /> },
-// 			{ path: "/8", element: <EightaETP /> },
-// 			{ path: "/9", element: <TenaPPWG /> },
-// 			{ path: "/10", element: <TenaECT /> },
-// 			{ path: "/11", element: <ElevenaACT /> },
-// 			{ path: "/12", element: <TwelveaCMH /> },
-// 			{ path: "/13", element: <ThirteenaFeSeg /> },
-// 			{ path: "/14", element: <FourteenFpSeg /> },
-// 			{ path: "/15", element: <Fifeteen /> },
-// 			{ path: "/16", element: <SixteenFgSeg /> },
-// 			{ path: "/17", element: <SeventeenFcSeg /> },
-// 			{ path: "/18", element: <EighteenNSeg /> },
-// 			{ path: "/19", element: <NineTeenaC /> },
-// 			{ path: "/20", element: <TwentyaCDE /> },
-// 			{ path: "/21", element: <TwentyOneaAG /> },
-// 			{ path: "/12", element: <TwentyTwoaPDCO /> },
-// 			{ path: "/23", element: <TwentyThreeaAG /> },
-// 			{ path: "/24", element: <TwentyFouraACD /> },
-// 			{ path: "/25", element: <TwentyFivePCTDA /> },
-// 			{ path: "/26", element: <TwentySixaPRI /> },
-// 			{ path: "/27", element: <TwentySevenaCR /> },
-// 			{ path: "/28", element: <TwentyEightaCR /> },
-// 		],
-// 	},
-// ]);
 export default function AppRouter() {
   return (
     <Router>

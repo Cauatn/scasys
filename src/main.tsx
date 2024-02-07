@@ -1,8 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { ItemsProvider } from "./context/ItemsContext.tsx";
 import "./index.css";
+
+import { ItemsProvider } from "./context/ItemsContext.tsx";
 import AppRouter from "./routes.tsx";
+
+
 const rootElement = document.getElementById("root");
 
 if (rootElement) {
