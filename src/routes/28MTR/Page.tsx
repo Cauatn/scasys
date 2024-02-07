@@ -3,10 +3,10 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeftIcon } from "@radix-ui/react-icons";
 import { Input } from "@/components/ui/input";
 import {
-	Select,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
+  Select,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
 import { CircleIcon } from "@radix-ui/react-icons";
 import { SelectContent } from "@radix-ui/react-select";

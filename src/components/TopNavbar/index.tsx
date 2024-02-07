@@ -7,7 +7,7 @@ export default function TopNavbar({ toggleReturnButton = true }) {
   return (
     <>
       <nav>
-        <div className="px-6 py-5 mb-10">
+        <div className="px-6 py-5">
           <div className="flex items-center space-x-4">
             {toggleReturnButton && (
               <Button
@@ -25,9 +25,9 @@ export default function TopNavbar({ toggleReturnButton = true }) {
           </div>
         </div>
       </nav>
-      <div>
+      <section className="flex flex-col justify-between h-4/5 mx-10">
         <Outlet/>
-      </div>
+      </section>
     </>
   );
 }
