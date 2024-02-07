@@ -6,13 +6,13 @@ import AppRouter from "./routes.tsx";
 const rootElement = document.getElementById("root");
 
 if (rootElement) {
-	ReactDOM.createRoot(rootElement).render(
-		<React.StrictMode>
-			<ItemsProvider>
-				<AppRouter/>
-			</ItemsProvider>
-		</React.StrictMode>,
-	);
+  ReactDOM.createRoot(rootElement).render(
+    <React.StrictMode>
+      <ItemsProvider>
+        <AppRouter />
+      </ItemsProvider>
+    </React.StrictMode>
+  );
 } else {
-	console.error("Root element with ID 'root' not found in the DOM");
+  console.error("Root element with ID 'root' not found in the DOM");
 }

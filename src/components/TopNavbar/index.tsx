@@ -26,7 +26,7 @@ export default function TopNavbar({ toggleReturnButton = true }) {
         </div>
       </nav>
       <div>
-        <Outlet/>
+        <Outlet />
       </div>
     </>
   );
