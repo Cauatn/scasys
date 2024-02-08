@@ -3,8 +3,8 @@ import { UserAuthForm } from "./components/user-auth-form";
 
 function AuthenticationPage() {
 	return (
-		<div className="w-screen h-screen flex flex-row">
-			<div className="container relative hidden h-screen items-center justify-center md:grid lg:w-2/3">
+		<div className="w-screen h-screen flex flex-row lg:">
+			<div className="container flex relative h-screen items-center justify-center md:grid lg:w-2/3">
 				<div className="lg:p-8">
 					<div className="mx-auto flex flex-col justify-center space-y-6 sm:w-[350px]">
 						<div className="flex flex-col space-y-2 text-center">
@@ -70,3 +70,4 @@ function AuthenticationPage() {
 }
 
 export { AuthenticationPage };
+
