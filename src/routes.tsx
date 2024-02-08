@@ -47,7 +47,7 @@ export default function AppRouter() {
             <Route path="5" element={<EightaETP />} /> //zezao veio ate aqui
           </Route>
           <Route path="/ppwg" element={<TopNavbar />}>
-            <Route index element={<TenaPPWG />} /> //falta deixar essa pagina responsiva
+            <Route index element={<TenaPPWG />} /> //falta deixar essa pagina responsiva e as outras debaixo
           </Route>
           <Route path="/etc" element={<TopNavbar />}>
             <Route path="1" element={<TenaECT />} />
