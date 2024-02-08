@@ -2,149 +2,162 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { SVGProps, useState } from "react";
 import { Link } from "react-router-dom";
 import { JSX } from "react/jsx-runtime";
 
-
-
 export default function EightaPerg() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
-      <div className="bg-white p-6 max-w-4xl m-auto h-screen space-y-8">
-        <div className="grid grid-cols-3 gap-4 mb-4">
-          <Select>
-            <SelectTrigger id="residue-set">
-              <SelectValue placeholder="Conjunto de resíduos na bombona e:" />
-            </SelectTrigger>
-            <SelectContent position="popper">
-              <SelectItem value="option1">Option 1</SelectItem>
-              <SelectItem value="option2">Option 2</SelectItem>
-            </SelectContent>
-          </Select>
-          <Select>
-            <SelectTrigger id="total-quantity">
-              <SelectValue placeholder="quantidade total" />
-            </SelectTrigger>
-            <SelectContent position="popper">
-              <SelectItem value="option1">Option 1</SelectItem>
-              <SelectItem value="option2">Option 2</SelectItem>
-            </SelectContent>
-          </Select>
-          <Select>
-            <SelectTrigger id="unit">
-              <SelectValue placeholder="kg/etc..." />
-            </SelectTrigger>
-            <SelectContent position="popper">
-              <SelectItem value="kg">Kg</SelectItem>
-              <SelectItem value="liters">Liters</SelectItem>
-            </SelectContent>
-          </Select>
-          <Button className="col-span-3 bg-green-400" variant="secondary">
-            Adicionar novo resíduo
-          </Button>
-        </div>
-        <div className="grid grid-cols-2 gap-4 mb-4">
-          <Button className="flex items-center space-x-2" variant="secondary">
-            <PlusIcon className="w-5 h-5" />
-            <span>Adicionar novo conjunto de resíduos</span>
-          </Button>
-          <Select>
-            <SelectTrigger id="added-quantity">
-              <SelectValue placeholder="quantidade total nova adicionada" />
-            </SelectTrigger>
-            <SelectContent position="popper">
-              <SelectItem value="option1">Option 1</SelectItem>
-              <SelectItem value="option2">Option 2</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-        <div className="flex flex-row gap-8 justify-between ">
-          <div className="inline-flex items-center space-x-4">
-            <Label>Qual metodo de avaliação a ser empregado?</Label>
+      <div className="flex justify-center">
+        <div className="flex flex-col gap-4 space-y-4 w-full xl:w-1/2">
+          <h1 className="text-2xl font-bold w-full"> Fase de Inventário</h1>
+          <div className="grid grid-cols-3 gap-4 mb-4">
             <Select>
-              <SelectTrigger id="added-quantity" className="max-w-fit">
-                <SelectValue placeholder="Selecione aqui" />
+              <SelectTrigger id="residue-set">
+                <SelectValue placeholder="Conjunto de resíduos na bombona e:" />
               </SelectTrigger>
               <SelectContent position="popper">
-                <SelectItem value="option1">
-                  Nas condições experimentais
-                </SelectItem>
-                <SelectItem value="option2">Em condições extremas</SelectItem>
+                <SelectItem value="option1">Option 1</SelectItem>
+                <SelectItem value="option2">Option 2</SelectItem>
               </SelectContent>
             </Select>
+            <Select>
+              <SelectTrigger id="total-quantity">
+                <SelectValue placeholder="quantidade total" />
+              </SelectTrigger>
+              <SelectContent position="popper">
+                <SelectItem value="option1">Option 1</SelectItem>
+                <SelectItem value="option2">Option 2</SelectItem>
+              </SelectContent>
+            </Select>
+            <Select>
+              <SelectTrigger id="unit">
+                <SelectValue placeholder="kg/etc..." />
+              </SelectTrigger>
+              <SelectContent position="popper">
+                <SelectItem value="kg">Kg</SelectItem>
+                <SelectItem value="liters">Liters</SelectItem>
+              </SelectContent>
+            </Select>
+            <Button className="col-span-3 bg-green-400" variant="secondary">
+              Adicionar novo resíduo
+            </Button>
           </div>
-          <Input placeholder="Observações" className="max-w-60" />
-        </div>
-        <div className="flex space-x-4">
-          <Label>
-            O objetivo do procedimento é<br /> a formação de um produto químico
-            ?
-          </Label>
-          <ToggleGroup
-            type="single"
-            defaultValue="n"
-            className="space-x-1"
-            onValueChange={() => setIsOpen(!isOpen)}
-          >
-            <ToggleGroupItem
-              value="s"
-              className="data-[state=on]:bg-green-400 w-10 h-10 border rounded-md"
+          <div className="flex flex-col items-center flex-wrap gap-4 md:flex md:flex-row md:justify-between">
+            <Button
+              className="flex items-center space-x-2 w-72"
+              variant="secondary"
             >
-              S
-            </ToggleGroupItem>
-            <ToggleGroupItem
-              value="n"
-              className="data-[state=on]:bg-green-400 w-10 h-10 border rounded-md"
-            >
-              N
-            </ToggleGroupItem>
-          </ToggleGroup>
-        </div>
-        {isOpen && (
-          <div className="flex flex-row justify-between">
-            <div className="flex items-center space-x-2">
-              <Label className="text-sm max-w-60">
-                Qual é a quantidade de reagentes efetivamente empregada no
-                procedimento?
-              </Label>
-              <Input type="number" className="max-w-20" />
+              <PlusIcon className="w-5 h-5" />
+              <span>Adicionar novo conjunto de resíduos</span>
+            </Button>
+            <div className="w-72">
               <Select>
                 <SelectTrigger id="added-quantity">
-                  <SelectValue placeholder="Selecione aqui" />
+                  <SelectValue placeholder="quantidade total nova adicionada" />
                 </SelectTrigger>
                 <SelectContent position="popper">
-                  <SelectItem value="option1">Kg</SelectItem>
-                  <SelectItem value="option2">g</SelectItem>
-                  <SelectItem value="option3">L</SelectItem>
-                  <SelectItem value="option4">mol</SelectItem>
+                  <SelectItem value="option1">Option 1</SelectItem>
+                  <SelectItem value="option2">Option 2</SelectItem>
                 </SelectContent>
               </Select>
             </div>
-            <div className="flex items-center space-x-4">
-              <FileQuestionIcon className="w-5 h-5" />
-              <Label>
-                Quantos interferentes há <br />
-                no procedimento?
-              </Label>
-              <Input type="number" className="max-w-20" />
-            </div>
           </div>
-        )}
-        <div className="flex justify-end">
-          <Link to={"/inventario/5"} className="flex justify-end">
-            <Button className="bg-green-400 w-44">Próximo</Button>
-          </Link>
+          <div className="flex flex-col gap-8 items-center sm:flex sm:flex-row sm:justify-between">
+            <Label>Qual metodo de avaliação a ser empregado?</Label>
+            <div>
+              <Select>
+                <SelectTrigger id="added-quantity" className="w-60 sm:max-w-40">
+                  <SelectValue placeholder="Selecione aqui" />
+                </SelectTrigger>
+                <SelectContent position="popper">
+                  <SelectItem value="option1">
+                    Nas condições experimentais
+                  </SelectItem>
+                  <SelectItem value="option2">Em condições extremas</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <Input placeholder="Observações" className="max-w-60" />
+          </div>
+          <div className="flex space-x-4">
+            <Label>
+              O objetivo do procedimento é<br /> a formação de um produto
+              químico ?
+            </Label>
+            <ToggleGroup
+              type="single"
+              defaultValue="n"
+              className="space-x-1"
+              onValueChange={() => setIsOpen(!isOpen)}
+            >
+              <ToggleGroupItem
+                value="s"
+                className="data-[state=on]:bg-green-400 w-10 h-10 border rounded-md"
+              >
+                S
+              </ToggleGroupItem>
+              <ToggleGroupItem
+                value="n"
+                className="data-[state=on]:bg-green-400 w-10 h-10 border rounded-md"
+              >
+                N
+              </ToggleGroupItem>
+            </ToggleGroup>
+          </div>
+          {isOpen && (
+            <>
+              <div className="flex flex-col justify-between md:flex-row">
+                <Label className="text-sm md:max-w-60">
+                  Qual é a quantidade de reagentes efetivamente empregada no
+                  procedimento?
+                </Label>
+
+                <div className="flex mt-4 flex-row justify-between w-full md:w-1/2 md:mt-0">
+                  <div>
+                    <Input type="number" className="max-w-32" />
+                  </div>
+                  <div className="max-w-32">
+                    <Select>
+                      <SelectTrigger id="added-quantity">
+                        <SelectValue placeholder="Selecione aqui" />
+                      </SelectTrigger>
+                      <SelectContent position="popper">
+                        <SelectItem value="option1">Kg</SelectItem>
+                        <SelectItem value="option2">g</SelectItem>
+                        <SelectItem value="option3">L</SelectItem>
+                        <SelectItem value="option4">mol</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+              </div>
+              <div className="flex items-center space-x-4">
+                <FileQuestionIcon className="w-5 h-5" />
+                <Label>
+                  Quantos interferentes há <br />
+                  no procedimento?
+                </Label>
+                <Input type="number" className="max-w-20" />
+              </div>
+            </>
+          )}
         </div>
+      </div>
+      <div className="flex justify-end mt-5 sm:mt-0">
+        <Link to={"/inventory/5"} className="flex justify-end">
+          <Button className="bg-green-400 w-44">Próximo</Button>
+        </Link>
       </div>
     </>
   );

@@ -17,7 +17,7 @@ function FouraF() {
   return (
     <>
       <div className="flex justify-center">
-        <div className="flex flex-col gap-5 space-y-4 w-1/2">
+        <div className="flex flex-col gap-5 space-y-4 max-w-full w-full xl:w-1/2">
           <h1 className="text-2xl font-bold">Fase de Inventário</h1>
           <div className="max-w-[300px]">
             <Select onValueChange={(e) => setItemFase(e)}>
@@ -39,7 +39,7 @@ function FouraF() {
         </div>
       </div>
       <div className="flex justify-end">
-        <Link to={"/inventario/2"} className="flex justify-end">
+        <Link to={"/inventory/2"} className="flex justify-end">
           <Button className="bg-green-400 w-44">Próximo</Button>
         </Link>
       </div>

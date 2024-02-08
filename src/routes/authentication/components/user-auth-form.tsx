@@ -91,7 +91,7 @@ function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 							//<Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
 							<div>{""}</div>
 						)*/}
-						<Link to={"/inventario=1"}>Registrar</Link>
+						<Link to={"/procedure"}>Registrar</Link>
 					</Button>
 				</div>
 			</form>
@@ -120,3 +120,4 @@ function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 }
 
 export { UserAuthForm };
+

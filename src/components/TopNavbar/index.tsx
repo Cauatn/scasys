@@ -11,7 +11,7 @@ export default function TopNavbar({ toggleReturnButton = true }) {
           <div className="inline-flex space-x-4">
             {toggleReturnButton && (
               <div className="flex items-center space-x-4 mb-6">
-                <Button 
+                <Button
                 onClick={() => navigator(-1)}
                 className="flex items-center space-x-2" variant="ghost">
                   <ArrowLeftIcon className="w-5 h-5" />
@@ -19,7 +19,7 @@ export default function TopNavbar({ toggleReturnButton = true }) {
                 </Button>
               </div>
             )}
-						<h1 className="text-2xl font-bold">SCASYS</h1>					
+						<h1 className="text-2xl font-bold ml-2">SCASYS</h1>
           </div>
         </div>
       </nav>

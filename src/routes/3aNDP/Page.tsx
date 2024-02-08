@@ -32,26 +32,27 @@ export default function TrheeaNDP() {
     setSelectedItem(target.textContent ?? "unknown");
   }
   return (
-      <div className="flex content-center justify-center h-full">
-        <div className="flex flex-col gap-10">
+    <>
+      <div className="flex flex-col h-full items-center justify-between w-full">
+        <div className="flex flex-col w-3/4 justify-center gap-10 sm:w-1/2">
           <div>
             <Label className="font-bold mb-3">
               Forneça um nome para o procedimento, a ser avaliado:
             </Label>
             <Input
               placeholder="Forneça um nome"
-              className="h-9 pl-2 w-[500px]"
+              className="h-9 pl-2"
               onChange={(event) => {
                 setProcedimento(event.target.value);
               }}
             />
           </div>
-          <div className="flex gap-4 justify-between items-center">
+          <div className="flex flex-col gap-4 justify-between items-center sm:flex sm:flex-row">
             <p>Escolha um modo de cálculo:</p>
             <DropdownMenu>
               <DropdownMenuTrigger
                 asChild
-                className="flex flex-row min-w-32 justify-between border rounded-md gap-1 pr-2 pl-2"
+                className="flex flex-row w-52 justify-between border rounded-md gap-1 pr-2 pl-2"
               >
                 <Button variant="outline" onClick={() => setIsOpen(!isOpen)}>
                   {selectedValue}
@@ -94,21 +95,22 @@ export default function TrheeaNDP() {
                 </CardDescription>
               </CardHeader>
             </Card>
-            <div className="flex justify-end mt-[50px]">
-              <Link to={"/inventario/1"}>
-                <Button
-                  className="bg-green-400 w-fit "
-                  onClick={() => {
-                    novoProcedimento(procedimento, selectedValue);
-                    console.log(procedimentos);
-                  }}
-                >
-                  Salvar procedimento
-                </Button>
-              </Link>
-            </div>
           </div>
         </div>
+        <div className="flex justify-end">
+          <Link to={"/inventory/1"}>
+            <Button
+              className="bg-green-400 w-fit "
+              onClick={() => {
+                novoProcedimento(procedimento, selectedValue);
+                console.log(procedimentos);
+              }}
+            >
+              Salvar procedimento
+            </Button>
+          </Link>
+        </div>
       </div>
+    </>
   );
 }
