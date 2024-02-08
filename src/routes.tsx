@@ -1,5 +1,5 @@
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
-import TopNavbar from './components/TopNavbar'
+import PageRoot from './components/page-root'
 import './index.css'
 import TenaECT from './routes/10aECT/Page'
 import TenaPPWG from './routes/10aPPWG/Page'
@@ -38,11 +38,11 @@ export default function AppRouter() {
                     <Route path="/" element={<AuthenticationPage />} />
                     <Route
                         path="/"
-                        element={<TopNavbar toggleReturnButton={false} />}
+                        element={<PageRoot toggleReturnButton={false} />}
                     >
                         <Route path="procedure" element={<TrheeaNDP />} />
                     </Route>
-                    <Route path="/inventory" element={<TopNavbar />}>
+                    <Route path="/inventory" element={<PageRoot />}>
                         <Route index element={<FouraF />} />
                         <Route path="2" element={<FiveaETP />} />
                         <Route path="3" element={<SixaETP />} />
@@ -50,20 +50,20 @@ export default function AppRouter() {
                         <Route path="5" element={<EightaETP />} /> //zezao veio
                         ate aqui
                     </Route>
-                    <Route path="/ppwg" element={<TopNavbar />}>
+                    <Route path="/ppwg" element={<PageRoot />}>
                         <Route index element={<TenaPPWG />} /> //falta deixar
                         essa pagina responsiva e as outras debaixo
                     </Route>
-                    <Route path="/etc" element={<TopNavbar />}>
+                    <Route path="/etc" element={<PageRoot />}>
                         <Route path="1" element={<TenaECT />} />
                     </Route>
-                    <Route path="/atc" element={<TopNavbar />}>
+                    <Route path="/atc" element={<PageRoot />}>
                         <Route path="1" element={<ElevenaACT />} />
                     </Route>
-                    <Route path="/cmh" element={<TopNavbar />}>
+                    <Route path="/cmh" element={<PageRoot />}>
                         <Route path="1" element={<TwelveaCMH />} />
                     </Route>
-                    <Route path="/ps" element={<TopNavbar />}>
+                    <Route path="/ps" element={<PageRoot />}>
                         <Route path="1" element={<ThirteenaFeSeg />} />
                         <Route path="2" element={<FourteenFpSeg />} />
                         <Route path="3" element={<Fifeteen />} />
@@ -71,29 +71,29 @@ export default function AppRouter() {
                         <Route path="5" element={<SeventeenFcSeg />} />
                         <Route path="6" element={<EighteenNSeg />} />
                     </Route>
-                    <Route path="/ce" element={<TopNavbar />}>
+                    <Route path="/ce" element={<PageRoot />}>
                         <Route path="1" element={<NineTeenaC />} />
                     </Route>
-                    <Route path="/eec" element={<TopNavbar />}>
+                    <Route path="/eec" element={<PageRoot />}>
                         <Route path="1" element={<TwentyaCDE />} />
                     </Route>
-                    <Route path="/gw" element={<TopNavbar />}>
+                    <Route path="/gw" element={<PageRoot />}>
                         <Route path="1" element={<TwentyOneaAG />} />
                     </Route>
-                    <Route path="/oldp" element={<TopNavbar />}>
+                    <Route path="/oldp" element={<PageRoot />}>
                         <Route path="1" element={<TwentyTwoaPDCO />} />
                         <Route path="2" element={<TwentyThreeaAG />} />
                     </Route>
-                    <Route path="/ap" element={<TopNavbar />}>
+                    <Route path="/ap" element={<PageRoot />}>
                         <Route path="1" element={<TwentyFouraACD />} />
                     </Route>
-                    <Route path="/cdtpw" element={<TopNavbar />}>
+                    <Route path="/cdtpw" element={<PageRoot />}>
                         <Route path="1" element={<TwentyFivePCTDA />} />
                     </Route>
-                    <Route path="/pri" element={<TopNavbar />}>
+                    <Route path="/pri" element={<PageRoot />}>
                         <Route path="1" element={<TwentySixaPRI />} />
                     </Route>
-                    <Route path="/rc" element={<TopNavbar />}>
+                    <Route path="/rc" element={<PageRoot />}>
                         <Route path="1" element={<TwentySevenaCR />} />
                         <Route path="2" element={<TwentyEightaCR />} />
                     </Route>
