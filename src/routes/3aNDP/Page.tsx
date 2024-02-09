@@ -98,7 +98,7 @@ export default function TrheeaNDP() {
           </div>
         </div>
         <div className="flex justify-end">
-          <Link to={"/inventory/1"}>
+          <Link to={"/inventory"}>
             <Button
               className="bg-green-400 w-fit "
               onClick={() => {
