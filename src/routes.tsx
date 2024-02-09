@@ -47,24 +47,22 @@ export default function AppRouter() {
                         <Route path="2" element={<FiveaETP />} />
                         <Route path="3" element={<SixaETP />} />
                         <Route path="4" element={<EightaPerg />} />
-                        <Route path="5" element={<EightaETP />} /> //zezao veio
-                        ate aqui
+                        <Route path="5" element={<EightaETP />} />
                     </Route>
                     <Route path="/ppwg" element={<PageRoot />}>
-                        <Route index element={<TenaPPWG />} /> //falta deixar
-                        essa pagina responsiva e as outras debaixo
+                        <Route index element={<TenaPPWG />} />
                     </Route>
                     <Route path="/etc" element={<PageRoot />}>
-                        <Route path="1" element={<TenaECT />} />
+                        <Route index element={<TenaECT />} />
                     </Route>
                     <Route path="/atc" element={<PageRoot />}>
-                        <Route path="1" element={<ElevenaACT />} />
+                        <Route index element={<ElevenaACT />} />
                     </Route>
                     <Route path="/cmh" element={<PageRoot />}>
-                        <Route path="1" element={<TwelveaCMH />} />
+                        <Route index element={<TwelveaCMH />} />
                     </Route>
                     <Route path="/ps" element={<PageRoot />}>
-                        <Route path="1" element={<ThirteenaFeSeg />} />
+                        <Route index element={<ThirteenaFeSeg />} />
                         <Route path="2" element={<FourteenFpSeg />} />
                         <Route path="3" element={<Fifeteen />} />
                         <Route path="4" element={<SixteenFgSeg />} />

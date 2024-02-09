@@ -6,7 +6,7 @@ export default function Navbar({ toggleReturnButton = true }) {
     const navigator = useNavigate()
     return (
         <nav>
-            <div className="flex-start mx-auto flex max-w-6xl py-5">
+            <div className="flex-start mx-auto items-center flex max-w-6xl py-5">
                 <div className="inline-flex space-x-4">
                     {toggleReturnButton && (
                         <div className="mb-6 flex items-center space-x-4">
@@ -15,7 +15,7 @@ export default function Navbar({ toggleReturnButton = true }) {
                                 className="flex items-center space-x-2"
                                 variant="ghost"
                             >
-                                <ArrowLeftIcon className="h-5 w-5" />
+                                <ArrowLeftIcon className="size-5" />
                                 <span>Retornar</span>
                             </Button>
                         </div>
