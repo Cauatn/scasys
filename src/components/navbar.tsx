@@ -6,8 +6,8 @@ export default function Navbar({ toggleReturnButton = true }) {
   const navigator = useNavigate()
   return (
     <nav>
-      <div className="flex-start mx-auto flex max-w-6xl items-center pt-5">
-        <div className="inline-flex space-x-4">
+      <div className="flex-start mx-auto flex h-16 max-w-6xl items-center px-4 pt-3">
+        <div className="inline-flex h-full w-full items-start space-x-4">
           {toggleReturnButton && (
             <div className="mb-6 flex items-center space-x-4">
               <Button
@@ -20,7 +20,7 @@ export default function Navbar({ toggleReturnButton = true }) {
               </Button>
             </div>
           )}
-          <h1 className="ml-2 text-2xl font-bold">SCASYS</h1>
+          <h1 className="ml-2 h-fit text-2xl font-bold">SCASYS</h1>
         </div>
       </div>
     </nav>
