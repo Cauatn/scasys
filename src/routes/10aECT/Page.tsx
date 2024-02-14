@@ -14,8 +14,8 @@ import { Link } from "react-router-dom"
 export default function TenaECT() {
   return (
     <>
-      <div className="flex justify-center">
-        <div className="flex w-full flex-col gap-5 space-y-4 xl:w-1/2">
+      <div className="flex justify-start">
+        <div className="flex w-full flex-col gap-5 space-y-4 xl:w-full">
           <div>
             <h1 className="w-full text-2xl font-bold">Segurança</h1>
             <div className="mt-2 flex w-full justify-between text-sm text-gray-500">
