@@ -13,8 +13,8 @@ import { Link } from "react-router-dom"
 function ThirteenaFeSeg() {
   return (
     <>
-      <div className="flex justify-center">
-        <div className="flex w-full flex-col gap-5 space-y-4 xl:w-1/2">
+      <div className="flex justify-start p-4">
+        <div className="flex w-full flex-col gap-5 space-y-4 xl:w-full">
           <div>
             <div className="mb-6 space-y-2">
               <h1 className="w-full text-2xl font-bold">Segurança</h1>
@@ -25,7 +25,7 @@ function ThirteenaFeSeg() {
                 >
                   Fator: explosão potencial
                 </label>
-                <CircleIcon className="h-5 w-5 text-gray-400" />
+                <CircleIcon className="size-5 text-gray-400" />
               </div>
             </div>
             <div className="mb-4">
@@ -53,7 +53,7 @@ function ThirteenaFeSeg() {
                 Fe
               </label>
               <div className="flex flex-col items-center gap-5 sm:flex sm:flex-row">
-                <div className="flex flex-col w-full gap-4 sm:flex sm:flex-row">
+                <div className="flex w-full flex-col gap-4 sm:flex sm:flex-row">
                   <Input
                     id="quantidade"
                     placeholder="Quantidade"
@@ -96,7 +96,7 @@ function ThirteenaFeSeg() {
           </div>
         </div>
       </div>
-      <Link to={"/ps/2"} className="flex justify-end">
+      <Link to={"/ps/2"} className="flex justify-end p-4">
         <Button className="w-44 bg-green-400">Proxima</Button>
       </Link>
     </>
@@ -104,4 +104,3 @@ function ThirteenaFeSeg() {
 }
 
 export { ThirteenaFeSeg }
-

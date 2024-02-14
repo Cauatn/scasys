@@ -43,8 +43,8 @@ export default function SeventeenFcSeg() {
   return (
     <>
       <form onSubmit={handleSubmit(handleFormSubmit)}>
-        <div className="flex justify-center mb-4">
-          <div className="flex w-full flex-col space-y-4 xl:w-1/2">
+        <div className="mb-4 space-y-4 p-4">
+          <div className="flex w-full flex-col space-y-4">
             <div className="mb-6 space-y-2">
               <h1 className="w-full text-2xl font-bold">Segurança</h1>
               <div className="flex items-center justify-between">
@@ -187,11 +187,11 @@ export default function SeventeenFcSeg() {
               />
             </div>
           </div>
-        </div>
-        <div className="flex justify-end">
-          <Button className="w-44 bg-green-400" type="submit">
-            Proximo
-          </Button>
+          <div className="flex justify-end">
+            <Button className="w-44 bg-green-400" type="submit">
+              Proximo
+            </Button>
+          </div>
         </div>
       </form>
     </>

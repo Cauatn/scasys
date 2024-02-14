@@ -13,8 +13,8 @@ import { Link } from "react-router-dom"
 function FourteenFpSeg() {
   return (
     <>
-      <div className="flex justify-center">
-        <div className="flex w-full flex-col gap-5 space-y-4 xl:w-1/2">
+      <div className="flex justify-start p-4">
+        <div className="flex w-full flex-col gap-5 space-y-4">
           <div>
             <div className="mb-6 space-y-2">
               <h1 className="w-full text-2xl font-bold">Segurança</h1>
@@ -168,4 +168,3 @@ function FourteenFpSeg() {
 }
 
 export { FourteenFpSeg }
-

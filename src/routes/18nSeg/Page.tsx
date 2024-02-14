@@ -34,9 +34,12 @@ export default function EighteenNSeg() {
     navigate("/ce/1")
   }
   return (
-    <form className="flex flex-col justify-between h-full" onSubmit={handleSubmit(handleFormSubmit)}>
-      <div className="flex justify-center mb-4">
-        <div className="flex w-full flex-col space-y-4 xl:w-1/2">
+    <form
+      className="flex h-full flex-col justify-between p-4"
+      onSubmit={handleSubmit(handleFormSubmit)}
+    >
+      <div className="mb-4">
+        <div className="flex w-full flex-col space-y-4">
           <div className="mb-6 space-y-2">
             <h2 className="w-full text-2xl font-bold">Segurança</h2>
             <div className="flex items-center justify-between">
@@ -64,14 +67,14 @@ export default function EighteenNSeg() {
                 </SelectContent>
               </Select>
             </div>
-            <div className="inline-flex items-center space-x-4 w-full space-y-2">
+            <div className="inline-flex w-full items-center space-x-4 space-y-2">
               <label
                 className="text-sm font-medium text-gray-700"
                 htmlFor="corrosion-rate"
               >
                 Número maximo de itens de segurança empregados:
               </label>
-              <div className="inline-flex items-center space-x-4 w-3/4">
+              <div className="inline-flex w-3/4 items-center space-x-4">
                 <Input
                   id="corrosion-rate"
                   placeholder="Insira aqui"

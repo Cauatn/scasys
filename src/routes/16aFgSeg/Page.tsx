@@ -16,8 +16,8 @@ import { JSX } from "react/jsx-runtime"
 export default function SixteenFgSeg() {
   return (
     <>
-      <div className="flex justify-center mb-4">
-        <div className="flex w-full flex-col space-y-4 xl:w-1/2">
+      <div className="space-y-2 p-6">
+        <div className="flex w-full flex-col space-y-4 ">
           <div className="mb-6 space-y-2">
             <h1 className="w-full text-2xl font-bold">Segurança</h1>
             <div className="flex items-center justify-between">
@@ -148,10 +148,10 @@ export default function SixteenFgSeg() {
             </RadioGroup>
           </div>
         </div>
+        <Link to={"/ps/5"} className="flex justify-end">
+          <Button className="w-44 bg-green-400">Proximo</Button>
+        </Link>
       </div>
-      <Link to={"/ps/5"} className="flex justify-end">
-        <Button className="w-44 bg-green-400">Proximo</Button>
-      </Link>
     </>
   )
 }

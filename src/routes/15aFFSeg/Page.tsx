@@ -14,8 +14,8 @@ import { Link } from "react-router-dom"
 export default function Fifeteen() {
   return (
     <>
-      <div className="flex justify-center">
-        <div className="flex w-full flex-col gap-5 space-y-4 xl:w-1/2">
+      <div className="p-4">
+        <div className="flex w-full flex-col gap-5 space-y-4">
           <div>
             <div className="mb-6 space-y-2">
               <h1 className="w-full text-2xl font-bold">Segurança</h1>
@@ -184,10 +184,10 @@ export default function Fifeteen() {
             </div>
           </div>
         </div>
+        <Link to={"/ps/4"} className="flex justify-end">
+          <Button className="w-44 bg-green-400">Proxima</Button>
+        </Link>
       </div>
-      <Link to={"/ps/4"} className="flex justify-end">
-        <Button className="w-44 bg-green-400">Proxima</Button>
-      </Link>
     </>
   )
 }
