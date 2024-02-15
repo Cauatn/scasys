@@ -12,9 +12,6 @@ import { Label } from "@radix-ui/react-dropdown-menu"
 
 import { useNavigate } from "react-router-dom"
 
-import { z } from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
 import {
   Select,
   SelectContent,
@@ -23,6 +20,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
 
 const NmSchema = z.object({
   nomeProcedimento: z.string().nonempty("O nome do procedimento é obrigatório"),
@@ -40,34 +40,34 @@ export default function TrheeaNDP() {
 
   const handleFormSubmit = (data: any) => {
     console.log(data)
-    navigate("/inventory")
+    navigate("/inventory/1")
   }
 
   return (
     <>
       <form
-        className="flex h-full w-full flex-col items-center justify-between"
+        className="flex h-full flex-col justify-between px-8 xl:px-0"
         onSubmit={handleSubmit(handleFormSubmit)}
       >
-        <div className="flex w-3/4 flex-col justify-center gap-10 sm:w-1/2">
-          <div>
+        <div className="flex w-full flex-col items-center justify-center gap-5 xl:gap-10">
+          <div className="max-w-2xl w-full">
             <Label className="mb-3 font-bold">
               Forneça um nome para o procedimento, a ser avaliado:
             </Label>
             <Input
               placeholder="Forneça um nome"
-              className="h-9 pl-2"
+              className="h-9 w-full pl-2"
               {...register("nomeProcedimento")}
               required
             />
           </div>
-          <div className="flex flex-col items-center justify-between gap-4 sm:flex sm:flex-row">
+          <div className="flex flex-col justify-between gap-4 max-w-2xl w-full">
             <p>Escolha um modo de cálculo:</p>
             <Select
               onValueChange={(value) => setValue("modoCalculo", value)}
               required
             >
-              <SelectTrigger className="flex w-52 flex-row justify-between gap-1 rounded-md border pl-2 pr-2">
+              <SelectTrigger className="flex w-full flex-row justify-between gap-1 rounded-md border pl-2 pr-2">
                 <SelectValue placeholder="Selecione o composto" />
               </SelectTrigger>
               <SelectContent className="w-48">
@@ -81,7 +81,7 @@ export default function TrheeaNDP() {
               </SelectContent>
             </Select>
           </div>
-          <div className="flex h-full flex-col justify-between">
+          <div className="flex h-full flex-col justify-between max-w-2xl w-full">
             <Card className="w-full">
               <CardHeader className="flex content-start items-start justify-start">
                 <CardTitle className="">Exemplos:</CardTitle>
@@ -95,9 +95,9 @@ export default function TrheeaNDP() {
             </Card>
           </div>
         </div>
-        <div className="flex w-1/2  justify-end">
-          <Button className="w-fit bg-green-400 " type="submit">
-            Proximo
+        <div className="flex justify-end mb-6">
+          <Button className="w-44 bg-green-400" type="submit">
+            Próximo
           </Button>
         </div>
       </form>
