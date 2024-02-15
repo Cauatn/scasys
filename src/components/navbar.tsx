@@ -45,20 +45,22 @@ export default function Navbar({ toggleReturnButton = true }) {
   ]
   return (
     <nav className="mb-10 flex h-16 w-full items-center justify-start px-8 pt-3 lg:mb-6">
-      <div className="inline-flex h-full w-full items-center space-x-4">
-        {toggleReturnButton && (
-          <div className="flex items-center space-x-4">
-            <Button
-              onClick={() => navigator(-1)}
-              className="flex items-center space-x-2 py-0"
-              variant="ghost"
-            >
-              <ArrowLeftIcon className="size-4" />
-              <span>Retornar</span>
-            </Button>
-          </div>
-        )}
-        <div className="flex w-full items-center justify-between xl:hidden">
+      <div className="inline-flex h-full w-full items-center">
+        <div className="hidden xl:flex">
+          {toggleReturnButton && (
+            <div className="flex items-center space-x-4">
+              <Button
+                onClick={() => navigator(-1)}
+                className="flex items-center space-x-2 py-0"
+                variant="ghost"
+              >
+                <ArrowLeftIcon className="size-4" />
+                <span>Retornar</span>
+              </Button>
+            </div>
+          )}
+        </div>
+        <div className="flex w-full flex-row-reverse items-center justify-between xl:hidden">
           <h1 className="flex text-2xl font-bold">SCASYS</h1>
           <DropdownMenu>
             <DropdownMenuTrigger>
