@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { Outlet } from "react-router-dom"
 import Navbar from "./navbar"
 import {
@@ -5,13 +6,10 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "./ui/resizable"
-import { useState } from "react"
-import { Separator } from "./ui/separator"
 
-import { Inbox, Globe2, Skull, AlertTriangle } from "lucide-react"
-import Nav from "./side-bar"
 import { cn } from "@/lib/utils"
-import { ScrollArea } from "./ui/scroll-area"
+import { AlertTriangle, Globe2, Inbox, Skull } from "lucide-react"
+import Nav from "./side-bar"
 
 export default function PageRoot({ toggleReturnButton = true }) {
   const [isCollapsed, setIsCollapsed] = useState(false)
@@ -19,14 +17,14 @@ export default function PageRoot({ toggleReturnButton = true }) {
   return (
     <>
       <ResizablePanelGroup direction="horizontal">
-        <ResizablePanel maxSize={16} minSize={10}>
+        <ResizablePanel maxSize={16} minSize={10} className="hidden xl:flex xl:flex-col">
           <div
             className={cn(
               "flex h-16 items-center justify-start",
               isCollapsed ? "h-16" : "px-2"
             )}
           >
-            <h1 className="pl-3 text-xl font-bold">SCASYS</h1>
+            <h1 className="pl-3 text-2xl font-bold">SCASYS</h1>
           </div>
           <Nav
             links={[
@@ -63,12 +61,12 @@ export default function PageRoot({ toggleReturnButton = true }) {
             ]}
           />
         </ResizablePanel>
-        <ResizableHandle withHandle />
+        <ResizableHandle withHandle className="hidden xl:flex" />
         <ResizablePanel className="flex h-full w-full flex-col overflow-scroll">
           <Navbar toggleReturnButton={toggleReturnButton} />
-          <ScrollArea className="m-4 rounded-lg border shadow">
+          {/* <ScrollArea className="m-4 h-full rounded-lg border shadow"> */}
             <Outlet />
-          </ScrollArea>
+          {/* </ScrollArea> */}
         </ResizablePanel>
       </ResizablePanelGroup>
     </>
