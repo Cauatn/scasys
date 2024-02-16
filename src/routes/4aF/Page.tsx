@@ -2,11 +2,11 @@ import { ItemsTable } from "@/components/Items-table"
 import { Button } from "@/components/ui/button"
 
 import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select"
 
 import { useNavigate } from "react-router-dom"
@@ -63,8 +63,8 @@ export default function FouraF() {
           <ItemsTable />
         </div>
       </div>
-      <div className="flex flex-col justify-center xl:justify-end mb-6 space-y-2">
-        <Button className="w-full xl:w-44 bg-green-500" type="submit">
+      <div className="mb-6 flex flex-col items-center space-y-2 xl:items-end xl:mr-8">
+        <Button className="w-full bg-green-500 xl:w-44" type="submit">
           Próximo
         </Button>
         <Button

@@ -50,7 +50,7 @@ export default function TrheeaNDP() {
         onSubmit={handleSubmit(handleFormSubmit)}
       >
         <div className="flex w-full flex-col items-center justify-center gap-5 xl:gap-10">
-          <div className="max-w-2xl w-full">
+          <div className="w-full max-w-2xl">
             <Label className="mb-3 font-bold">
               Forneça um nome para o procedimento, a ser avaliado:
             </Label>
@@ -61,7 +61,7 @@ export default function TrheeaNDP() {
               required
             />
           </div>
-          <div className="flex flex-col justify-between gap-4 max-w-2xl w-full">
+          <div className="flex w-full max-w-2xl flex-col justify-between gap-4">
             <p>Escolha um modo de cálculo:</p>
             <Select
               onValueChange={(value) => setValue("modoCalculo", value)}
@@ -81,7 +81,7 @@ export default function TrheeaNDP() {
               </SelectContent>
             </Select>
           </div>
-          <div className="flex h-full flex-col justify-between max-w-2xl w-full">
+          <div className="flex h-full w-full max-w-2xl flex-col justify-between">
             <Card className="w-full">
               <CardHeader className="flex content-start items-start justify-start">
                 <CardTitle className="">Exemplos:</CardTitle>
@@ -95,8 +95,8 @@ export default function TrheeaNDP() {
             </Card>
           </div>
         </div>
-        <div className="flex flex-col justify-center xl:justify-items-start mb-6">
-          <Button className="w-full xl:w-44 bg-green-500" type="submit">
+        <div className="mb-6 flex flex-col items-center xl:items-end xl:xl:mr-8">
+          <Button className="w-full bg-green-500 xl:w-44" type="submit">
             Próximo
           </Button>
         </div>
