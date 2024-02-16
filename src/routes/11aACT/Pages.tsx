@@ -9,12 +9,13 @@ import {
 } from "@/components/ui/select"
 import { Label } from "@radix-ui/react-dropdown-menu"
 import { CircleIcon } from "@radix-ui/react-icons"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 export default function ElevenaACT() {
+  const navigate = useNavigate()
   return (
     <>
-      <div className="flex justify-center">
+      <div className="flex h-full flex-col items-center justify-between px-8 xl:px-0">
         <div className="flex w-full flex-col gap-5 space-y-4 xl:w-1/2">
           <div>
             <h1 className="w-full text-2xl font-bold">Segurança</h1>
@@ -101,10 +102,17 @@ export default function ElevenaACT() {
           </div>
         </div>
       </div>
-      <div className="flex justify-end">
-        <Link to={"/cmh"} className="flex justify-end">
-          <Button className="w-44 bg-green-400">Próximo</Button>
+      <div className="mb-6 flex flex-col items-center space-y-2 px-8 xl:mr-8 xl:space-y-0 xl:flex-row xl:justify-end xl:px-0">
+        <Link to={"/cmh"} className="w-full xl:w-44">
+          <Button className="w-full bg-green-500 xl:w-44">Próximo</Button>
         </Link>
+        <Button
+          className="w-full bg-slate-950 xl:hidden"
+          type="button"
+          onClick={() => navigate(-1)}
+        >
+          Retornar
+        </Button>
       </div>
     </>
   )

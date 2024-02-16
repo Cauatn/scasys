@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { useItemContext } from "@/context/ItemsContext"
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 import { ItemsTable } from "@/components/Items-table"
 import {
@@ -32,10 +32,11 @@ export default function EightaETP() {
     const target = e.target as HTMLDivElement
     setSelectedItem(target.textContent ?? "unknown")
   }
+  const navigate = useNavigate();
 
   return (
     <>
-      <div className="flex justify-center">
+      <div className="flex h-full flex-col items-center justify-between px-8 xl:px-0">
         <div className="flex w-full flex-col gap-5 space-y-4 xl:w-1/2">
           <h1 className="w-full text-2xl font-bold">Fase de Inventário</h1>
           <div className="mb-4 mt-4 flex flex-col gap-4 ">
@@ -130,10 +131,19 @@ export default function EightaETP() {
           </div>
         </div>
       </div>
-      <div className="flex justify-end">
-        <Link to={"/ppwg"} className="flex justify-end">
-          <Button className="w-44 bg-green-400">Próximo</Button>
+      <div className="mb-6 flex flex-col items-center space-y-2 px-8 xl:mr-8 xl:items-end xl:px-0">
+        <Link to={"/ppwg"} className="w-full xl:w-44">
+          <Button className="w-full bg-green-500 xl:w-44" type="submit">
+            Próximo
+          </Button>
         </Link>
+        <Button
+          className="w-full bg-slate-950 xl:hidden"
+          type="button"
+          onClick={() => navigate(-1)}
+        >
+          Retornar
+        </Button>
       </div>
     </>
   )

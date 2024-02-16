@@ -8,12 +8,13 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Label } from "@radix-ui/react-dropdown-menu"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 export default function TenaPPWG() {
+  const navigate = useNavigate()
   return (
     <>
-      <div className="flex justify-center">
+      <div className="flex h-full flex-col items-center justify-between px-8 xl:px-0">
         <div className="flex w-full flex-col gap-5 space-y-4 xl:w-1/2">
           <div>
             <h1 className="w-full text-2xl font-bold">
@@ -190,13 +191,18 @@ export default function TenaPPWG() {
           </form>
         </div>
       </div>
-      <div className="mt-6 flex justify-end">
-        <div className="flex space-x-2">
-          <Button variant="secondary">Tabela</Button>
-          <Link to={"/etc"}>
-            <Button className="bg-green-400 w-44">Próximo</Button>
-          </Link>
-        </div>
+      <div className="mb-6 flex flex-col items-center space-y-2 px-8 xl:mr-8 xl:flex-row xl:justify-end xl:space-y-0 xl:px-0">
+        <Button variant="secondary">Tabela</Button>
+        <Link to={"/etc"} className="w-full xl:w-44">
+          <Button className="w-full bg-green-500 xl:w-44">Próximo</Button>
+        </Link>
+        <Button
+          className="w-full bg-slate-950 xl:hidden"
+          type="button"
+          onClick={() => navigate(-1)}
+        >
+          Retornar
+        </Button>
       </div>
     </>
   )

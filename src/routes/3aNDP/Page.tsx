@@ -95,7 +95,7 @@ export default function TrheeaNDP() {
             </Card>
           </div>
         </div>
-        <div className="mb-6 flex flex-col items-center xl:items-end xl:xl:mr-8">
+        <div className="mb-6 flex flex-col items-center xl:items-end xl:mr-8">
           <Button className="w-full bg-green-500 xl:w-44" type="submit">
             Próximo
           </Button>

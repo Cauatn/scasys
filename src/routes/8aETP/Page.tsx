@@ -1,13 +1,11 @@
 import { Button } from '@/components/ui/button'
-import { useState } from 'react'
 import { useItemContext } from '@/context/ItemsContext'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
+import { ItemsTable } from '@/components/Items-table'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { ArrowLeftIcon, PlusIcon } from '@radix-ui/react-icons'
-import { Textarea } from '@/components/ui/textarea'
-import { ItemsTable } from '@/components/Items-table'
 import {
     Select,
     SelectContent,
@@ -15,6 +13,8 @@ import {
     SelectSeparator,
     SelectTrigger,
 } from '@/components/ui/select'
+import { Textarea } from '@/components/ui/textarea'
+import { ArrowLeftIcon, PlusIcon } from '@radix-ui/react-icons'
 
 export default function EightaETP() {
     const [quantityOrValue, setQuantityOrValue] = useState(1)
@@ -22,7 +22,7 @@ export default function EightaETP() {
     const { items, adicionarItem } = useItemContext()
 
     return (
-        <div className="m-auto max-w-4xl space-y-8 bg-white p-6">
+        <div className="flex h-full flex-col justify-between px-8 xl:px-0">
             <div className="mb-6 flex items-center space-x-4">
                 <Button className="flex items-center space-x-2" variant="ghost">
                     <ArrowLeftIcon className="h-5 w-5" />

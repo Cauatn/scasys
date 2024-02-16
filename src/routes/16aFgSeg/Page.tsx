@@ -10,14 +10,15 @@ import {
 } from "@/components/ui/select"
 import { SelectContent } from "@radix-ui/react-select"
 import { SVGProps } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { JSX } from "react/jsx-runtime"
 
 export default function SixteenFgSeg() {
+  const navigate = useNavigate()
   return (
     <>
-      <div className="space-y-2 p-6">
-        <div className="flex w-full flex-col space-y-4 ">
+      <div className="flex h-full flex-col items-center justify-between px-8 xl:px-0">
+        <div className="flex w-full flex-col gap-5 space-y-4 xl:w-1/2">
           <div className="mb-6 space-y-2">
             <h1 className="w-full text-2xl font-bold">Segurança</h1>
             <div className="flex items-center justify-between">
@@ -148,9 +149,18 @@ export default function SixteenFgSeg() {
             </RadioGroup>
           </div>
         </div>
-        <Link to={"/ps/5"} className="flex justify-end">
-          <Button className="w-44 bg-green-400">Proximo</Button>
+      </div>
+      <div className="mb-6 flex flex-col items-center space-y-2 px-8 xl:mr-8 xl:space-y-0 xl:flex-row xl:justify-end xl:px-0">
+        <Link to={"/ps/5"} className="w-full xl:w-44">
+          <Button className="w-full bg-green-500 xl:w-44">Próximo</Button>
         </Link>
+        <Button
+          className="w-full bg-slate-950 xl:hidden"
+          type="button"
+          onClick={() => navigate(-1)}
+        >
+          Retornar
+        </Button>
       </div>
     </>
   )

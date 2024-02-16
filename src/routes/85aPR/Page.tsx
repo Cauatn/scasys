@@ -1,27 +1,28 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { SVGProps, useState } from "react";
-import { Link } from "react-router-dom";
-import { JSX } from "react/jsx-runtime";
+} from "@/components/ui/select"
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
+import { SVGProps, useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { JSX } from "react/jsx-runtime"
 
 export default function EightaPerg() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
+  const navigate = useNavigate()
 
   return (
     <>
-      <div className="flex justify-center">
-        <div className="flex flex-col gap-4 space-y-4 w-full xl:w-1/2">
-          <h1 className="text-2xl font-bold w-full"> Fase de Inventário</h1>
-          <div className="grid grid-cols-3 gap-4 mb-4">
+      <div className="flex h-full flex-col items-center justify-between px-8 xl:px-0">
+        <div className="flex w-full flex-col gap-4 space-y-4 xl:w-1/2">
+          <h1 className="w-full text-2xl font-bold"> Fase de Inventário</h1>
+          <div className="mb-4 grid grid-cols-3 gap-4">
             <Select>
               <SelectTrigger id="residue-set">
                 <SelectValue placeholder="Conjunto de resíduos na bombona e:" />
@@ -53,12 +54,12 @@ export default function EightaPerg() {
               Adicionar novo resíduo
             </Button>
           </div>
-          <div className="flex flex-col items-center flex-wrap gap-4 md:flex md:flex-row md:justify-between">
+          <div className="flex flex-col flex-wrap items-center gap-4 md:flex md:flex-row md:justify-between">
             <Button
-              className="flex items-center space-x-2 w-72"
+              className="flex w-72 items-center space-x-2"
               variant="secondary"
             >
-              <PlusIcon className="w-5 h-5" />
+              <PlusIcon className="h-5 w-5" />
               <span>Adicionar novo conjunto de resíduos</span>
             </Button>
             <div className="w-72">
@@ -73,7 +74,7 @@ export default function EightaPerg() {
               </Select>
             </div>
           </div>
-          <div className="flex flex-col gap-8 items-center sm:flex sm:flex-row sm:justify-between">
+          <div className="flex flex-col items-center gap-8 sm:flex sm:flex-row sm:justify-between">
             <Label>Qual metodo de avaliação a ser empregado?</Label>
             <div>
               <Select>
@@ -103,13 +104,13 @@ export default function EightaPerg() {
             >
               <ToggleGroupItem
                 value="s"
-                className="data-[state=on]:bg-green-400 w-10 h-10 border rounded-md"
+                className="h-10 w-10 rounded-md border data-[state=on]:bg-green-400"
               >
                 S
               </ToggleGroupItem>
               <ToggleGroupItem
                 value="n"
-                className="data-[state=on]:bg-green-400 w-10 h-10 border rounded-md"
+                className="h-10 w-10 rounded-md border data-[state=on]:bg-green-400"
               >
                 N
               </ToggleGroupItem>
@@ -123,7 +124,7 @@ export default function EightaPerg() {
                   procedimento?
                 </Label>
 
-                <div className="flex mt-4 flex-row justify-between w-full md:w-1/2 md:mt-0">
+                <div className="mt-4 flex w-full flex-row justify-between md:mt-0 md:w-1/2">
                   <div>
                     <Input type="number" className="max-w-32" />
                   </div>
@@ -143,7 +144,7 @@ export default function EightaPerg() {
                 </div>
               </div>
               <div className="flex items-center space-x-4">
-                <FileQuestionIcon className="w-5 h-5" />
+                <FileQuestionIcon className="h-5 w-5" />
                 <Label>
                   Quantos interferentes há <br />
                   no procedimento?
@@ -154,13 +155,20 @@ export default function EightaPerg() {
           )}
         </div>
       </div>
-      <div className="flex justify-end mt-5 sm:mt-0">
-        <Link to={"/inventory/5"} className="flex justify-end">
-          <Button className="bg-green-400 w-44">Próximo</Button>
-        </Link>
+      <div className="mb-6 flex flex-col items-center space-y-2 px-8 xl:mr-8 xl:items-end xl:px-0">
+        <Button className="w-full bg-green-500 xl:w-44" onClick={() => navigate("/inventory/5")}>
+          Próximo
+        </Button>
+        <Button
+          className="w-full bg-slate-950 xl:hidden"
+          type="button"
+          onClick={() => navigate(-1)}
+        >
+          Retornar
+        </Button>
       </div>
     </>
-  );
+  )
 }
 
 function FileQuestionIcon(
@@ -184,7 +192,7 @@ function FileQuestionIcon(
       <path d="M10 10.3c.2-.4.5-.8.9-1a2.1 2.1 0 0 1 2.6.4c.3.4.5.8.5 1.3 0 1.3-2 2-2 2" />
       <path d="M12 17h.01" />
     </svg>
-  );
+  )
 }
 
 function PlusIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
@@ -205,5 +213,5 @@ function PlusIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
       <path d="M5 12h14" />
       <path d="M12 5v14" />
     </svg>
-  );
+  )
 }

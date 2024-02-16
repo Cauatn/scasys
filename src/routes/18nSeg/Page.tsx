@@ -35,11 +35,11 @@ export default function EighteenNSeg() {
   }
   return (
     <form
-      className="flex h-full flex-col justify-between p-4"
+      className="flex h-full flex-col justify-between px-8 xl:px-0"
       onSubmit={handleSubmit(handleFormSubmit)}
     >
-      <div className="mb-4">
-        <div className="flex w-full flex-col space-y-4">
+      <div className="mb-4 flex justify-center space-y-4">
+        <div className="flex w-full flex-col space-y-4 xl:w-1/2">
           <div className="mb-6 space-y-2">
             <h2 className="w-full text-2xl font-bold">Segurança</h2>
             <div className="flex items-center justify-between">
@@ -87,9 +87,16 @@ export default function EighteenNSeg() {
           </div>
         </div>
       </div>
-      <div className="flex justify-end">
-        <Button className="w-44 bg-green-400" type="submit">
-          Proximo
+      <div className="mb-6 flex w-full flex-col items-center space-y-2 xl:items-end">
+        <Button className="w-full bg-green-500 xl:mr-8 xl:w-44" type="submit">
+          Próximo
+        </Button>
+        <Button
+          className="w-full bg-slate-950 xl:hidden"
+          type="button"
+          onClick={() => navigate(-1)}
+        >
+          Retornar
         </Button>
       </div>
     </form>
