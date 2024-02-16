@@ -32,7 +32,7 @@ export default function EightaETP() {
     const target = e.target as HTMLDivElement
     setSelectedItem(target.textContent ?? "unknown")
   }
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   return (
     <>
@@ -123,7 +123,7 @@ export default function EightaETP() {
                   Sim
                 </Button>
               </Link>
-              <Link to={"/ppwg"}>
+              <Link to={"/inventory/5"}>
                 <Button>Não</Button>
               </Link>
             </div>

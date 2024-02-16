@@ -18,7 +18,7 @@ export default function TenaECT() {
       <div className="flex h-full flex-col items-center justify-between px-8 xl:px-0">
         <div className="flex w-full flex-col gap-4 space-y-4 xl:w-1/2">
           <div>
-            <h1 className="w-full text-2xl font-bold">Segurança</h1>
+            <h1 className="w-full text-2xl font-bold">Toxicidade</h1>
             <div className="mt-2 flex w-full justify-between text-sm text-gray-500">
               <label htmlFor="corrosion-factor">
                 Exposição a compostos tóxicos

@@ -156,7 +156,10 @@ export default function EightaPerg() {
         </div>
       </div>
       <div className="mb-6 flex flex-col items-center space-y-2 px-8 xl:mr-8 xl:items-end xl:px-0">
-        <Button className="w-full bg-green-500 xl:w-44" onClick={() => navigate("/inventory/5")}>
+        <Button
+          className="w-full bg-green-500 xl:w-44"
+          onClick={() => navigate("/ppwg")}
+        >
           Próximo
         </Button>
         <Button

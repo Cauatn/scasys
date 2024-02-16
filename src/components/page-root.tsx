@@ -17,7 +17,11 @@ export default function PageRoot({ toggleReturnButton = true }) {
   return (
     <>
       <ResizablePanelGroup direction="horizontal">
-        <ResizablePanel maxSize={16} minSize={10} className="hidden xl:flex xl:flex-col">
+        <ResizablePanel
+          maxSize={16}
+          minSize={10}
+          className="hidden xl:flex xl:flex-col"
+        >
           <div
             className={cn(
               "flex h-16 items-center justify-start",
@@ -65,7 +69,7 @@ export default function PageRoot({ toggleReturnButton = true }) {
         <ResizablePanel className="flex h-full w-full flex-col overflow-scroll">
           <Navbar toggleReturnButton={toggleReturnButton} />
           {/* <ScrollArea className="m-4 h-full rounded-lg border shadow"> */}
-            <Outlet />
+          <Outlet />
           {/* </ScrollArea> */}
         </ResizablePanel>
       </ResizablePanelGroup>

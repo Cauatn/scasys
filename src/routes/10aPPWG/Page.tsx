@@ -40,8 +40,8 @@ export default function TenaPPWG() {
                   <Input id="mrr" placeholder="MMR" className="w-52 sm:w-20" />
                   <div className="flex justify-between sm:gap-10">
                     <Select>
-                      <SelectTrigger id="mrr-options" className="max-w-24">
-                        <SelectValue placeholder="Select" />
+                      <SelectTrigger id="mrr-options" className="max-w-32">
+                        <SelectValue placeholder="Quantidade" />
                       </SelectTrigger>
                       <SelectContent position="popper">
                         <SelectItem value="option1">Option 1</SelectItem>
@@ -49,8 +49,8 @@ export default function TenaPPWG() {
                       </SelectContent>
                     </Select>
                     <Select>
-                      <SelectTrigger id="mrr-options" className="max-w-24">
-                        <SelectValue placeholder="Select" />
+                      <SelectTrigger id="mrr-options" className="max-w-32">
+                        <SelectValue placeholder="Unidade" />
                       </SelectTrigger>
                       <SelectContent position="popper">
                         <SelectItem value="option1">Option 1</SelectItem>
@@ -73,8 +73,8 @@ export default function TenaPPWG() {
                   <Input id="mrr" placeholder="MTAD" className="w-52 sm:w-20" />
                   <div className="flex justify-between sm:gap-10">
                     <Select>
-                      <SelectTrigger id="mtad-options" className="max-w-24">
-                        <SelectValue placeholder="Select" />
+                      <SelectTrigger id="mtad-options" className="max-w-32">
+                        <SelectValue placeholder="Quantidade" />
                       </SelectTrigger>
                       <SelectContent position="popper">
                         <SelectItem value="option1">Option 1</SelectItem>
@@ -82,8 +82,8 @@ export default function TenaPPWG() {
                       </SelectContent>
                     </Select>
                     <Select>
-                      <SelectTrigger id="mrr-options" className="max-w-24">
-                        <SelectValue placeholder="Select" />
+                      <SelectTrigger id="mrr-options" className="max-w-32">
+                        <SelectValue placeholder="Unidade" />
                       </SelectTrigger>
                       <SelectContent position="popper">
                         <SelectItem value="option1">Option 1</SelectItem>
@@ -106,8 +106,8 @@ export default function TenaPPWG() {
                   <Input id="mrr" placeholder="MTDR" className="w-52 sm:w-20" />
                   <div className="flex justify-between sm:gap-10">
                     <Select>
-                      <SelectTrigger id="mrr-options" className="max-w-24">
-                        <SelectValue placeholder="Select" />
+                      <SelectTrigger id="mrr-options" className="max-w-32">
+                        <SelectValue placeholder="Quantidade" />
                       </SelectTrigger>
                       <SelectContent position="popper">
                         <SelectItem value="option1">Option 1</SelectItem>
@@ -115,8 +115,8 @@ export default function TenaPPWG() {
                       </SelectContent>
                     </Select>
                     <Select>
-                      <SelectTrigger id="mrr-options" className="max-w-24">
-                        <SelectValue placeholder="Select" />
+                      <SelectTrigger id="mrr-options" className="max-w-32">
+                        <SelectValue placeholder="Unidade" />
                       </SelectTrigger>
                       <SelectContent position="popper">
                         <SelectItem value="option1">Option 1</SelectItem>
@@ -139,8 +139,8 @@ export default function TenaPPWG() {
                   <Input id="mrr" placeholder="TD" className="w-52 sm:w-20" />
                   <div className="flex justify-between sm:gap-10">
                     <Select>
-                      <SelectTrigger id="mtad-options" className="max-w-24">
-                        <SelectValue placeholder="Select" />
+                      <SelectTrigger id="mtad-options" className="max-w-32">
+                        <SelectValue placeholder="Quantidade" />
                       </SelectTrigger>
                       <SelectContent position="popper">
                         <SelectItem value="option1">Option 1</SelectItem>
@@ -148,8 +148,8 @@ export default function TenaPPWG() {
                       </SelectContent>
                     </Select>
                     <Select>
-                      <SelectTrigger id="mrr-options" className="max-w-24">
-                        <SelectValue placeholder="Select" />
+                      <SelectTrigger id="mrr-options" className="max-w-32">
+                        <SelectValue placeholder="Unidade" />
                       </SelectTrigger>
                       <SelectContent position="popper">
                         <SelectItem value="option1">Option 1</SelectItem>
@@ -169,17 +169,17 @@ export default function TenaPPWG() {
               </div>
               <div className="flex w-2/3 flex-wrap justify-center gap-4">
                 <Input
-                  className="w-52 sm:w-80"
+                  className="w-52 sm:w-full"
                   placeholder="Inserir quantidade ou..."
                 />
               </div>
             </div>
             <div className="mt-6 w-full">
               <label
-                className="block text-sm font-medium text-gray-700"
+                className="mt-2 block text-sm font-medium text-gray-700"
                 htmlFor="fonte-bibliografica"
               >
-                Fonte bibliográfica
+                Fonte bibliográfica relacionada ao TD
               </label>
               <div className="mt-1">
                 <Input
@@ -191,7 +191,7 @@ export default function TenaPPWG() {
           </form>
         </div>
       </div>
-      <div className="mb-6 flex flex-col items-center space-y-2 px-8 xl:mr-8 xl:flex-row xl:justify-end xl:space-y-0 xl:px-0">
+      <div className="mb-6 flex flex-col items-center space-x-4 space-y-2 px-8 xl:mr-8 xl:flex-row xl:justify-end xl:space-y-0 xl:px-0">
         <Button variant="secondary">Tabela</Button>
         <Link to={"/etc"} className="w-full xl:w-44">
           <Button className="w-full bg-green-500 xl:w-44">Próximo</Button>
