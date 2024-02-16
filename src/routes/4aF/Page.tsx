@@ -11,6 +11,7 @@ import {
 
 import { useNavigate } from "react-router-dom"
 
+import NextPageButton from "@/components/next-page-button"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -63,18 +64,7 @@ export default function FouraF() {
           <ItemsTable />
         </div>
       </div>
-      <div className="mb-6 flex flex-col items-center space-y-2 xl:items-end xl:mr-8">
-        <Button className="w-full bg-green-500 xl:w-44" type="submit">
-          Próximo
-        </Button>
-        <Button
-          className="w-full bg-slate-950 xl:hidden"
-          type="button"
-          onClick={() => navigate(-1)}
-        >
-          Retornar
-        </Button>
-      </div>
+      <NextPageButton />
     </form>
   )
 }

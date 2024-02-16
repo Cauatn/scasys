@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button"
 import {
   Card,
   CardDescription,
@@ -12,6 +11,7 @@ import { Label } from "@radix-ui/react-dropdown-menu"
 
 import { useNavigate } from "react-router-dom"
 
+import NextPageButton from "@/components/next-page-button"
 import {
   Select,
   SelectContent,
@@ -95,11 +95,7 @@ export default function TrheeaNDP() {
             </Card>
           </div>
         </div>
-        <div className="mb-6 flex flex-col items-center xl:items-end xl:mr-8">
-          <Button className="w-full bg-green-500 xl:w-44" type="submit">
-            Próximo
-          </Button>
-        </div>
+        <NextPageButton />
       </form>
     </>
   )

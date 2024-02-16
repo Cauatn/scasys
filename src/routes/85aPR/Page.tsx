@@ -1,3 +1,4 @@
+import NextPageButton from "@/components/next-page-button"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -9,21 +10,47 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { SVGProps, useState } from "react"
+import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
 import { JSX } from "react/jsx-runtime"
+import { z } from "zod"
+
+const InvSchema = z.object({
+  conj_res_bombona: z.string(),
+  quant_total: z.string(),
+  unidade: z.string(),
+  quant_total_nova: z.string(),
+  metodo_avaliacao: z.string(),
+  observacoes: z.string() ? z.string() : z.undefined(),
+})
+type InvSchema = z.infer<typeof InvSchema>
 
 export default function EightaPerg() {
   const [isOpen, setIsOpen] = useState(false)
+  const { handleSubmit, setValue, register } = useForm({
+    resolver: zodResolver(InvSchema),
+  })
   const navigate = useNavigate()
+  const handleFormSubmit = (data: any) => {
+    console.log(data)
+    navigate("/inventory/2")
+  }
 
   return (
-    <>
+    <form
+      className="flex h-full flex-col justify-between px-8 xl:px-0"
+      onSubmit={handleSubmit(handleFormSubmit)}
+    >
       <div className="flex h-full flex-col items-center justify-between px-8 xl:px-0">
         <div className="flex w-full flex-col gap-4 space-y-4 xl:w-1/2">
-          <h1 className="w-full text-2xl font-bold"> Fase de Inventário</h1>
+          <h1 className="w-full text-2xl font-bold">Fase de Inventário</h1>
           <div className="mb-4 grid grid-cols-3 gap-4">
-            <Select>
+            <Select
+              onValueChange={(value) => setValue("conj_res_bombona", value)}
+              required
+            >
               <SelectTrigger id="residue-set">
                 <SelectValue placeholder="Conjunto de resíduos na bombona e:" />
               </SelectTrigger>
@@ -32,7 +59,10 @@ export default function EightaPerg() {
                 <SelectItem value="option2">Option 2</SelectItem>
               </SelectContent>
             </Select>
-            <Select>
+            <Select
+              onValueChange={(value) => setValue("quant_total", value)}
+              required
+            >
               <SelectTrigger id="total-quantity">
                 <SelectValue placeholder="quantidade total" />
               </SelectTrigger>
@@ -41,7 +71,10 @@ export default function EightaPerg() {
                 <SelectItem value="option2">Option 2</SelectItem>
               </SelectContent>
             </Select>
-            <Select>
+            <Select
+              onValueChange={(value) => setValue("unidade", value)}
+              required
+            >
               <SelectTrigger id="unit">
                 <SelectValue placeholder="kg/etc..." />
               </SelectTrigger>
@@ -63,7 +96,10 @@ export default function EightaPerg() {
               <span>Adicionar novo conjunto de resíduos</span>
             </Button>
             <div className="w-72">
-              <Select>
+              <Select
+                onValueChange={(value) => setValue("quant_total_nova", value)}
+                required
+              >
                 <SelectTrigger id="added-quantity">
                   <SelectValue placeholder="quantidade total nova adicionada" />
                 </SelectTrigger>
@@ -77,7 +113,10 @@ export default function EightaPerg() {
           <div className="flex flex-col items-center gap-8 sm:flex sm:flex-row sm:justify-between">
             <Label>Qual metodo de avaliação a ser empregado?</Label>
             <div>
-              <Select>
+              <Select
+                onValueChange={(value) => setValue("metodo_avaliacao", value)}
+                required
+              >
                 <SelectTrigger id="added-quantity" className="w-60 sm:max-w-40">
                   <SelectValue placeholder="Selecione aqui" />
                 </SelectTrigger>
@@ -89,7 +128,11 @@ export default function EightaPerg() {
                 </SelectContent>
               </Select>
             </div>
-            <Input placeholder="Observações" className="max-w-60" />
+            <Input
+              placeholder="Observações"
+              className="max-w-60"
+              {...register("observacoes")}
+            />
           </div>
           <div className="flex space-x-4">
             <Label>
@@ -126,10 +169,16 @@ export default function EightaPerg() {
 
                 <div className="mt-4 flex w-full flex-row justify-between md:mt-0 md:w-1/2">
                   <div>
-                    <Input type="number" className="max-w-32" />
+                    <Input
+                      required
+                      type="number"
+                      className="max-w-32"
+                    />
                   </div>
                   <div className="max-w-32">
-                    <Select>
+                    <Select
+                      required
+                    >
                       <SelectTrigger id="added-quantity">
                         <SelectValue placeholder="Selecione aqui" />
                       </SelectTrigger>
@@ -155,22 +204,8 @@ export default function EightaPerg() {
           )}
         </div>
       </div>
-      <div className="mb-6 flex flex-col items-center space-y-2 px-8 xl:mr-8 xl:items-end xl:px-0">
-        <Button
-          className="w-full bg-green-500 xl:w-44"
-          onClick={() => navigate("/ppwg")}
-        >
-          Próximo
-        </Button>
-        <Button
-          className="w-full bg-slate-950 xl:hidden"
-          type="button"
-          onClick={() => navigate(-1)}
-        >
-          Retornar
-        </Button>
-      </div>
-    </>
+      <NextPageButton />
+    </form>
   )
 }
 
