@@ -6,9 +6,9 @@ import { Label } from "@/components/ui/label"
 
 import { useNavigate } from "react-router-dom"
 
-import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
+import { z } from "zod"
 
 const InvSchema = z.object({
   especificidade: z.string(),
@@ -32,7 +32,7 @@ export function SixaETP() {
 
   return (
     <form
-      className="flex h-full flex-col justify-between"
+      className="flex h-full flex-col justify-between px-8 xl:px-0"
       onSubmit={handleSubmit(handleFormSubmit)}
     >
       <div className="flex justify-center">
@@ -72,9 +72,16 @@ export function SixaETP() {
           <ItemsTable />
         </div>
       </div>
-      <div className="flex justify-end">
-        <Button className="w-44 bg-green-400" type="submit">
+      <div className="mb-6 flex flex-col items-center space-y-2 xl:mr-8 xl:items-end">
+        <Button className="w-full bg-green-500 xl:w-44" type="submit">
           Próximo
+        </Button>
+        <Button
+          className="w-full bg-slate-950 xl:hidden"
+          type="button"
+          onClick={() => navigate(-1)}
+        >
+          Retornar
         </Button>
       </div>
     </form>
