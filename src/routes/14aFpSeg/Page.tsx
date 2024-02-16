@@ -8,13 +8,14 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { CircleIcon } from "@radix-ui/react-icons"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 function FourteenFpSeg() {
+  const navigate = useNavigate()
   return (
     <>
-      <div className="flex justify-start p-4">
-        <div className="flex w-full flex-col gap-5 space-y-4">
+      <div className="flex h-full flex-col items-center justify-between px-8 xl:px-0">
+        <div className="flex w-full flex-col gap-5 space-y-4 xl:w-1/2">
           <div>
             <div className="mb-6 space-y-2">
               <h1 className="w-full text-2xl font-bold">Segurança</h1>
@@ -128,7 +129,7 @@ function FourteenFpSeg() {
                   </SelectTrigger>
                   <SelectContent position="popper">
                     <SelectItem value="option1">Comprimido</SelectItem>
-                    <SelectItem value="option2">rarefeito</SelectItem>
+                    <SelectItem value="option2">Rarefeito</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -153,18 +154,28 @@ function FourteenFpSeg() {
                 </label>
                 <Input
                   id="bibliographic-source-3"
-                  placeholder="Temperatuda do composto"
+                  placeholder="Temperatura do composto"
                 />
               </div>
             </div>
           </div>
         </div>
       </div>
-      <Link to={"/ps/3"} className="flex justify-end">
-        <Button className="w-44 bg-green-400">Proxima</Button>
-      </Link>
+      <div className="mb-6 flex flex-col items-center space-y-2 px-8 xl:mr-8 xl:space-y-0 xl:flex-row xl:justify-end xl:px-0">
+        <Link to={"/ps/3"} className="w-full xl:w-44">
+          <Button className="w-full bg-green-500 xl:w-44">Próximo</Button>
+        </Link>
+        <Button
+          className="w-full bg-slate-950 xl:hidden"
+          type="button"
+          onClick={() => navigate(-1)}
+        >
+          Retornar
+        </Button>
+      </div>
     </>
   )
 }
 
 export { FourteenFpSeg }
+

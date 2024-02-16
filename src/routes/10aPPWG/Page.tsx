@@ -191,10 +191,10 @@ export default function TenaPPWG() {
           </form>
         </div>
       </div>
-      <div className="mb-6 flex flex-col items-center space-y-2 px-8 xl:mr-8 xl:px-0 xl:flex-row xl:justify-end">
+      <div className="mb-6 flex flex-col items-center space-y-2 px-8 xl:mr-8 xl:flex-row xl:justify-end xl:space-y-0 xl:px-0">
         <Button variant="secondary">Tabela</Button>
         <Link to={"/etc"} className="w-full xl:w-44">
-          <Button className="w-full xl:w-44 bg-green-400">Próximo</Button>
+          <Button className="w-full bg-green-500 xl:w-44">Próximo</Button>
         </Link>
         <Button
           className="w-full bg-slate-950 xl:hidden"
