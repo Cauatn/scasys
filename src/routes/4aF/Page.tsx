@@ -16,7 +16,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { useContext } from "react"
-import { ExperimentoContext } from "@/context/ExperimentoContext"
+import { ExperimentoContext, useExpContext } from "@/context/ExperimentoContext"
 
 const InvSchema = z.object({
   pashe: z.string(),
@@ -29,18 +29,13 @@ export default function FouraF() {
     resolver: zodResolver(InvSchema),
   })
 
-  const experimentoContext = useContext(ExperimentoContext)
-
-  const { setPhaseName } = experimentoContext || {}
+  const { setNewPhase, currentPhase } = useExpContext()
 
   const navigate = useNavigate()
 
   const handleFormSubmit = (data: any) => {
     console.log(data)
-    if (setPhaseName) {
-      setPhaseName(data.pashe)
-    }
-
+    setNewPhase(data.pashe)
     navigate("/inventory/2")
   }
 

@@ -1,4 +1,3 @@
-
 import { ItemsTable } from "@/components/Items-table"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -9,6 +8,7 @@ import NextPageButton from "@/components/next-page-button"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
+import { useExpContext } from "@/context/ExperimentoContext"
 
 const InvSchema = z.object({
   especificidade: z.string(),
@@ -25,8 +25,12 @@ export function SixaETP() {
 
   const navigate = useNavigate()
 
+  const { setNewItem, currentEtapa, currentPhase } = useExpContext()
+
   const handleFormSubmit = (data: any) => {
     console.log(data)
+    setNewItem(data.item, data.especificidade, data.formula, currentEtapa)
+
     navigate("/inventory/4")
   }
 
@@ -37,7 +41,10 @@ export function SixaETP() {
     >
       <div className="flex justify-center">
         <div className="flex w-full flex-col gap-5 space-y-4 xl:w-1/2">
-          <h1 className="w-full text-2xl font-bold"> Fase de Inventário</h1>
+          <div className="inline-flex">
+            <h1 className="w-full text-2xl font-bold"> Fase de Inventário</h1>
+            <span className="text-xl text-gray-500">{currentPhase}</span>
+          </div>
           <div className="mb-4 mt-4 flex items-center justify-between gap-4">
             <div className="flex w-full flex-wrap justify-between gap-5">
               <div>
