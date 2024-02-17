@@ -8,29 +8,47 @@ import {
 } from "./ui/resizable"
 
 import { cn } from "@/lib/utils"
-import { AlertTriangle, Globe2, Inbox, Skull } from "lucide-react"
+import { AlertTriangle, Globe2, Inbox, Moon, Skull } from "lucide-react"
 import Nav from "./side-bar"
+import { Separator } from "./ui/separator"
+import { TooltipProvider } from "./ui/tooltip"
 
 export default function PageRoot({ toggleReturnButton = true }) {
   const [isCollapsed, setIsCollapsed] = useState(false)
 
   return (
-    <>
-      <ResizablePanelGroup direction="horizontal">
+    <TooltipProvider delayDuration={0}>
+      <ResizablePanelGroup
+        direction="horizontal"
+        className="h-full max-h-[800px] items-stretch"
+      >
         <ResizablePanel
-          maxSize={16}
-          minSize={10}
-          className="hidden xl:flex xl:flex-col"
+          collapsedSize={4}
+          collapsible={true}
+          minSize={15}
+          maxSize={20}
+          onCollapse={() => setIsCollapsed(true)}
+          onExpand={() => setIsCollapsed(false)}
+          className={cn(
+            isCollapsed &&
+              "min-w-[50px] transition-all duration-300 ease-in-out"
+          )}
         >
           <div
             className={cn(
-              "flex h-16 items-center justify-start",
-              isCollapsed ? "h-16" : "px-2"
+              "flex h-[52px] items-center justify-center",
+              isCollapsed ? "h-[52px]" : "px-2"
             )}
           >
-            <h1 className="pl-3 text-2xl font-bold">SCASYS</h1>
+            {isCollapsed ? (
+              <Moon />
+            ) : (
+              <h1 className="pl-3 text-2xl font-bold">SCASYS</h1>
+            )}
           </div>
+          <Separator />
           <Nav
+            isCollapsed={isCollapsed}
             links={[
               {
                 title: "Inventario",
@@ -73,6 +91,6 @@ export default function PageRoot({ toggleReturnButton = true }) {
           {/* </ScrollArea> */}
         </ResizablePanel>
       </ResizablePanelGroup>
-    </>
+    </TooltipProvider>
   )
 }
