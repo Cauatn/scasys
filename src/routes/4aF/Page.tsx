@@ -15,6 +15,8 @@ import NextPageButton from "@/components/next-page-button"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
+import { useContext } from "react"
+import { ExperimentoContext } from "@/context/ExperimentoContext"
 
 const InvSchema = z.object({
   pashe: z.string(),
@@ -27,10 +29,18 @@ export default function FouraF() {
     resolver: zodResolver(InvSchema),
   })
 
+  const experimentoContext = useContext(ExperimentoContext)
+
+  const { setPhaseName } = experimentoContext || {}
+
   const navigate = useNavigate()
 
   const handleFormSubmit = (data: any) => {
     console.log(data)
+    if (setPhaseName) {
+      setPhaseName(data.pashe)
+    }
+
     navigate("/inventory/2")
   }
 
@@ -41,7 +51,15 @@ export default function FouraF() {
     >
       <div className="flex justify-center">
         <div className="flex w-full max-w-full flex-col gap-5 space-y-4 xl:w-1/2">
-          <h1 className="text-2xl font-bold">Fase de Inventário</h1>
+          <div>
+            <h1 className="text-2xl font-bold">Fase de Inventário</h1>
+            <label
+              className="text-sm font-medium text-gray-700"
+              htmlFor="corrosion-factor"
+            >
+              Identifique a fase que está sendo realizada
+            </label>
+          </div>
           <div className="max-w-[300px]">
             <Select
               onValueChange={(value) => setValue("pashe", value)}

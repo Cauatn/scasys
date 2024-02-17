@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button"
-import { useItemContext } from "@/context/ItemsContext"
 
 import { ItemsTable } from "@/components/Items-table"
 import { Input } from "@/components/ui/input"
@@ -20,8 +19,6 @@ const InvSchema = z.object({
 type InvSchema = z.infer<typeof InvSchema>
 
 function FiveaETP() {
-  const { setItemEtapa } = useItemContext()
-
   const { register, handleSubmit } = useForm({
     resolver: zodResolver(InvSchema),
   })
@@ -29,7 +26,6 @@ function FiveaETP() {
   const navigate = useNavigate()
 
   const handleFormSubmit = (data: any) => {
-    console.log(data)
     navigate("/inventory/3")
   }
 
@@ -52,7 +48,7 @@ function FiveaETP() {
             <div className="inline-flex w-full flex-wrap content-center items-center justify-between gap-3">
               <div className="inline-flex items-center justify-start">
                 <label className="w-44" htmlFor="rep">
-                  Número de repetições :
+                  Número de repetições da etapa procedimental:
                 </label>
                 <Input
                   id="rep"
@@ -80,4 +76,3 @@ function FiveaETP() {
 }
 
 export { FiveaETP }
-

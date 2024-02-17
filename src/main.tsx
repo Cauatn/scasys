@@ -1,21 +1,20 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import "./index.css";
+import React from "react"
+import ReactDOM from "react-dom/client"
+import "./index.css"
 
-import { ItemsProvider } from "./context/ItemsContext.tsx";
-import AppRouter from "./routes.tsx";
+import { ExperimentoProvider } from "./context/ExperimentoContext.tsx"
+import AppRouter from "./routes.tsx"
 
-
-const rootElement = document.getElementById("root");
+const rootElement = document.getElementById("root")
 
 if (rootElement) {
   ReactDOM.createRoot(rootElement).render(
     <React.StrictMode>
-      <ItemsProvider>
+      <ExperimentoProvider>
         <AppRouter />
-      </ItemsProvider>
+      </ExperimentoProvider>
     </React.StrictMode>
-  );
+  )
 } else {
-  console.error("Root element with ID 'root' not found in the DOM");
+  console.error("Root element with ID 'root' not found in the DOM")
 }

@@ -23,6 +23,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
+import { useExpContext } from "@/context/ExperimentoContext"
 
 const NmSchema = z.object({
   nomeProcedimento: z.string().nonempty("O nome do procedimento é obrigatório"),
@@ -38,8 +39,10 @@ export default function TrheeaNDP() {
 
   const navigate = useNavigate()
 
+  const { setExperimentoMetaData } = useExpContext()
+
   const handleFormSubmit = (data: any) => {
-    console.log(data)
+    setExperimentoMetaData(data.nomeProcedimento, data.modoCalculo)
     navigate("/inventory/1")
   }
 

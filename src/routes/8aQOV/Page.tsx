@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button"
-import { useItemContext } from "@/context/ItemsContext"
 import { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 
@@ -40,7 +39,6 @@ export default function EightaETP() {
   const { register, handleSubmit, setValue } = useForm({
     resolver: zodResolver(InvSchema),
   })
-  const { items, adicionarItem } = useItemContext()
 
   function setItem(e: Event) {
     const target = e.target as HTMLDivElement
@@ -144,13 +142,7 @@ export default function EightaETP() {
                 Adicionar novo item ao inventario?
               </Label>
               <Link to={"/inventory/1"}>
-                <Button
-                  onClick={() => {
-                    adicionarItem()
-                  }}
-                >
-                  Sim
-                </Button>
+                <Button onClick={() => {}}>Sim</Button>
               </Link>
               <Link to={"/inventory/5"}>
                 <Button>Não</Button>
