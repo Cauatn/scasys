@@ -1,6 +1,5 @@
 import { useState } from "react"
 import { Outlet } from "react-router-dom"
-import Navbar from "./navbar"
 import {
   ResizableHandle,
   ResizablePanel,
@@ -12,12 +11,15 @@ import { AlertTriangle, Globe2, Inbox, Moon, Skull } from "lucide-react"
 import Nav from "./side-bar"
 import { Separator } from "./ui/separator"
 import { TooltipProvider } from "./ui/tooltip"
+import { NavBarT } from "./nav"
+import Navbar from "./navbar"
 
 export default function PageRoot({ toggleReturnButton = true }) {
   const [isCollapsed, setIsCollapsed] = useState(false)
 
   return (
     <TooltipProvider delayDuration={0}>
+      <NavBarT />
       <ResizablePanelGroup
         direction="horizontal"
         className="h-full max-h-[800px] items-stretch"
@@ -25,7 +27,7 @@ export default function PageRoot({ toggleReturnButton = true }) {
         <ResizablePanel
           collapsedSize={4}
           collapsible={true}
-          minSize={15}
+          minSize={16}
           maxSize={20}
           onCollapse={() => setIsCollapsed(true)}
           onExpand={() => setIsCollapsed(false)}
@@ -44,7 +46,7 @@ export default function PageRoot({ toggleReturnButton = true }) {
             {isCollapsed ? (
               <Moon />
             ) : (
-              <h1 className="pl-3 text-2xl font-bold">SCASYS</h1>
+              <h1 className="pl-3 text-2xl font-bold">LABEL</h1>
             )}
           </div>
           <Separator />
@@ -83,13 +85,13 @@ export default function PageRoot({ toggleReturnButton = true }) {
               },
             ]}
           />
+          <Separator />
         </ResizablePanel>
         <ResizableHandle withHandle className="hidden xl:flex" />
         <ResizablePanel className="flex h-full w-full flex-col overflow-scroll">
           <Navbar toggleReturnButton={toggleReturnButton} />
-          {/* <ScrollArea className="m-4 h-full rounded-lg border shadow"> */}
+          <Separator />
           <Outlet />
-          {/* </ScrollArea> */}
         </ResizablePanel>
       </ResizablePanelGroup>
     </TooltipProvider>
