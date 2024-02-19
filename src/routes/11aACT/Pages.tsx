@@ -1,3 +1,4 @@
+import NextPageButton from "@/components/next-page-button"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
@@ -7,14 +8,36 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { Label } from "@radix-ui/react-dropdown-menu"
 import { CircleIcon } from "@radix-ui/react-icons"
-import { Link, useNavigate } from "react-router-dom"
+import { useForm } from "react-hook-form"
+import { useNavigate } from "react-router-dom"
+import { z } from "zod"
+
+const AtcSchema = z.object({
+  compostos_quimicos: z.string(),
+  fa_quantidade: z.string().transform(Number),
+  fa_unidade: z.string(),
+  fa_unidade_medida: z.string(),
+  fonte_bibliografica: z.string(),
+})
+type AtcSchema = z.infer<typeof AtcSchema>
 
 export default function ElevenaACT() {
+  const { handleSubmit, register, setValue } = useForm({
+    resolver: zodResolver(AtcSchema),
+  })
   const navigate = useNavigate()
+  const handleFormSubmit = (data: any) => {
+    console.log(data)
+    navigate("/cmh")
+  }
   return (
-    <>
+    <form
+      className="flex h-full flex-col justify-between px-8 xl:px-0"
+      onSubmit={handleSubmit(handleFormSubmit)}
+    >
       <div className="flex h-full flex-col items-center justify-between px-8 xl:px-0">
         <div className="flex w-full flex-col gap-5 space-y-4 xl:w-1/2">
           <div>
@@ -31,7 +54,10 @@ export default function ElevenaACT() {
               <Label className="text-sm font-medium text-gray-700">
                 Compostos Químicos
               </Label>
-              <Select>
+              <Select
+                required
+                onValueChange={(value) => setValue("compostos_quimicos", value)}
+              >
                 <SelectTrigger id="residue-set">
                   <SelectValue placeholder="Selecione o composto" />
                 </SelectTrigger>
@@ -50,26 +76,36 @@ export default function ElevenaACT() {
               </label>
               <div className="flex flex-col items-center gap-5 sm:flex sm:flex-row">
                 <div className="flex w-full justify-between gap-5">
-                  <Select>
+                  <Select
+                    required
+                    onValueChange={(value) => setValue("fa_unidade", value)}
+                  >
                     <SelectTrigger id="residue-set">
                       <SelectValue placeholder="Unidade" />
                     </SelectTrigger>
                     <SelectContent position="popper">
-                      <SelectItem value="option1">BCF</SelectItem>
-                      <SelectItem value="option2">BAF</SelectItem>
-                      <SelectItem value="option3">Kow</SelectItem>
-                      <SelectItem value="option4">outro</SelectItem>
+                      <SelectItem value="BCF">BCF</SelectItem>
+                      <SelectItem value="BAF">BAF</SelectItem>
+                      <SelectItem value="KOW">Kow</SelectItem>
+                      <SelectItem value="other">outro</SelectItem>
                     </SelectContent>
                   </Select>
                   <Input
-                    id="corrosion-raapresentate"
+                    required
+                    id="corrosion-rate"
                     placeholder="Insira aqui"
                     className="min-w-28"
                     type="number"
+                    {...register("fa_quantidade")}
                   />
                 </div>
                 <div className="flex w-full justify-between gap-5">
-                  <Select>
+                  <Select
+                    required
+                    onValueChange={(value) =>
+                      setValue("fa_unidade_medida", value)
+                    }
+                  >
                     <SelectTrigger id="residue-set">
                       <SelectValue placeholder="Unidade" />
                     </SelectTrigger>
@@ -94,26 +130,17 @@ export default function ElevenaACT() {
                   Fonte bibliográfica
                 </label>
                 <Input
+                  required
                   id="bibliographic-source"
                   placeholder="Digite a fonte bibliográfica"
+                  {...register("fonte_bibliografica")}
                 />
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div className="mb-6 flex flex-col items-center space-y-2 px-8 xl:mr-8 xl:space-y-0 xl:flex-row xl:justify-end xl:px-0">
-        <Link to={"/cmh"} className="w-full xl:w-44">
-          <Button className="w-full bg-green-500 xl:w-44">Próximo</Button>
-        </Link>
-        <Button
-          className="w-full bg-slate-950 xl:hidden"
-          type="button"
-          onClick={() => navigate(-1)}
-        >
-          Retornar
-        </Button>
-      </div>
-    </>
+      <NextPageButton />
+    </form>
   )
 }

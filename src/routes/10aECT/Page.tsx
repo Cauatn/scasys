@@ -1,3 +1,4 @@
+import NextPageButton from "@/components/next-page-button"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
@@ -7,14 +8,37 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { Label } from "@radix-ui/react-dropdown-menu"
 import { CircleIcon } from "@radix-ui/react-icons"
-import { Link, useNavigate } from "react-router-dom"
+import { useForm } from "react-hook-form"
+import { useNavigate } from "react-router-dom"
+import { z } from "zod"
+
+const ToxicitySchema = z.object({
+  composto_quimico: z.string(),
+  concentracao_toxicidade_limite: z.string().transform(Number),
+  concentracao_toxicidade_limite_unidade: z.string(),
+  tempo_exposicao: z.string().transform(Number),
+  tempo_exposicao_unidade: z.string(),
+  fonte_bibliografica: z.string(),
+})
+type ToxicitySchema = z.infer<typeof ToxicitySchema>
 
 export default function TenaECT() {
+  const { handleSubmit, setValue, register } = useForm({
+    resolver: zodResolver(ToxicitySchema),
+  })
   const navigate = useNavigate()
+  const handleFormSubmit = (data: any) => {
+    console.log(data)
+    navigate("/atc")
+  }
   return (
-    <>
+    <form
+      className="flex h-full flex-col justify-between px-8 xl:px-0"
+      onSubmit={handleSubmit(handleFormSubmit)}
+    >
       <div className="flex h-full flex-col items-center justify-between px-8 xl:px-0">
         <div className="flex w-full flex-col gap-4 space-y-4 xl:w-1/2">
           <div>
@@ -31,7 +55,10 @@ export default function TenaECT() {
               <Label className="text-sm font-medium text-gray-700">
                 Composto Químico
               </Label>
-              <Select>
+              <Select
+                required
+                onValueChange={(value) => setValue("composto_quimico", value)}
+              >
                 <SelectTrigger id="residue-set">
                   <SelectValue placeholder="Selecione o composto" />
                 </SelectTrigger>
@@ -50,12 +77,19 @@ export default function TenaECT() {
               </label>
               <div className="inline-flex items-center space-x-4">
                 <Input
-                  id="corrosion-raapresentate"
+                  required
+                  id="corrosion-rate"
                   placeholder="Insira aqui"
                   className="max-w-28"
                   type="number"
+                  {...register("concentracao_toxicidade_limite")}
                 />
-                <Select>
+                <Select
+                  required
+                  onValueChange={(value) =>
+                    setValue("concentracao_toxicidade_limite_unidade", value)
+                  }
+                >
                   <SelectTrigger id="residue-set">
                     <SelectValue placeholder="Unidade" />
                   </SelectTrigger>
@@ -81,12 +115,19 @@ export default function TenaECT() {
                 </label>
                 <div className="inline-flex items-center space-x-4">
                   <Input
+                    required
                     id="temperature"
                     placeholder="Insira aqui"
                     className="max-w-32"
                     type="number"
+                    {...register("tempo_exposicao")}
                   />
-                  <Select>
+                  <Select
+                    required
+                    onValueChange={(value) =>
+                      setValue("tempo_exposicao_unidade", value)
+                    }
+                  >
                     <SelectTrigger id="residue-set">
                       <SelectValue placeholder="Unidade" />
                     </SelectTrigger>
@@ -107,28 +148,17 @@ export default function TenaECT() {
                   Fonte bibliográfica
                 </label>
                 <Input
+                  required
                   id="bibliographic-source"
                   placeholder="Digite a fonte bibliográfica"
+                  {...register("fonte_bibliografica")}
                 />
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div className="mb-6 flex flex-col items-center space-y-2 px-8 xl:mr-8 xl:items-end xl:px-0">
-        <Link to={"/atc"} className="w-full xl:w-44">
-          <Button className="w-full bg-green-500 xl:w-44" type="submit">
-            Próximo
-          </Button>
-        </Link>
-        <Button
-          className="w-full bg-slate-950 xl:hidden"
-          type="button"
-          onClick={() => navigate(-1)}
-        >
-          Retornar
-        </Button>
-      </div>
-    </>
+      <NextPageButton />
+    </form>
   )
 }

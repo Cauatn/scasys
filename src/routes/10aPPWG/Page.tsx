@@ -1,3 +1,4 @@
+import NextPageButton from "@/components/next-page-button"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
@@ -7,13 +8,44 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { Label } from "@radix-ui/react-dropdown-menu"
-import { Link, useNavigate } from "react-router-dom"
+import { useForm } from "react-hook-form"
+import { useNavigate } from "react-router-dom"
+import { z } from "zod"
+
+const PpwgSchema = z.object({
+  mmr: z.string(),
+  mmr_quantidade: z.string(),
+  mmr_unidade: z.string(),
+  mtad: z.string(),
+  mtad_quantidade: z.string(),
+  mtad_unidade: z.string(),
+  mtdr: z.string(),
+  mtdr_quantidade: z.string(),
+  mtdr_unidade: z.string(),
+  td: z.string(),
+  td_quantidade: z.string(),
+  td_unidade: z.string(),
+  f: z.string(),
+  fonte_bibliografica_td: z.string(),
+})
+type PpwgSchema = z.infer<typeof PpwgSchema>
 
 export default function TenaPPWG() {
+  const { handleSubmit, setValue, register } = useForm({
+    resolver: zodResolver(PpwgSchema),
+  })
   const navigate = useNavigate()
+  const handleFormSubmit = (data: any) => {
+    console.log(data)
+    navigate("/etc")
+  }
   return (
-    <>
+    <form
+      className="flex h-full flex-col justify-between px-8 xl:px-0"
+      onSubmit={handleSubmit(handleFormSubmit)}
+    >
       <div className="flex h-full flex-col items-center justify-between px-8 xl:px-0">
         <div className="flex w-full flex-col gap-5 space-y-4 xl:w-1/2">
           <div>
@@ -27,183 +59,225 @@ export default function TenaPPWG() {
               </p>
             </div>
           </div>
-          <form className="flex flex-col items-center space-y-4">
-            <div className="flex w-full flex-1 flex-col flex-wrap items-center gap-4 sm:flex sm:flex-row sm:justify-center">
-              <div className="flex items-center">
-                <Label className="w-16">MMR</Label>
-                <div>
-                  <Button variant="secondary">?</Button>
-                </div>
-              </div>
-              <div className="flex w-2/3 flex-wrap justify-center gap-4">
-                <div className="flex-col space-y-4 sm:flex sm:flex-row sm:gap-10 sm:space-y-0">
-                  <Input id="mrr" placeholder="MMR" className="w-52 sm:w-20" />
-                  <div className="flex justify-between sm:gap-10">
-                    <Select>
-                      <SelectTrigger id="mrr-options" className="max-w-32">
-                        <SelectValue placeholder="Quantidade" />
-                      </SelectTrigger>
-                      <SelectContent position="popper">
-                        <SelectItem value="option1">Option 1</SelectItem>
-                        <SelectItem value="option2">Option 2</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <Select>
-                      <SelectTrigger id="mrr-options" className="max-w-32">
-                        <SelectValue placeholder="Unidade" />
-                      </SelectTrigger>
-                      <SelectContent position="popper">
-                        <SelectItem value="option1">Option 1</SelectItem>
-                        <SelectItem value="option2">Option 2</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
+
+          <div className="flex w-full flex-1 flex-col flex-wrap items-center gap-4 sm:flex sm:flex-row sm:justify-center">
+            <div className="flex items-center">
+              <Label className="w-16">MMR</Label>
+              <div>
+                <Button variant="secondary">?</Button>
               </div>
             </div>
-            <div className="flex w-full flex-1 flex-col flex-wrap items-center gap-4 sm:flex sm:flex-row sm:justify-center">
-              <div className="flex items-center">
-                <Label className="w-16">MTAD</Label>
-                <div>
-                  <Button variant="secondary">?</Button>
-                </div>
-              </div>
-              <div className="flex w-2/3 flex-wrap justify-center gap-4">
-                <div className="flex-col gap-5 space-y-4 sm:flex sm:flex-row sm:gap-10 sm:space-y-0">
-                  <Input id="mrr" placeholder="MTAD" className="w-52 sm:w-20" />
-                  <div className="flex justify-between sm:gap-10">
-                    <Select>
-                      <SelectTrigger id="mtad-options" className="max-w-32">
-                        <SelectValue placeholder="Quantidade" />
-                      </SelectTrigger>
-                      <SelectContent position="popper">
-                        <SelectItem value="option1">Option 1</SelectItem>
-                        <SelectItem value="option2">Option 2</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <Select>
-                      <SelectTrigger id="mrr-options" className="max-w-32">
-                        <SelectValue placeholder="Unidade" />
-                      </SelectTrigger>
-                      <SelectContent position="popper">
-                        <SelectItem value="option1">Option 1</SelectItem>
-                        <SelectItem value="option2">Option 2</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="flex w-full flex-1 flex-col flex-wrap items-center gap-4 sm:flex sm:flex-row sm:justify-center">
-              <div className="flex items-center">
-                <Label className="w-16">MTDR</Label>
-                <div>
-                  <Button variant="secondary">?</Button>
-                </div>
-              </div>
-              <div className="flex w-2/3 flex-wrap justify-center gap-4">
-                <div className="flex-col gap-5 space-y-4 sm:flex sm:flex-row sm:gap-10 sm:space-y-0">
-                  <Input id="mrr" placeholder="MTDR" className="w-52 sm:w-20" />
-                  <div className="flex justify-between sm:gap-10">
-                    <Select>
-                      <SelectTrigger id="mrr-options" className="max-w-32">
-                        <SelectValue placeholder="Quantidade" />
-                      </SelectTrigger>
-                      <SelectContent position="popper">
-                        <SelectItem value="option1">Option 1</SelectItem>
-                        <SelectItem value="option2">Option 2</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <Select>
-                      <SelectTrigger id="mrr-options" className="max-w-32">
-                        <SelectValue placeholder="Unidade" />
-                      </SelectTrigger>
-                      <SelectContent position="popper">
-                        <SelectItem value="option1">Option 1</SelectItem>
-                        <SelectItem value="option2">Option 2</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="flex w-full flex-1 flex-col flex-wrap items-center gap-4 sm:flex sm:flex-row sm:justify-center">
-              <div className="flex items-center">
-                <Label className="w-16">TD</Label>
-                <div>
-                  <Button variant="secondary">?</Button>
-                </div>
-              </div>
-              <div className="flex w-2/3 flex-wrap justify-center gap-4">
-                <div className="flex-col gap-5 space-y-4 sm:flex sm:flex-row sm:gap-10 sm:space-y-0">
-                  <Input id="mrr" placeholder="TD" className="w-52 sm:w-20" />
-                  <div className="flex justify-between sm:gap-10">
-                    <Select>
-                      <SelectTrigger id="mtad-options" className="max-w-32">
-                        <SelectValue placeholder="Quantidade" />
-                      </SelectTrigger>
-                      <SelectContent position="popper">
-                        <SelectItem value="option1">Option 1</SelectItem>
-                        <SelectItem value="option2">Option 2</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <Select>
-                      <SelectTrigger id="mrr-options" className="max-w-32">
-                        <SelectValue placeholder="Unidade" />
-                      </SelectTrigger>
-                      <SelectContent position="popper">
-                        <SelectItem value="option1">Option 1</SelectItem>
-                        <SelectItem value="option2">Option 2</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="flex w-full flex-1 flex-col flex-wrap items-center gap-4 sm:flex sm:flex-row sm:justify-center">
-              <div className="flex items-center">
-                <Label className="w-16">F</Label>
-                <div>
-                  <Button variant="secondary">?</Button>
-                </div>
-              </div>
-              <div className="flex w-2/3 flex-wrap justify-center gap-4">
+            <div className="flex w-2/3 flex-wrap justify-center gap-4">
+              <div className="flex-col space-y-4 sm:flex sm:flex-row sm:gap-10 sm:space-y-0">
                 <Input
-                  className="w-52 sm:w-full"
-                  placeholder="Inserir quantidade ou..."
+                  id="mmr"
+                  placeholder="MMR"
+                  className="w-52 sm:w-20"
+                  required
+                  {...register("mmr")}
                 />
+                <div className="flex justify-between sm:gap-10">
+                  <Select
+                    required
+                    onValueChange={(value) => setValue("mmr_quantidade", value)}
+                  >
+                    <SelectTrigger id="mmr-options" className="max-w-32">
+                      <SelectValue placeholder="Quantidade" />
+                    </SelectTrigger>
+                    <SelectContent position="popper">
+                      <SelectItem value="option1">Option 1</SelectItem>
+                      <SelectItem value="option2">Option 2</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <Select
+                    required
+                    onValueChange={(value) => setValue("mmr_unidade", value)}
+                  >
+                    <SelectTrigger id="mmr-options" className="max-w-32">
+                      <SelectValue placeholder="Unidade" />
+                    </SelectTrigger>
+                    <SelectContent position="popper">
+                      <SelectItem value="option1">Option 1</SelectItem>
+                      <SelectItem value="option2">Option 2</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
             </div>
-            <div className="mt-6 w-full">
-              <label
-                className="mt-2 block text-sm font-medium text-gray-700"
-                htmlFor="fonte-bibliografica"
-              >
-                Fonte bibliográfica relacionada ao TD
-              </label>
-              <div className="mt-1">
+          </div>
+          <div className="flex w-full flex-1 flex-col flex-wrap items-center gap-4 sm:flex sm:flex-row sm:justify-center">
+            <div className="flex items-center">
+              <Label className="w-16">MTAD</Label>
+              <div>
+                <Button variant="secondary">?</Button>
+              </div>
+            </div>
+            <div className="flex w-2/3 flex-wrap justify-center gap-4">
+              <div className="flex-col gap-5 space-y-4 sm:flex sm:flex-row sm:gap-10 sm:space-y-0">
                 <Input
-                  id="fonte-bibliografica"
-                  placeholder="Insira a fonte bibliográfica"
+                  id="mtad"
+                  placeholder="MTAD"
+                  className="w-52 sm:w-20"
+                  {...register("mtad")}
                 />
+                <div className="flex justify-between sm:gap-10">
+                  <Select
+                    required
+                    onValueChange={(value) =>
+                      setValue("mtad_quantidade", value)
+                    }
+                  >
+                    <SelectTrigger id="mtad-options" className="max-w-32">
+                      <SelectValue placeholder="Quantidade" />
+                    </SelectTrigger>
+                    <SelectContent position="popper">
+                      <SelectItem value="option1">Option 1</SelectItem>
+                      <SelectItem value="option2">Option 2</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <Select
+                    required
+                    onValueChange={(value) => setValue("mtad_unidade", value)}
+                  >
+                    <SelectTrigger id="mtad-options" className="max-w-32">
+                      <SelectValue placeholder="Unidade" />
+                    </SelectTrigger>
+                    <SelectContent position="popper">
+                      <SelectItem value="option1">Option 1</SelectItem>
+                      <SelectItem value="option2">Option 2</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
             </div>
-          </form>
+          </div>
+          <div className="flex w-full flex-1 flex-col flex-wrap items-center gap-4 sm:flex sm:flex-row sm:justify-center">
+            <div className="flex items-center">
+              <Label className="w-16">MTDR</Label>
+              <div>
+                <Button variant="secondary">?</Button>
+              </div>
+            </div>
+            <div className="flex w-2/3 flex-wrap justify-center gap-4">
+              <div className="flex-col gap-5 space-y-4 sm:flex sm:flex-row sm:gap-10 sm:space-y-0">
+                <Input
+                  required
+                  id="mtdr"
+                  placeholder="MTDR"
+                  className="w-52 sm:w-20"
+                  {...register("mtdr")}
+                />
+                <div className="flex justify-between sm:gap-10">
+                  <Select
+                    required
+                    onValueChange={(value) =>
+                      setValue("mtdr_quantidade", value)
+                    }
+                  >
+                    <SelectTrigger id="mtdr-options" className="max-w-32">
+                      <SelectValue placeholder="Quantidade" />
+                    </SelectTrigger>
+                    <SelectContent position="popper">
+                      <SelectItem value="option1">Option 1</SelectItem>
+                      <SelectItem value="option2">Option 2</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <Select
+                    required
+                    onValueChange={(value) => setValue("mtdr_unidade", value)}
+                  >
+                    <SelectTrigger id="mtdr-options" className="max-w-32">
+                      <SelectValue placeholder="Unidade" />
+                    </SelectTrigger>
+                    <SelectContent position="popper">
+                      <SelectItem value="option1">Option 1</SelectItem>
+                      <SelectItem value="option2">Option 2</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="flex w-full flex-1 flex-col flex-wrap items-center gap-4 sm:flex sm:flex-row sm:justify-center">
+            <div className="flex items-center">
+              <Label className="w-16">TD</Label>
+              <div>
+                <Button variant="secondary">?</Button>
+              </div>
+            </div>
+            <div className="flex w-2/3 flex-wrap justify-center gap-4">
+              <div className="flex-col gap-5 space-y-4 sm:flex sm:flex-row sm:gap-10 sm:space-y-0">
+                <Input
+                  required
+                  id="td"
+                  placeholder="TD"
+                  className="w-52 sm:w-20"
+                  {...register("td")}
+                />
+                <div className="flex justify-between sm:gap-10">
+                  <Select
+                    required
+                    onValueChange={(value) => setValue("td_quantidade", value)}
+                  >
+                    <SelectTrigger id="td-options" className="max-w-32">
+                      <SelectValue placeholder="Quantidade" />
+                    </SelectTrigger>
+                    <SelectContent position="popper">
+                      <SelectItem value="option1">Option 1</SelectItem>
+                      <SelectItem value="option2">Option 2</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <Select
+                    required
+                    onValueChange={(value) => setValue("td_unidade", value)}
+                  >
+                    <SelectTrigger id="td-options" className="max-w-32">
+                      <SelectValue placeholder="Unidade" />
+                    </SelectTrigger>
+                    <SelectContent position="popper">
+                      <SelectItem value="option1">Option 1</SelectItem>
+                      <SelectItem value="option2">Option 2</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="flex w-full flex-1 flex-col flex-wrap items-center gap-4 sm:flex sm:flex-row sm:justify-center">
+            <div className="flex items-center">
+              <Label className="w-16">F</Label>
+              <div>
+                <Button variant="secondary">?</Button>
+              </div>
+            </div>
+            <div className="flex w-2/3 flex-wrap justify-center gap-4">
+              <Input
+                required
+                className="w-52 sm:w-full"
+                placeholder="Inserir quantidade ou..."
+                {...register("f")}
+              />
+            </div>
+          </div>
+          <div className="mt-6 w-full">
+            <label
+              className="mt-2 block text-sm font-medium text-gray-700"
+              htmlFor="fonte-bibliografica"
+            >
+              Fonte bibliográfica relacionada ao TD
+            </label>
+            <div className="mt-1">
+              <Input
+                required
+                id="fonte-bibliografica"
+                placeholder="Insira a fonte bibliográfica"
+                {...register("fonte_bibliografica_td")}
+              />
+            </div>
+          </div>
         </div>
       </div>
-      <div className="mb-6 flex flex-col items-center space-x-4 space-y-2 px-8 xl:mr-8 xl:flex-row xl:justify-end xl:space-y-0 xl:px-0">
-        <Button variant="secondary">Tabela</Button>
-        <Link to={"/etc"} className="w-full xl:w-44">
-          <Button className="w-full bg-green-500 xl:w-44">Próximo</Button>
-        </Link>
-        <Button
-          className="w-full bg-slate-950 xl:hidden"
-          type="button"
-          onClick={() => navigate(-1)}
-        >
-          Retornar
-        </Button>
-      </div>
-    </>
+      <NextPageButton />
+    </form>
   )
 }

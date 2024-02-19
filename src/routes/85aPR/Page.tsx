@@ -2,6 +2,7 @@ import NextPageButton from "@/components/next-page-button"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import {
   Select,
   SelectContent,
@@ -9,7 +10,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { SVGProps, useState } from "react"
 import { useForm } from "react-hook-form"
@@ -23,7 +23,10 @@ const InvSchema = z.object({
   unidade: z.string(),
   quant_total_nova: z.string(),
   metodo_avaliacao: z.string(),
-  observacoes: z.string() ? z.string() : z.undefined(),
+  observacoes: z.string().optional(),
+  quant_reagentes: z.string().optional().transform(Number),
+  unidade_reagentes: z.string().optional(),
+  quant_interferentes: z.string().optional().transform(Number),
 })
 type InvSchema = z.infer<typeof InvSchema>
 
@@ -35,7 +38,7 @@ export default function EightaPerg() {
   const navigate = useNavigate()
   const handleFormSubmit = (data: any) => {
     console.log(data)
-    navigate("/inventory/2")
+    navigate("/ppwg")
   }
 
   return (
@@ -134,30 +137,38 @@ export default function EightaPerg() {
               {...register("observacoes")}
             />
           </div>
+
           <div className="flex space-x-4">
             <Label>
               O objetivo do procedimento é<br /> a formação de um produto
               químico ?
             </Label>
-            <ToggleGroup
-              type="single"
-              defaultValue="n"
-              className="space-x-1"
+            <RadioGroup
+              defaultValue="nao"
+              className="flex"
               onValueChange={() => setIsOpen(!isOpen)}
             >
-              <ToggleGroupItem
-                value="s"
-                className="h-10 w-10 rounded-md border data-[state=on]:bg-green-400"
-              >
-                S
-              </ToggleGroupItem>
-              <ToggleGroupItem
-                value="n"
-                className="h-10 w-10 rounded-md border data-[state=on]:bg-green-400"
-              >
-                N
-              </ToggleGroupItem>
-            </ToggleGroup>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem
+                  className="rounded-md border-slate-200 p-4 data-[state=checked]:bg-green-400"
+                  value="sim"
+                  id="sim"
+                />
+                <Label className="absolute cursor-pointer pl-1" htmlFor="sim">
+                  S
+                </Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem
+                  className="rounded-md border-slate-200 p-4 data-[state=checked]:bg-green-400"
+                  value="nao"
+                  id="nao"
+                />
+                <Label className="absolute cursor-pointer pl-1" htmlFor="nao">
+                  N
+                </Label>
+              </div>
+            </RadioGroup>
           </div>
           {isOpen && (
             <>
@@ -173,11 +184,15 @@ export default function EightaPerg() {
                       required
                       type="number"
                       className="max-w-32"
+                      {...register("quant_reagentes")}
                     />
                   </div>
                   <div className="max-w-32">
                     <Select
                       required
+                      onValueChange={(value) =>
+                        setValue("unidade_reagentes", value)
+                      }
                     >
                       <SelectTrigger id="added-quantity">
                         <SelectValue placeholder="Selecione aqui" />
@@ -198,7 +213,12 @@ export default function EightaPerg() {
                   Quantos interferentes há <br />
                   no procedimento?
                 </Label>
-                <Input type="number" className="max-w-20" />
+                <Input
+                  type="number"
+                  required
+                  className="max-w-20"
+                  {...register("quant_interferentes")}
+                />
               </div>
             </>
           )}
