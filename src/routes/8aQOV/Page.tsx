@@ -6,29 +6,24 @@ import { ItemsTable } from "@/components/Items-table"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import {
-  PlusIcon,
-  TriangleDownIcon,
-  TriangleUpIcon,
-} from "@radix-ui/react-icons"
+import { PlusIcon } from "@radix-ui/react-icons"
 
 import NextPageButton from "@/components/next-page-button"
-import { zodResolver } from "@hookform/resolvers/zod"
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@radix-ui/react-dropdown-menu"
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
 const InvSchema = z.object({
-  quantidade: z.string(),
+  quantidade: z.string().transform(Number),
   unidade: z.string(),
-  observacoes: z.string() ? z.string() : z.undefined(),
+  observacoes: z.string().optional(),
 })
 type InvSchema = z.infer<typeof InvSchema>
 
@@ -78,43 +73,24 @@ export default function EightaETP() {
                     {...register("quantidade")}
                     required
                   />
-                  <DropdownMenu>
-                    <DropdownMenuTrigger
-                      asChild
-                      className="flex min-w-32 flex-row justify-between gap-1 rounded-md border pl-2 pr-2"
+                  <div className="flex max-w-[300px]">
+                    <Select
+                      onValueChange={(value) => setValue("unidade", value)}
+                      required
                     >
-                      <Button
-                        variant="outline"
-                        onClick={() => setIsOpen(!isOpen)}
-                      >
-                        {selectedValue}
-                        {isOpen ? (
-                          <TriangleDownIcon className="size-6" />
-                        ) : (
-                          <TriangleUpIcon className="size-6" />
-                        )}
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent className="w-32 cursor-pointer bg-white p-1 font-medium">
-                      <DropdownMenuGroup>
-                        <DropdownMenuItem onSelect={setItem}>
-                          Kilograma (Kg)
-                        </DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem onSelect={setItem}>
-                          Grama (g)
-                        </DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem onSelect={setItem}>
-                          Litro (L)
-                        </DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem onSelect={setItem}>
-                          Mol (mol)
-                        </DropdownMenuItem>
-                      </DropdownMenuGroup>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+                      <SelectTrigger id="unidade-select">
+                        <SelectValue placeholder="Selecione aqui" />
+                      </SelectTrigger>
+                      <SelectContent position="popper">
+                        <SelectItem value="kilograma">
+                          Kilograma (kg)
+                        </SelectItem>
+                        <SelectItem value="grama">Grama (g)</SelectItem>
+                        <SelectItem value="litro">Litro (L)</SelectItem>
+                        <SelectItem value="mol">Mol (mol)</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
               </div>
             ))}
