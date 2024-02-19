@@ -19,6 +19,15 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 
 const InvSchema = z.object({
   quantidade: z.string().transform(Number),
@@ -35,25 +44,24 @@ export default function EightaETP() {
     resolver: zodResolver(InvSchema),
   })
 
-  function setItem(e: Event) {
-    const target = e.target as HTMLDivElement
-    setSelectedItem(target.textContent ?? "unknown")
-  }
   const navigate = useNavigate()
+
   const handleFormSubmit = (data: any) => {
     console.log(data)
     navigate("/inventory/5")
   }
+
   useEffect(() => {
     setValue("unidade", selectedValue)
   }, [selectedValue, setValue])
+
   return (
     <form
       className="flex h-full flex-col justify-between px-8 xl:px-0"
       onSubmit={handleSubmit(handleFormSubmit)}
     >
-      <div className="flex justify-center">
-        <div className="flex w-full flex-col gap-5 space-y-4 xl:w-1/2">
+      <div className="flex justify-start px-6 py-2">
+        <div className="flex w-full flex-col gap-5 space-y-4 ">
           <h1 className="w-full text-2xl font-bold">Fase de Inventário</h1>
           <div className="mb-4 mt-4 flex w-full flex-col gap-4 ">
             {Array.from({ length: quantityOrValue }, (_, index) => (
@@ -68,12 +76,12 @@ export default function EightaETP() {
                   <Input
                     id="quantitade"
                     placeholder="quantitade"
-                    className="w-32"
+                    className=""
                     type="number"
                     {...register("quantidade")}
                     required
                   />
-                  <div className="flex max-w-[300px]">
+                  <div className="">
                     <Select
                       onValueChange={(value) => setValue("unidade", value)}
                       required
@@ -95,12 +103,11 @@ export default function EightaETP() {
               </div>
             ))}
             <div className="inline-flex content-center items-center justify-start gap-6">
-              <span>Adicionar nova quantidade e(ou) valor</span>
               <Button
-                className="rounded-full bg-green-400 p-3"
+                className="rounded-md bg-green-400 p-3"
                 onClick={() => setQuantityOrValue(quantityOrValue + 1)}
               >
-                <PlusIcon className="p-0" />
+                Adicionar nova quantidade e(ou) valor
               </Button>
             </div>
             <div className="flex flex-col gap-3">
@@ -117,16 +124,34 @@ export default function EightaETP() {
               <Label htmlFor="" className="pl-2">
                 Adicionar novo item ao inventario?
               </Label>
-              <Link to={"/inventory/1"}>
+              <Link to={"/inventory/3"}>
                 <Button onClick={() => {}}>Sim</Button>
               </Link>
-              <Link to={"/inventory/5"}>
-                <Button>Não</Button>
-              </Link>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button>Não</Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Atenção</DialogTitle>
+                    <DialogDescription>
+                      Deseja adicionar uma nova etapa ao procedimento ?
+                    </DialogDescription>
+                    <DialogFooter className="inline-flex justify-end">
+                      <Button onClick={() => navigate("/inventory/5")}>
+                        Não
+                      </Button>
+                      <Button onClick={() => navigate("/inventory/2")}>
+                        Sim
+                      </Button>
+                    </DialogFooter>
+                  </DialogHeader>
+                </DialogContent>
+              </Dialog>
             </div>
-            <ItemsTable />
           </div>
         </div>
+        <ItemsTable />
       </div>
       <NextPageButton />
     </form>

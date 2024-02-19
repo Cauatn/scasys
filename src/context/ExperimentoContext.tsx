@@ -1,12 +1,4 @@
-import {
-  Dispatch,
-  SetStateAction,
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-} from "react"
-import { set } from "react-hook-form"
+import { createContext, useContext, useEffect, useState } from "react"
 
 export type ExperimentoContext = {
   setExperimentoMetaData: (nome: string, modoDeCalculo: string) => void
@@ -18,7 +10,8 @@ export type ExperimentoContext = {
     item: string,
     especificidade: string,
     formula: string,
-    currentEtapa: string
+    currentEtapa: string,
+    currentPhase: string
   ) => void
 }
 
@@ -105,7 +98,8 @@ export const ExperimentoProvider = ({ children }: any) => {
     item: string,
     especificidade: string,
     formula: string,
-    currentEtapa: string
+    currentEtapa: string,
+    currentPhase: string
   ) => {
     setExperimento((prev: any) => ({
       nome: prev.nome,

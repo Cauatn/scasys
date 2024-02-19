@@ -7,7 +7,6 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "./ui/collapsible"
-import { useEffect, useState } from "react"
 
 export default function Nav({ links, isCollapsed, path }: any) {
   return (
@@ -60,8 +59,8 @@ export default function Nav({ links, isCollapsed, path }: any) {
                   "justify-start"
                 )}
               >
-                <link.icon className="mr-2 h-4 w-4" />
-                {link.title}
+                <link.icon className="mr-2 size-4" />
+                <span className="text-sm">{link.title}</span>
                 {link.label && (
                   <span
                     className={cn(

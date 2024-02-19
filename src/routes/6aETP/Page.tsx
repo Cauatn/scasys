@@ -29,7 +29,13 @@ export function SixaETP() {
 
   const handleFormSubmit = (data: any) => {
     console.log(data)
-    setNewItem(data.item, data.especificidade, data.formula, currentEtapa)
+    setNewItem(
+      data.item,
+      data.especificidade,
+      data.formula,
+      currentEtapa,
+      currentPhase
+    )
 
     navigate("/inventory/4")
   }
@@ -39,14 +45,14 @@ export function SixaETP() {
       className="flex h-full flex-col justify-between px-8 xl:px-0"
       onSubmit={handleSubmit(handleFormSubmit)}
     >
-      <div className="flex justify-center">
-        <div className="flex w-full flex-col gap-5 space-y-4 xl:w-1/2">
+      <div className="flex px-6 py-4">
+        <div className="flex w-full flex-col gap-5 space-y-4">
           <div className="inline-flex">
             <h1 className="w-full text-2xl font-bold"> Fase de Inventário</h1>
             <span className="text-xl text-gray-500">{currentPhase}</span>
           </div>
-          <div className="mb-4 mt-4 flex items-center justify-between gap-4">
-            <div className="flex w-full flex-wrap justify-between gap-5">
+          <div className="">
+            <div className="mx-auto inline-flex w-full  justify-between gap-5">
               <div>
                 <Label htmlFor="especificidade">Especificidade:</Label>
                 <Input

@@ -64,8 +64,6 @@ export function MainNav({ items, children }: MainNavProps) {
               {item.title}
             </Link>
           ))}
-
-          {/* <AskAIComponent /> */}
         </nav>
       ) : null}
       <button

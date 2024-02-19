@@ -7,11 +7,11 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
-export function ItemsTable() {
+export function ItemsTable(props) {
   const items = []
 
   return (
-    <Table>
+    <Table className={props.class}>
       <TableHeader>
         <TableRow>
           <TableHead>Fase</TableHead>

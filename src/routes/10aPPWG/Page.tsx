@@ -46,9 +46,9 @@ export default function TenaPPWG() {
       className="flex h-full flex-col justify-between px-8 xl:px-0"
       onSubmit={handleSubmit(handleFormSubmit)}
     >
-      <div className="flex h-full flex-col items-center justify-between px-8 xl:px-0">
-        <div className="flex w-full flex-col gap-5 space-y-4 xl:w-1/2">
-          <div>
+      <div className="flex h-full flex-col justify-start px-8 py-4">
+        <div className="flex w-full flex-col gap-5 space-y-4 xl:w-full">
+          <div className="pl-24">
             <h1 className="w-full text-2xl font-bold">
               Problematização de Prevenção de Geração de Resíduos
             </h1>
@@ -67,7 +67,7 @@ export default function TenaPPWG() {
                 <Button variant="secondary">?</Button>
               </div>
             </div>
-            <div className="flex w-2/3 flex-wrap justify-center gap-4">
+            <div className="flex w-2/3 flex-wrap justify-start gap-4">
               <div className="flex-col space-y-4 sm:flex sm:flex-row sm:gap-10 sm:space-y-0">
                 <Input
                   id="mmr"
@@ -112,7 +112,7 @@ export default function TenaPPWG() {
                 <Button variant="secondary">?</Button>
               </div>
             </div>
-            <div className="flex w-2/3 flex-wrap justify-center gap-4">
+            <div className="flex w-2/3 flex-wrap justify-start gap-4">
               <div className="flex-col gap-5 space-y-4 sm:flex sm:flex-row sm:gap-10 sm:space-y-0">
                 <Input
                   id="mtad"
@@ -158,7 +158,7 @@ export default function TenaPPWG() {
                 <Button variant="secondary">?</Button>
               </div>
             </div>
-            <div className="flex w-2/3 flex-wrap justify-center gap-4">
+            <div className="flex w-2/3 flex-wrap justify-start gap-4">
               <div className="flex-col gap-5 space-y-4 sm:flex sm:flex-row sm:gap-10 sm:space-y-0">
                 <Input
                   required
@@ -205,7 +205,7 @@ export default function TenaPPWG() {
                 <Button variant="secondary">?</Button>
               </div>
             </div>
-            <div className="flex w-2/3 flex-wrap justify-center gap-4">
+            <div className="flex w-2/3 flex-wrap justify-start gap-4">
               <div className="flex-col gap-5 space-y-4 sm:flex sm:flex-row sm:gap-10 sm:space-y-0">
                 <Input
                   required
@@ -250,16 +250,16 @@ export default function TenaPPWG() {
                 <Button variant="secondary">?</Button>
               </div>
             </div>
-            <div className="flex w-2/3 flex-wrap justify-center gap-4">
+            <div className="flex w-2/3 flex-wrap justify-start gap-4">
               <Input
                 required
-                className="w-52 sm:w-full"
+                className="w-52 max-w-[370px] sm:w-full"
                 placeholder="Inserir quantidade ou..."
                 {...register("f")}
               />
             </div>
           </div>
-          <div className="mt-6 w-full">
+          <div className="mt-6 w-full pl-24">
             <label
               className="mt-2 block text-sm font-medium text-gray-700"
               htmlFor="fonte-bibliografica"
@@ -270,6 +270,7 @@ export default function TenaPPWG() {
               <Input
                 required
                 id="fonte-bibliografica"
+                className="max-w-[400px]"
                 placeholder="Insira a fonte bibliográfica"
                 {...register("fonte_bibliografica_td")}
               />
