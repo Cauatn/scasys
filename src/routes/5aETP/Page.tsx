@@ -7,14 +7,14 @@ import { PlusIcon } from "@radix-ui/react-icons"
 import { useNavigate } from "react-router-dom"
 
 import NextPageButton from "@/components/next-page-button"
+import { useExpContext } from "@/context/ExperimentoContext"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { useExpContext } from "@/context/ExperimentoContext"
 
 const InvSchema = z.object({
-  etapaNome: z.string(),
-  repeticoes: z.string().transform(Number),
+  stageName: z.string(),
+  reps: z.string().transform(Number),
 })
 
 type InvSchema = z.infer<typeof InvSchema>
@@ -30,7 +30,7 @@ function FiveaETP() {
 
   const handleFormSubmit = (data: any) => {
     console.log(data)
-    setNewEtapa(data.etapaNome, currentPhase)
+    setNewEtapa(data.stageName, currentPhase)
 
     navigate("/inventory/3")
   }
@@ -50,7 +50,7 @@ function FiveaETP() {
             <Input
               placeholder="Forneça o nome para etapa"
               required
-              {...register("etapaNome")}
+              {...register("stageName")}
             />
           </div>
           <div className="inline-flex space-x-2">
@@ -65,7 +65,7 @@ function FiveaETP() {
                   className="w-16"
                   min="1"
                   required
-                  {...register("repeticoes")}
+                  {...register("reps")}
                 />
               </div>
               <div className="space-x-2">
@@ -85,3 +85,4 @@ function FiveaETP() {
 }
 
 export { FiveaETP }
+

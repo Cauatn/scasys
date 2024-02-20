@@ -1,4 +1,5 @@
-import { Button } from "@/components/ui/button"
+import NextPageButton from "@/components/next-page-button"
+import Radio from "@/components/radio-group"
 import { Input } from "@/components/ui/input"
 import {
   Select,
@@ -7,14 +8,57 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { CircleIcon } from "@radix-ui/react-icons"
-import { Link, useNavigate } from "react-router-dom"
+import { useEffect, useState } from "react"
+import { useForm } from "react-hook-form"
+import { useNavigate } from "react-router-dom"
+import { z } from "zod"
+
+const SecuritySchema = z.object({
+  composto_quimico: z.string(),
+  risco_de_incendio: z.string(),
+  entalpia: z.string(),
+  entalpia_unidade: z.string(),
+  entalpia_fonte_bibliografica: z.string(),
+  limite_inf_explosividade: z.string().transform(Number),
+  limite_inf_explosividade_fonte_bibliografica: z.string(),
+  ponto_de_fulgor: z.string(),
+  ponto_de_fulgor_unidade: z.string(),
+  ponto_de_fulgor_fonte_bibliografica: z.string(),
+})
+type SecuritySchema = z.infer<typeof SecuritySchema>
 
 export default function Fifeteen() {
+  const checkboxes = [
+    {
+      label: "S",
+      value: "Sim",
+      id: "sim",
+    },
+    {
+      label: "N",
+      value: "Não",
+      id: "nao",
+    },
+  ]
   const navigate = useNavigate()
+  const { handleSubmit, register, setValue } = useForm({
+    resolver: zodResolver(SecuritySchema),
+  })
+  const handleFormSubmit = (data: any) => {
+    console.log(data)
+    navigate("/ps/4")
+  }
+  const [riscoDeIncendio, setRiscoDeIncendio] = useState("Não")
+  useEffect(() => {
+    setValue("risco_de_incendio", riscoDeIncendio)
+  }, [riscoDeIncendio, setValue])
   return (
-    <>
+    <form
+      onSubmit={handleSubmit(handleFormSubmit)}
+      className="flex h-full flex-col justify-between px-8 xl:px-0"
+    >
       <div className="flex h-full flex-col items-center justify-between px-8 xl:px-0">
         <div className="flex w-full flex-col gap-5 space-y-4 xl:w-1/2">
           <div>
@@ -37,7 +81,10 @@ export default function Fifeteen() {
               >
                 Composto químico:
               </label>
-              <Select>
+              <Select
+                required
+                onValueChange={(value) => setValue("composto_quimico", value)}
+              >
                 <SelectTrigger id="chemical-composition">
                   <SelectValue placeholder="Select" />
                 </SelectTrigger>
@@ -47,32 +94,13 @@ export default function Fifeteen() {
                 </SelectContent>
               </Select>
             </div>
-            <div className="mb-4">
-              <label className="mb-1 block text-sm font-medium text-gray-700">
-                Apresentará risco de incêndio?
-              </label>
-              <div className="flex space-x-2">
-                <ToggleGroup
-                  type="single"
-                  defaultValue="n"
-                  className="space-x-1"
-                >
-                  <ToggleGroupItem
-                    value="s"
-                    className="h-10 w-10 rounded-md border data-[state=on]:bg-green-400"
-                  >
-                    S
-                  </ToggleGroupItem>
-                  <ToggleGroupItem
-                    value="n"
-                    className="h-10 w-10 rounded-md border data-[state=on]:bg-green-400"
-                  >
-                    N
-                  </ToggleGroupItem>
-                </ToggleGroup>
-              </div>
-            </div>
-            <div className="mb-4 flex w-full flex-col space-y-4 sm:flex sm:flex-row sm:space-x-4 sm:space-y-0">
+            <Radio
+              label="Apresentará risco de incêndio?"
+              defaultValue="Não"
+              checkboxes={checkboxes}
+              changeValueAction={(value) => setRiscoDeIncendio(value)}
+            />
+            <div className="my-4 flex w-full flex-col space-y-4 sm:flex sm:flex-row sm:space-x-4 sm:space-y-0">
               <div className="w-full sm:w-1/2">
                 <label
                   className="mb-1 block text-sm font-medium text-gray-700"
@@ -81,8 +109,18 @@ export default function Fifeteen() {
                   Entalpia do processo associado:
                 </label>
                 <div className="inline-flex w-full space-x-4">
-                  <Input id="enthalpy" placeholder="Entalpia" />
-                  <Select>
+                  <Input
+                    required
+                    id="enthalpy"
+                    placeholder="Entalpia"
+                    {...register("entalpia")}
+                  />
+                  <Select
+                    required
+                    onValueChange={(value) =>
+                      setValue("entalpia_unidade", value)
+                    }
+                  >
                     <SelectTrigger id="residue-set">
                       <SelectValue placeholder="Unidade" />
                     </SelectTrigger>
@@ -103,8 +141,10 @@ export default function Fifeteen() {
                   Fonte bibliográfica:
                 </label>
                 <Input
+                  required
                   id="bibliographic-source-1"
                   placeholder="Fonte bibliográfica"
+                  {...register("entalpia_fonte_bibliografica")}
                 />
               </div>
             </div>
@@ -117,7 +157,13 @@ export default function Fifeteen() {
                   Limite inferior de explosividade:
                 </label>
                 <div className="inline-flex w-full items-center space-x-1">
-                  <Input id="explosion-limit" placeholder="Limite" />
+                  <Input
+                    required
+                    id="explosion-limit"
+                    placeholder="Limite"
+                    type="number"
+                    {...register("limite_inf_explosividade")}
+                  />
                   <p className="font-bold">%</p>
                 </div>
               </div>
@@ -129,8 +175,10 @@ export default function Fifeteen() {
                   Fonte bibliográfica:
                 </label>
                 <Input
+                  required
                   id="bibliographic-source-1"
                   placeholder="Fonte bibliográfica"
+                  {...register("limite_inf_explosividade_fonte_bibliografica")}
                 />
               </div>
             </div>
@@ -143,8 +191,18 @@ export default function Fifeteen() {
                   Ponto de fulgor:
                 </label>
                 <div className="inline-flex w-full space-x-4">
-                  <Input id="flash-point" placeholder="Ponto de fulgor" />
-                  <Select>
+                  <Input
+                    required
+                    id="flash-point"
+                    placeholder="Ponto de fulgor"
+                    {...register("ponto_de_fulgor")}
+                  />
+                  <Select
+                    required
+                    onValueChange={(value) =>
+                      setValue("ponto_de_fulgor_unidade", value)
+                    }
+                  >
                     <SelectTrigger id="residue-set">
                       <SelectValue placeholder="Unidade" />
                     </SelectTrigger>
@@ -165,8 +223,10 @@ export default function Fifeteen() {
                   Fonte bibliográfica:
                 </label>
                 <Input
+                  required
                   id="bibliographic-source-1"
                   placeholder="Fonte bibliográfica"
+                  {...register("ponto_de_fulgor_fonte_bibliografica")}
                 />
               </div>
             </div>
@@ -186,18 +246,7 @@ export default function Fifeteen() {
           </div>
         </div>
       </div>
-      <div className="mb-6 flex flex-col items-center space-y-2 px-8 xl:mr-8 xl:space-y-0 xl:flex-row xl:justify-end xl:px-0">
-        <Link to={"/ps/4"} className="w-full xl:w-44">
-          <Button className="w-full bg-green-500 xl:w-44">Próximo</Button>
-        </Link>
-        <Button
-          className="w-full bg-slate-950 xl:hidden"
-          type="button"
-          onClick={() => navigate(-1)}
-        >
-          Retornar
-        </Button>
-      </div>
-    </>
+      <NextPageButton />
+    </form>
   )
 }

@@ -20,14 +20,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { useExpContext } from "@/context/ExperimentoContext"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { useExpContext } from "@/context/ExperimentoContext"
 
 const NmSchema = z.object({
-  nomeProcedimento: z.string().nonempty("O nome do procedimento é obrigatório"),
-  modoCalculo: z.string().nonempty("O modo de cálculo é obrigatório"),
+  procedureName: z.string().nonempty("O nome do procedimento é obrigatório"),
+  calculusMethod: z.string().nonempty("O modo de cálculo é obrigatório"),
 })
 
 type NmSchema = z.infer<typeof NmSchema>
@@ -42,7 +42,7 @@ export default function TrheeaNDP() {
   const { setExperimentoMetaData } = useExpContext()
 
   const handleFormSubmit = (data: any) => {
-    setExperimentoMetaData(data.nomeProcedimento, data.modoCalculo)
+    setExperimentoMetaData(data.procedureName, data.calculusMethod)
     navigate("/inventory/1")
   }
 
@@ -60,14 +60,14 @@ export default function TrheeaNDP() {
             <Input
               placeholder="Forneça um nome"
               className="h-9 w-full pl-2"
-              {...register("nomeProcedimento")}
+              {...register("procedureName")}
               required
             />
           </div>
           <div className="flex w-full max-w-2xl flex-col justify-between gap-4">
             <p>Escolha um modo de cálculo:</p>
             <Select
-              onValueChange={(value) => setValue("modoCalculo", value)}
+              onValueChange={(value) => setValue("calculusMethod", value)}
               required
             >
               <SelectTrigger className="flex w-full flex-row justify-between gap-1 rounded-md border pl-2 pr-2">

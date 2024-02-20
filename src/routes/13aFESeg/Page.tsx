@@ -1,3 +1,4 @@
+import NextPageButton from "@/components/next-page-button"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
@@ -7,13 +8,34 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { CircleIcon } from "@radix-ui/react-icons"
-import { Link, useNavigate } from "react-router-dom"
+import { useForm } from "react-hook-form"
+import { useNavigate } from "react-router-dom"
+import { z } from "zod"
+
+const SecuritySchema = z.object({
+  composto_quimico: z.string(),
+  fe_quantidade: z.string().transform(Number),
+  fe_unidade: z.string(),
+  fonte_bibliografica: z.string(),
+})
+type SecuritySchema = z.infer<typeof SecuritySchema>
 
 function ThirteenaFeSeg() {
   const navigate = useNavigate()
+  const { handleSubmit, register, setValue } = useForm({
+    resolver: zodResolver(SecuritySchema),
+  })
+  const handleFormSubmit = (data: any) => {
+    console.log(data)
+    navigate("/ps/2")
+  }
   return (
-    <>
+    <form
+      className="flex h-full flex-col justify-between px-8 xl:px-0"
+      onSubmit={handleSubmit(handleFormSubmit)}
+    >
       <div className="flex h-full flex-col items-center justify-between px-8 xl:px-0">
         <div className="flex w-full flex-col gap-5 space-y-4 xl:w-1/2">
           <div>
@@ -36,7 +58,10 @@ function ThirteenaFeSeg() {
               >
                 Composto químico:
               </label>
-              <Select>
+              <Select
+                required
+                onValueChange={(value) => setValue("composto_quimico", value)}
+              >
                 <SelectTrigger id="chemical-composition">
                   <SelectValue placeholder="Select" />
                 </SelectTrigger>
@@ -56,13 +81,18 @@ function ThirteenaFeSeg() {
               <div className="flex flex-col items-center gap-5 sm:flex sm:flex-row">
                 <div className="flex w-full flex-col gap-4 sm:flex sm:flex-row">
                   <Input
+                    required
                     id="quantidade"
                     placeholder="Quantidade"
                     type="number"
                     className="w-full sm:w-1/2"
+                    {...register("fe_quantidade")}
                   />
                   <div className="flex w-full gap-4 sm:w-1/2">
-                    <Select>
+                    <Select
+                      required
+                      onValueChange={(value) => setValue("fe_unidade", value)}
+                    >
                       <SelectTrigger id="residue-set">
                         <SelectValue placeholder="Unidade" />
                       </SelectTrigger>
@@ -89,27 +119,18 @@ function ThirteenaFeSeg() {
                   Fonte bibliográfica
                 </label>
                 <Input
+                  required
                   id="bibliographic-source-3"
                   placeholder="Fontece bibliográfica"
+                  {...register("fonte_bibliografica")}
                 />
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div className="mb-6 flex flex-col items-center space-y-2 px-8 xl:mr-8 xl:space-y-0 xl:flex-row xl:justify-end xl:px-0">
-        <Link to={"/ps/2"} className="w-full xl:w-44">
-          <Button className="w-full bg-green-500 xl:w-44">Próximo</Button>
-        </Link>
-        <Button
-          className="w-full bg-slate-950 xl:hidden"
-          type="button"
-          onClick={() => navigate(-1)}
-        >
-          Retornar
-        </Button>
-      </div>
-    </>
+      <NextPageButton />
+    </form>
   )
 }
 
