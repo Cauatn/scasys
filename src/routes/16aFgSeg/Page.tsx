@@ -1,22 +1,43 @@
-import { Button } from "@/components/ui/button"
+import NextPageButton from "@/components/next-page-button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import {
-  Select,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
+import { Select, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+
+import { zodResolver } from "@hookform/resolvers/zod"
 import { SelectContent } from "@radix-ui/react-select"
 import { SVGProps } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { useForm } from "react-hook-form"
+import { useNavigate } from "react-router-dom"
 import { JSX } from "react/jsx-runtime"
+import { z } from "zod"
+
+const SecuritySchema = z.object({
+  composto_quimico: z.string(),
+  quantidade: z.string().transform(Number),
+  quantidade_unidade: z.string(),
+  volume_gas_formado: z.string().transform(Number),
+  volume_gas_formado_unidade: z.string(),
+  pressao_ar: z.string().transform(Number),
+  pressao_ar_unidade: z.string(),
+  fonte_bibliografica: z.string(),
+})
+type SecuritySchema = z.infer<typeof SecuritySchema>
 
 export default function SixteenFgSeg() {
+  const { handleSubmit, register, setValue } = useForm({
+    resolver: zodResolver(SecuritySchema),
+  })
   const navigate = useNavigate()
+  const handleFormSubmit = (data: any) => {
+    console.log(data)
+    navigate("/ps/5")
+  }
   return (
-    <>
+    <form
+      onSubmit={handleSubmit(handleFormSubmit)}
+      className="flex h-full flex-col justify-between px-8 xl:px-0"
+    >
       <div className="flex h-full flex-col items-center justify-between px-8 xl:px-0">
         <div className="flex w-full flex-col gap-5 space-y-4 xl:w-1/2">
           <div className="mb-6 space-y-2">
@@ -36,7 +57,10 @@ export default function SixteenFgSeg() {
               <Label className="text-sm font-medium text-gray-700">
                 Composto Químico
               </Label>
-              <Select>
+              <Select
+                required
+                onValueChange={(value) => setValue("composto_quimico", value)}
+              >
                 <SelectTrigger id="residue-set">
                   <SelectValue placeholder="Selecione o composto" />
                 </SelectTrigger>
@@ -55,12 +79,19 @@ export default function SixteenFgSeg() {
               </label>
               <div className="inline-flex items-center space-x-4">
                 <Input
+                  required
                   id="corrosion-raapresentate"
                   placeholder="Insira aqui"
                   className="w-full"
                   type="number"
+                  {...register("quantidade")}
                 />
-                <Select>
+                <Select
+                  required
+                  onValueChange={(value) =>
+                    setValue("quantidade_unidade", value)
+                  }
+                >
                   <SelectTrigger id="residue-set">
                     <SelectValue placeholder="Unidade" />
                   </SelectTrigger>
@@ -87,12 +118,19 @@ export default function SixteenFgSeg() {
                   </label>
                   <div className="inline-flex items-center space-x-4">
                     <Input
+                      required
                       id="temperature"
                       placeholder="Insira aqui"
                       className="w-full"
                       type="number"
+                      {...register("volume_gas_formado")}
                     />
-                    <Select>
+                    <Select
+                      required
+                      onValueChange={(value) =>
+                        setValue("volume_gas_formado_unidade", value)
+                      }
+                    >
                       <SelectTrigger id="residue-set">
                         <SelectValue placeholder="Unidade" />
                       </SelectTrigger>
@@ -115,12 +153,19 @@ export default function SixteenFgSeg() {
                   </label>
                   <div className="inline-flex items-center space-x-4">
                     <Input
+                      required
                       id="temperature"
                       placeholder="Insira aqui"
                       className="w-full"
                       type="number"
+                      {...register("pressao_ar")}
                     />
-                    <Select>
+                    <Select
+                      required
+                      onValueChange={(value) =>
+                        setValue("pressao_ar_unidade", value)
+                      }
+                    >
                       <SelectTrigger id="residue-set">
                         <SelectValue placeholder="Unidade" />
                       </SelectTrigger>
@@ -141,8 +186,11 @@ export default function SixteenFgSeg() {
                     Fonte bibliográfica
                   </label>
                   <Input
+                    required
                     id="bibliographic-source"
                     placeholder="Digite a fonte bibliográfica"
+                    type="text"
+                    {...register("fonte_bibliografica")}
                   />
                 </div>
               </div>
@@ -150,19 +198,8 @@ export default function SixteenFgSeg() {
           </div>
         </div>
       </div>
-      <div className="mb-6 flex flex-col items-center space-y-2 px-8 xl:mr-8 xl:space-y-0 xl:flex-row xl:justify-end xl:px-0">
-        <Link to={"/ps/5"} className="w-full xl:w-44">
-          <Button className="w-full bg-green-500 xl:w-44">Próximo</Button>
-        </Link>
-        <Button
-          className="w-full bg-slate-950 xl:hidden"
-          type="button"
-          onClick={() => navigate(-1)}
-        >
-          Retornar
-        </Button>
-      </div>
-    </>
+      <NextPageButton />
+    </form>
   )
 }
 
