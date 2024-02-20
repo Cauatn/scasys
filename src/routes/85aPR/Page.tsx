@@ -1,8 +1,8 @@
 import NextPageButton from "@/components/next-page-button"
+import Radio from "@/components/radio-group"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import {
   Select,
   SelectContent,
@@ -31,6 +31,18 @@ const InvSchema = z.object({
 type InvSchema = z.infer<typeof InvSchema>
 
 export default function EightaPerg() {
+  const checkboxes = [
+    {
+      label: "S",
+      value: "Sim",
+      id: "sim",
+    },
+    {
+      label: "N",
+      value: "Não",
+      id: "nao",
+    },
+  ]
   const [isOpen, setIsOpen] = useState(false)
   const { handleSubmit, setValue, register } = useForm({
     resolver: zodResolver(InvSchema),
@@ -137,39 +149,12 @@ export default function EightaPerg() {
               {...register("observacoes")}
             />
           </div>
-
-          <div className="flex space-x-4">
-            <Label>
-              O objetivo do procedimento é<br /> a formação de um produto
-              químico ?
-            </Label>
-            <RadioGroup
-              defaultValue="nao"
-              className="flex"
-              onValueChange={() => setIsOpen(!isOpen)}
-            >
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem
-                  className="rounded-md border-slate-200 p-4 data-[state=checked]:bg-green-400"
-                  value="sim"
-                  id="sim"
-                />
-                <Label className="absolute cursor-pointer pl-1" htmlFor="sim">
-                  S
-                </Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem
-                  className="rounded-md border-slate-200 p-4 data-[state=checked]:bg-green-400"
-                  value="nao"
-                  id="nao"
-                />
-                <Label className="absolute cursor-pointer pl-1" htmlFor="nao">
-                  N
-                </Label>
-              </div>
-            </RadioGroup>
-          </div>
+          <Radio
+            label="O objetivo do procedimento é a formação de um produto químico ?"
+            defaultValue="Não"
+            checkboxes={checkboxes}
+            action={() => setIsOpen(!isOpen)}
+          />
           {isOpen && (
             <>
               <div className="flex flex-col justify-between md:flex-row">

@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button"
+import NextPageButton from "@/components/next-page-button"
 import { Input } from "@/components/ui/input"
 import {
   Select,
@@ -7,13 +7,40 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { CircleIcon } from "@radix-ui/react-icons"
-import { Link, useNavigate } from "react-router-dom"
+import { useForm } from "react-hook-form"
+import { useNavigate } from "react-router-dom"
+import { z } from "zod"
+
+const SecuritySchema = z.object({
+  composto_quimico: z.string(),
+  quantidade: z.string().transform(Number),
+  quantidade_unidade: z.string(),
+  pressao_do_gas: z.string().transform(Number),
+  pressao_do_gas_unidade: z.string(),
+  pressao_do_ar: z.string().transform(Number),
+  pressao_do_ar_unidade: z.string(),
+  estado_do_gas: z.string(),
+  temperatura_do_ambiente: z.string().transform(Number),
+  temperatura_do_composto: z.string().transform(Number),
+})
+type SecuritySchema = z.infer<typeof SecuritySchema>
 
 function FourteenFpSeg() {
+  const { handleSubmit, register, setValue } = useForm({
+    resolver: zodResolver(SecuritySchema),
+  })
   const navigate = useNavigate()
+  const handleFormSubmit = (data: any) => {
+    console.log(data)
+    navigate("/ps/3")
+  }
   return (
-    <>
+    <form
+      className="flex h-full flex-col justify-between px-8 xl:px-0"
+      onSubmit={handleSubmit(handleFormSubmit)}
+    >
       <div className="flex h-full flex-col items-center justify-between px-8 xl:px-0">
         <div className="flex w-full flex-col gap-5 space-y-4 xl:w-1/2">
           <div>
@@ -36,7 +63,10 @@ function FourteenFpSeg() {
               >
                 Composto químico:
               </label>
-              <Select>
+              <Select
+                required
+                onValueChange={(value) => setValue("composto_quimico", value)}
+              >
                 <SelectTrigger id="chemical-composition">
                   <SelectValue placeholder="Select" />
                 </SelectTrigger>
@@ -55,8 +85,19 @@ function FourteenFpSeg() {
                 Quantidade
               </label>
               <div className="inline-flex w-full space-x-4">
-                <Input id="quantidade" placeholder="Quantidade" />
-                <Select>
+                <Input
+                  required
+                  id="quantidade"
+                  placeholder="Quantidade"
+                  type="number"
+                  {...register("quantidade")}
+                />
+                <Select
+                  required
+                  onValueChange={(value) =>
+                    setValue("quantidade_unidade", value)
+                  }
+                >
                   <SelectTrigger id="residue-set">
                     <SelectValue placeholder="Unidade" />
                   </SelectTrigger>
@@ -77,8 +118,19 @@ function FourteenFpSeg() {
                 Pressão do gás
               </label>
               <div className="inline-flex w-full space-x-4">
-                <Input id="explosion-limit" placeholder="Limite" />
-                <Select>
+                <Input
+                  required
+                  id="explosion-limit"
+                  placeholder="Limite"
+                  type="number"
+                  {...register("pressao_do_gas")}
+                />
+                <Select
+                  required
+                  onValueChange={(value) =>
+                    setValue("pressao_do_gas_unidade", value)
+                  }
+                >
                   <SelectTrigger id="residue-set">
                     <SelectValue placeholder="Unidade" />
                   </SelectTrigger>
@@ -99,8 +151,19 @@ function FourteenFpSeg() {
                 Pressão do ar
               </label>
               <div className="inline-flex w-full space-x-4">
-                <Input id="pressao" placeholder="Pressão do ar" />
-                <Select>
+                <Input
+                  required
+                  id="pressao"
+                  placeholder="Pressão do ar"
+                  type="number"
+                  {...register("pressao_do_ar")}
+                />
+                <Select
+                  required
+                  onValueChange={(value) =>
+                    setValue("pressao_do_ar_unidade", value)
+                  }
+                >
                   <SelectTrigger id="residue-set">
                     <SelectValue placeholder="Unidade" />
                   </SelectTrigger>
@@ -123,7 +186,10 @@ function FourteenFpSeg() {
                 >
                   Estado do gás
                 </label>
-                <Select>
+                <Select
+                  required
+                  onValueChange={(value) => setValue("estado_do_gas", value)}
+                >
                   <SelectTrigger id="state-gas">
                     <SelectValue placeholder="Unidade" />
                   </SelectTrigger>
@@ -141,8 +207,11 @@ function FourteenFpSeg() {
                   Temperatura do ambiente
                 </label>
                 <Input
+                required
                   id="bibliographic-source-2"
                   placeholder="Temperatura do ambiente"
+                  type="number"
+                  {...register("temperatura_do_ambiente")}
                 />
               </div>
               <div className="mb-4">
@@ -153,27 +222,19 @@ function FourteenFpSeg() {
                   Temperatura do composto
                 </label>
                 <Input
+                required
                   id="bibliographic-source-3"
                   placeholder="Temperatura do composto"
+                  type="number"
+                  {...register("temperatura_do_composto")}
                 />
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div className="mb-6 flex flex-col items-center space-y-2 px-8 xl:mr-8 xl:space-y-0 xl:flex-row xl:justify-end xl:px-0">
-        <Link to={"/ps/3"} className="w-full xl:w-44">
-          <Button className="w-full bg-green-500 xl:w-44">Próximo</Button>
-        </Link>
-        <Button
-          className="w-full bg-slate-950 xl:hidden"
-          type="button"
-          onClick={() => navigate(-1)}
-        >
-          Retornar
-        </Button>
-      </div>
-    </>
+      <NextPageButton />
+    </form>
   )
 }
 

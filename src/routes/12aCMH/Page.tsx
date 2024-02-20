@@ -1,8 +1,7 @@
 import { Input } from "@/components/ui/input"
 
 import NextPageButton from "@/components/next-page-button"
-import { Label } from "@/components/ui/label"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import Radio from "@/components/radio-group"
 import {
   Select,
   SelectContent,
@@ -18,12 +17,24 @@ import { z } from "zod"
 
 const CmhSchema = z.object({
   compostos_quimicos: z.string(),
-  potencial_cancerigeno: z.string(),
+  potencial_cancerigeno_mutagenico: z.string(),
   referencia_bibliografica: z.string(),
 })
 type CmhSchema = z.infer<typeof CmhSchema>
 
 export default function TwelveaCMH() {
+  const checkboxes = [
+    {
+      label: "S",
+      value: "Sim",
+      id: "sim",
+    },
+    {
+      label: "N",
+      value: "Não",
+      id: "nao",
+    },
+  ]
   const { handleSubmit, register, setValue } = useForm({
     resolver: zodResolver(CmhSchema),
   })
@@ -44,7 +55,7 @@ export default function TwelveaCMH() {
     navigate("/ps/1")
   }
   useEffect(() => {
-    setValue("potencial_cancerigeno", potencialCancerigeno)
+    setValue("potencial_cancerigeno_mutagenico", potencialCancerigeno)
   }, [potencialCancerigeno, setValue])
 
   return (
@@ -79,37 +90,12 @@ export default function TwelveaCMH() {
               </Select>
             </div>
           </div>
-          <div className="flex w-full items-center justify-between space-x-4">
-            <p>Apresenta potencial Cancerigeno ou mutagênico?</p>
-            <RadioGroup
-              defaultValue="nao"
-              className="flex"
-              required
-              onValueChange={(value) => setPotencialCancerigeno(value)}
-            >
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem
-                  className="rounded-md border-slate-200 p-4 data-[state=checked]:bg-green-400"
-                  value="sim"
-                  id="sim"
-                  required
-                />
-                <Label className="absolute cursor-pointer pl-1" htmlFor="sim">
-                  S
-                </Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem
-                  className="rounded-md border-slate-200 p-4 data-[state=checked]:bg-green-400"
-                  value="nao"
-                  id="nao"
-                />
-                <Label className="absolute cursor-pointer pl-1" htmlFor="nao">
-                  N
-                </Label>
-              </div>
-            </RadioGroup>
-          </div>
+          <Radio
+            label="Apresenta potencial Cancerígeno ou Mutagênico?"
+            defaultValue="Não"
+            checkboxes={checkboxes}
+            changeValueAction={(value: string) => setPotencialCancerigeno(value)}
+          />
           <div className="flex w-full flex-1">
             <div className="mt-4 flex w-full flex-col justify-end space-y-6">
               <div className="flex flex-col space-y-2">
