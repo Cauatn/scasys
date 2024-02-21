@@ -13,13 +13,19 @@ import { Separator } from "./ui/separator"
 import { TooltipProvider } from "./ui/tooltip"
 import { NavBarT } from "./nav"
 import Navbar from "./navbar"
+import ExperimentSwitcher from "./exp-switcher"
 
 export default function PageRoot({ toggleReturnButton = true }) {
   const [isCollapsed, setIsCollapsed] = useState(false)
 
   return (
     <TooltipProvider delayDuration={0}>
-      <NavBarT />
+      <NavBarT
+        items={[
+          { title: "Support", href: "/" },
+          { title: "About", href: "/about" },
+        ]}
+      />
       <ResizablePanelGroup
         direction="horizontal"
         className="h-full max-h-[800px] items-stretch"
@@ -43,11 +49,7 @@ export default function PageRoot({ toggleReturnButton = true }) {
               isCollapsed ? "h-[52px]" : "px-2"
             )}
           >
-            {isCollapsed ? (
-              <Moon />
-            ) : (
-              <h1 className="pl-3 text-2xl font-bold">LABEL</h1>
-            )}
+            <ExperimentSwitcher isCollapsed={isCollapsed} />
           </div>
           <Separator />
           <Nav
