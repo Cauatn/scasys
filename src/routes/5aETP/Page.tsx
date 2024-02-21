@@ -14,7 +14,7 @@ import { z } from "zod"
 
 const InvSchema = z.object({
   stageName: z.string(),
-  reps: z.string().transform(Number),
+  rep: z.string().transform(Number),
 })
 
 type InvSchema = z.infer<typeof InvSchema>
@@ -30,7 +30,7 @@ function FiveaETP() {
 
   const handleFormSubmit = (data: any) => {
     console.log(data)
-    setNewEtapa(data.stageName, currentPhase)
+    setNewEtapa(data.stageName, data.rep, currentPhase)
 
     navigate("/inventory/3")
   }
@@ -65,7 +65,7 @@ function FiveaETP() {
                   className="w-16"
                   min="1"
                   required
-                  {...register("reps")}
+                  {...register("rep")}
                 />
               </div>
               <div className="space-x-2">
@@ -85,4 +85,3 @@ function FiveaETP() {
 }
 
 export { FiveaETP }
-

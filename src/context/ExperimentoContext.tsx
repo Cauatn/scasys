@@ -4,7 +4,7 @@ export type ExperimentoContext = {
   setExperimentoMetaData: (nome: string, modoDeCalculo: string) => void
   setNewPhase: (nome: string) => void
   currentPhase: string
-  setNewEtapa: (nome: string, fase: string) => void
+  setNewEtapa: (nome: string, rep: number, fase: string) => void
   currentEtapa: string
   setNewItem: (
     item: string,
@@ -74,7 +74,7 @@ export const ExperimentoProvider = ({ children }: any) => {
     setCurrentPhase(nome)
   }
 
-  const setNewEtapa = (nome: string, fase: string) => {
+  const setNewEtapa = (nome: string, rep: number, fase: string) => {
     setExperimento((prev: any) => ({
       nome: prev.nome,
       modoDeCalculo: prev.modoDeCalculo,
@@ -84,6 +84,7 @@ export const ExperimentoProvider = ({ children }: any) => {
           etapas: {
             ...prev.fases[fase].etapas,
             [nome]: {
+              rep,
               items: {},
             },
           },
@@ -110,6 +111,7 @@ export const ExperimentoProvider = ({ children }: any) => {
           etapas: {
             ...prev.fases[currentPhase].etapas,
             [currentEtapa]: {
+              rep: prev.fases[currentPhase].etapas[currentEtapa].rep,
               items: {
                 ...prev.fases[currentPhase].etapas[currentEtapa].items,
                 [item]: {
