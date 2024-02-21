@@ -43,7 +43,6 @@ export function NavBarT({
         <MainNav items={items}>{children}</MainNav>
         <div className="flex items-center space-x-3">
           {rightElements}
-
           {
             /*users */ true ? (
               <UserAccountNav
