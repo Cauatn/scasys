@@ -16,19 +16,19 @@ import { z } from "zod"
 
 const PpwgSchema = z.object({
   mmr: z.string(),
-  mmr_quantidade: z.string(),
-  mmr_unidade: z.string(),
+  mmr_quantity: z.string(),
+  mmr_unit: z.string(),
   mtad: z.string(),
-  mtad_quantidade: z.string(),
-  mtad_unidade: z.string(),
+  mtad_quantity: z.string(),
+  mtad_unit: z.string(),
   mtdr: z.string(),
-  mtdr_quantidade: z.string(),
-  mtdr_unidade: z.string(),
+  mtdr_quantity: z.string(),
+  mtdr_unit: z.string(),
   td: z.string(),
-  td_quantidade: z.string(),
-  td_unidade: z.string(),
+  td_quantity: z.string(),
+  td_unit: z.string(),
   f: z.string(),
-  fonte_bibliografica_td: z.string(),
+  bibliographical_source_td: z.string(),
 })
 type PpwgSchema = z.infer<typeof PpwgSchema>
 
@@ -79,7 +79,7 @@ export default function TenaPPWG() {
                 <div className="flex justify-between sm:gap-10">
                   <Select
                     required
-                    onValueChange={(value) => setValue("mmr_quantidade", value)}
+                    onValueChange={(value) => setValue("mmr_quantity", value)}
                   >
                     <SelectTrigger id="mmr-options" className="max-w-32">
                       <SelectValue placeholder="Quantidade" />
@@ -91,7 +91,7 @@ export default function TenaPPWG() {
                   </Select>
                   <Select
                     required
-                    onValueChange={(value) => setValue("mmr_unidade", value)}
+                    onValueChange={(value) => setValue("mmr_unit", value)}
                   >
                     <SelectTrigger id="mmr-options" className="max-w-32">
                       <SelectValue placeholder="Unidade" />
@@ -124,7 +124,7 @@ export default function TenaPPWG() {
                   <Select
                     required
                     onValueChange={(value) =>
-                      setValue("mtad_quantidade", value)
+                      setValue("mtad_quantity", value)
                     }
                   >
                     <SelectTrigger id="mtad-options" className="max-w-32">
@@ -137,7 +137,7 @@ export default function TenaPPWG() {
                   </Select>
                   <Select
                     required
-                    onValueChange={(value) => setValue("mtad_unidade", value)}
+                    onValueChange={(value) => setValue("mtad_unit", value)}
                   >
                     <SelectTrigger id="mtad-options" className="max-w-32">
                       <SelectValue placeholder="Unidade" />
@@ -171,7 +171,7 @@ export default function TenaPPWG() {
                   <Select
                     required
                     onValueChange={(value) =>
-                      setValue("mtdr_quantidade", value)
+                      setValue("mtdr_quantity", value)
                     }
                   >
                     <SelectTrigger id="mtdr-options" className="max-w-32">
@@ -184,7 +184,7 @@ export default function TenaPPWG() {
                   </Select>
                   <Select
                     required
-                    onValueChange={(value) => setValue("mtdr_unidade", value)}
+                    onValueChange={(value) => setValue("mtdr_unit", value)}
                   >
                     <SelectTrigger id="mtdr-options" className="max-w-32">
                       <SelectValue placeholder="Unidade" />
@@ -217,7 +217,7 @@ export default function TenaPPWG() {
                 <div className="flex justify-between sm:gap-10">
                   <Select
                     required
-                    onValueChange={(value) => setValue("td_quantidade", value)}
+                    onValueChange={(value) => setValue("td_quantity", value)}
                   >
                     <SelectTrigger id="td-options" className="max-w-32">
                       <SelectValue placeholder="Quantidade" />
@@ -229,7 +229,7 @@ export default function TenaPPWG() {
                   </Select>
                   <Select
                     required
-                    onValueChange={(value) => setValue("td_unidade", value)}
+                    onValueChange={(value) => setValue("td_unit", value)}
                   >
                     <SelectTrigger id="td-options" className="max-w-32">
                       <SelectValue placeholder="Unidade" />
@@ -272,7 +272,7 @@ export default function TenaPPWG() {
                 id="fonte-bibliografica"
                 className="max-w-[400px]"
                 placeholder="Insira a fonte bibliográfica"
-                {...register("fonte_bibliografica_td")}
+                {...register("bibliographical_source_td")}
               />
             </div>
           </div>

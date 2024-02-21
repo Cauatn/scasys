@@ -12,14 +12,13 @@ import {
 import { useNavigate } from "react-router-dom"
 
 import NextPageButton from "@/components/next-page-button"
+import { useExpContext } from "@/context/ExperimentoContext"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { useContext } from "react"
-import { ExperimentoContext, useExpContext } from "@/context/ExperimentoContext"
 
 const InvSchema = z.object({
-  pashe: z.string(),
+  phase: z.string(),
 })
 
 type InvSchema = z.infer<typeof InvSchema>
@@ -35,7 +34,7 @@ export default function FouraF() {
 
   const handleFormSubmit = (data: any) => {
     console.log(data)
-    setNewPhase(data.pashe)
+    setNewPhase(data.phase)
     navigate("/inventory/2")
   }
 
@@ -57,7 +56,7 @@ export default function FouraF() {
           </div>
           <div className="max-w-[300px]">
             <Select
-              onValueChange={(value) => setValue("pashe", value)}
+              onValueChange={(value) => setValue("phase", value)}
               required
             >
               <SelectTrigger id="phase-select">

@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 
 import { ItemsTable } from "@/components/Items-table"
@@ -29,16 +29,15 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 
 const InvSchema = z.object({
-  quantidade: z.string().transform(Number),
-  unidade: z.string(),
+  quantity: z.string().transform(Number),
+  unit: z.string(),
   observacoes: z.string().optional(),
 })
 type InvSchema = z.infer<typeof InvSchema>
 
 export default function EightaETP() {
-  const [isOpen, setIsOpen] = useState(false)
+  // const [isOpen, setIsOpen] = useState(false)
   const [quantityOrValue, setQuantityOrValue] = useState(1)
-  const [selectedValue, setSelectedItem] = useState<string>("selecione aqui")
   const { register, handleSubmit, setValue } = useForm({
     resolver: zodResolver(InvSchema),
   })
@@ -49,10 +48,6 @@ export default function EightaETP() {
     console.log(data)
     navigate("/inventory/5")
   }
-
-  useEffect(() => {
-    setValue("unidade", selectedValue)
-  }, [selectedValue, setValue])
 
   return (
     <form
@@ -77,12 +72,12 @@ export default function EightaETP() {
                     placeholder="quantitade"
                     className=""
                     type="number"
-                    {...register("quantidade")}
+                    {...register("quantity")}
                     required
                   />
                   <div className="">
                     <Select
-                      onValueChange={(value) => setValue("unidade", value)}
+                      onValueChange={(value) => setValue("unit", value)}
                       required
                     >
                       <SelectTrigger id="unidade-select">

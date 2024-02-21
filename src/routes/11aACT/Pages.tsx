@@ -16,11 +16,11 @@ import { useNavigate } from "react-router-dom"
 import { z } from "zod"
 
 const AtcSchema = z.object({
-  compostos_quimicos: z.string(),
-  fa_quantidade: z.string().transform(Number),
-  fa_unidade: z.string(),
-  fa_unidade_medida: z.string(),
-  fonte_bibliografica: z.string(),
+  chemical_compound: z.string(),
+  fa_quantity: z.string().transform(Number),
+  fa_unit: z.string(),
+  fa_measurement_unit: z.string(),
+  bibliographical_source: z.string(),
 })
 type AtcSchema = z.infer<typeof AtcSchema>
 
@@ -56,7 +56,7 @@ export default function ElevenaACT() {
               </Label>
               <Select
                 required
-                onValueChange={(value) => setValue("compostos_quimicos", value)}
+                onValueChange={(value) => setValue("chemical_compound", value)}
               >
                 <SelectTrigger id="residue-set">
                   <SelectValue placeholder="Selecione o composto" />
@@ -78,7 +78,7 @@ export default function ElevenaACT() {
                 <div className="flex w-full justify-between gap-5">
                   <Select
                     required
-                    onValueChange={(value) => setValue("fa_unidade", value)}
+                    onValueChange={(value) => setValue("fa_unit", value)}
                   >
                     <SelectTrigger id="residue-set">
                       <SelectValue placeholder="Unidade" />
@@ -96,14 +96,14 @@ export default function ElevenaACT() {
                     placeholder="Insira aqui"
                     className="min-w-28"
                     type="number"
-                    {...register("fa_quantidade")}
+                    {...register("fa_quantity")}
                   />
                 </div>
                 <div className="flex w-full justify-between gap-5">
                   <Select
                     required
                     onValueChange={(value) =>
-                      setValue("fa_unidade_medida", value)
+                      setValue("fa_measurement_unit", value)
                     }
                   >
                     <SelectTrigger id="residue-set">
@@ -133,7 +133,7 @@ export default function ElevenaACT() {
                   required
                   id="bibliographic-source"
                   placeholder="Digite a fonte bibliográfica"
-                  {...register("fonte_bibliografica")}
+                  {...register("bibliographical_source")}
                 />
               </div>
             </div>
