@@ -14,6 +14,7 @@ import {
   DialogDescription,
   DialogFooter,
   DialogHeader,
+  DialogOverlay,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
@@ -27,6 +28,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
+import { DialogPortal } from "@radix-ui/react-dialog"
 
 const InvSchema = z.object({
   quantity: z.string().transform(Number),
@@ -132,12 +134,30 @@ export default function EightaETP() {
                       Deseja adicionar uma nova etapa ao procedimento ?
                     </DialogDescription>
                     <DialogFooter className="inline-flex justify-end">
-                      <Button onClick={() => navigate("/inventory/5")}>
-                        Não
-                      </Button>
                       <Button onClick={() => navigate("/inventory/2")}>
                         Sim
                       </Button>
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <Button>Não</Button>
+                        </DialogTrigger>
+                        <DialogContent>
+                          <DialogHeader>
+                            <DialogTitle>Atenção</DialogTitle>
+                          </DialogHeader>
+                          <DialogDescription>
+                            Deseja adicionar uma nova Fase ao procedimento ?
+                          </DialogDescription>
+                          <DialogFooter className="inline-flex justify-end">
+                            <Button onClick={() => navigate("/inventory/1")}>
+                              Sim
+                            </Button>
+                            <Button onClick={() => navigate("/inventory/5")}>
+                              Não
+                            </Button>
+                          </DialogFooter>
+                        </DialogContent>
+                      </Dialog>
                     </DialogFooter>
                   </DialogHeader>
                 </DialogContent>

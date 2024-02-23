@@ -45,7 +45,7 @@ export function MainNav({ items, children }: MainNavProps) {
     <div className="flex gap-6 md:gap-10">
       <Link to="/" className="hidden items-center space-x-2 md:flex">
         <Sun />
-        <span className="font-urban hidden text-xl font-bold sm:inline-block">
+        <span className="font-urban mb-1 hidden text-xl font-bold sm:inline-block">
           scasys
         </span>
       </Link>

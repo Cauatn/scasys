@@ -29,13 +29,15 @@ import EightaPerg from "./routes/85aPR/Page"
 import EightaETP from "./routes/8aQOV/Page"
 import NotFound from "./routes/NotFound/Page"
 import { AuthenticationPage } from "./routes/authentication/page"
+import LandPage from "./routes/land-page"
 
 export default function AppRouter() {
   return (
     <Router>
       <main>
         <Routes>
-          <Route path="/" element={<AuthenticationPage />} />
+          <Route path="/" element={<LandPage />} />
+          <Route path="/SingIn" element={<AuthenticationPage />} />
           <Route path="/" element={<PageRoot toggleReturnButton={false} />}>
             <Route path="procedure" element={<TrheeaNDP />} />
           </Route>
