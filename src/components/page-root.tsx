@@ -1,4 +1,22 @@
-import { useState } from "react"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { useEffect, useState } from "react"
 import { Outlet } from "react-router-dom"
 import {
   ResizableHandle,
@@ -7,24 +25,125 @@ import {
 } from "./ui/resizable"
 
 import { cn } from "@/lib/utils"
-import { AlertTriangle, Globe2, Inbox, Moon, Skull } from "lucide-react"
-import Nav from "./side-bar"
-import { Separator } from "./ui/separator"
-import { TooltipProvider } from "./ui/tooltip"
+import { AlertTriangle, Globe2, Inbox, Skull } from "lucide-react"
+import ExperimentSwitcher from "./exp-switcher"
 import { NavBarT } from "./nav"
 import Navbar from "./navbar"
-import ExperimentSwitcher from "./exp-switcher"
+import Radio from "./radio-group"
+import Nav from "./side-bar"
+import { Label } from "./ui/label"
+import { Separator } from "./ui/separator"
+import { TooltipProvider } from "./ui/tooltip"
 
 export default function PageRoot({ toggleReturnButton = true }) {
   const [isCollapsed, setIsCollapsed] = useState(false)
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const [contactReason, setContactReason] = useState("")
+  const [isProblemOnCurrentPage, setIsProblemOnCurrentPage] = useState(true)
+
+  useEffect(() => {
+    if (isDialogOpen) {
+      setContactReason("")
+      setIsProblemOnCurrentPage(true)
+    }
+  }, [isDialogOpen])
+
+  const checkboxes = [
+    {
+      label: "S",
+      value: "Sim",
+      id: "sim",
+    },
+    {
+      label: "N",
+      value: "Não",
+      id: "nao",
+    },
+  ]
 
   return (
     <TooltipProvider delayDuration={0}>
       <NavBarT
-        items={[
-          { title: "Support", href: "/" },
-          { title: "About", href: "/about" },
-        ]}
+        items={[{ title: "About", href: "/about" }]}
+        children={
+          <AlertDialog onOpenChange={() => setIsDialogOpen(!isDialogOpen)}>
+            <AlertDialogTrigger className="flex items-center text-lg font-medium transition-colors hover:text-foreground/80 sm:text-sm">
+              Suporte
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle className="mb-4 space-y-1">
+                  <h3 className="text-xl font-bold">Mande uma mensagem!</h3>
+                  <p className="text-sm font-normal">
+                    Encontrou algum problema ou quer fazer uma sugestão? Envie
+                    uma mensagem para nossa equipe!
+                  </p>
+                </AlertDialogTitle>
+                <AlertDialogDescription className="space-y-4">
+                  <div className="space-y-2">
+                    <h3 className="">Selecione o motivo do seu contato:</h3>
+                    <div className="max-w-[300px]">
+                      <Select
+                        required
+                        onValueChange={(value) => setContactReason(value)}
+                      >
+                        <SelectTrigger id="reason-select">
+                          <SelectValue placeholder="Selecione" />
+                        </SelectTrigger>
+                        <SelectContent position="popper">
+                          <SelectItem value="problem">Problema</SelectItem>
+                          <SelectItem value="suggestion">Sugestão</SelectItem>
+                          <SelectItem value="others">Outros</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                  {contactReason === "problem" && (
+                    <Radio
+                      label="O problema está localizado na página atual?"
+                      defaultValue="Sim"
+                      checkboxes={checkboxes}
+                      action={() =>
+                        setIsProblemOnCurrentPage(!isProblemOnCurrentPage)
+                      }
+                    />
+                  )}
+                  {isProblemOnCurrentPage === false &&
+                    contactReason === "problem" && (
+                      <div className="space-y-2">
+                        <Label>Em qual página você encontrou o problema?</Label>
+                        <div className="max-w-[300px]">
+                          <Select required>
+                            <SelectTrigger id="page-select">
+                              <SelectValue placeholder="Selecione" />
+                            </SelectTrigger>
+                            <SelectContent position="popper">
+                              <SelectItem value="pag-1">Pag 1</SelectItem>
+                              <SelectItem value="pag-2">pag 2</SelectItem>
+                              <SelectItem value="pag-3">pag 3</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      </div>
+                    )}
+                  <div className="space-y-2">
+                    <h3>Digite a sua mensagem:</h3>
+                    <textarea
+                      className="h-20 max-h-40 min-h-20 w-full rounded-md border-2 p-1 outline-2 outline-[#272e3f]"
+                      name=""
+                      id="problem-description"
+                      placeholder="Digite aqui sobre o que você pensando..."
+                    ></textarea>
+                  </div>
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Fechar</AlertDialogCancel>
+                <AlertDialogAction>Enviar</AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        }
       />
       <ResizablePanelGroup
         direction="horizontal"
