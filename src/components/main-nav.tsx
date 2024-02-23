@@ -8,6 +8,7 @@ export type NavItem = {
   title: string
   href: string
   disabled?: boolean
+  redirect?: boolean
 }
 
 export type MainNavItem = NavItem
@@ -46,7 +47,7 @@ export function MainNav({ items, children }: MainNavProps) {
       <Link to="/" className="hidden items-center space-x-2 md:flex">
         <Sun />
         <span className="font-urban mb-1 hidden text-xl font-bold sm:inline-block">
-          scasys
+          SCASYS
         </span>
       </Link>
       {items?.length ? (
@@ -64,6 +65,7 @@ export function MainNav({ items, children }: MainNavProps) {
               {item.title}
             </Link>
           ))}
+          {children}
         </nav>
       ) : null}
       <button

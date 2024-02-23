@@ -33,7 +33,7 @@ export default function Radio({
         <div className="flex items-center space-x-2">
           {checkboxes.map((checkbox) => {
             return (
-              <div className="flex items-center space-x-2">
+              <div key={checkbox.id} className="flex items-center space-x-2">
                 <RadioGroupItem
                   className="rounded-md border-slate-200 p-4 data-[state=checked]:bg-green-400"
                   value={checkbox.value}

@@ -16,12 +16,12 @@ import { useNavigate } from "react-router-dom"
 import { z } from "zod"
 
 const ToxicitySchema = z.object({
-  composto_quimico: z.string(),
-  concentracao_toxicidade_limite: z.string().transform(Number),
-  concentracao_toxicidade_limite_unidade: z.string(),
-  tempo_exposicao: z.string().transform(Number),
-  tempo_exposicao_unidade: z.string(),
-  fonte_bibliografica: z.string(),
+  chemical_compound: z.string(),
+  limit_toxicity_concentration: z.string().transform(Number),
+  limit_toxicity_concentration_unit: z.string(),
+  exposure_time: z.string().transform(Number),
+  exposure_time_unit: z.string(),
+  bibliographical_source: z.string(),
 })
 type ToxicitySchema = z.infer<typeof ToxicitySchema>
 
@@ -57,7 +57,7 @@ export default function TenaECT() {
               </Label>
               <Select
                 required
-                onValueChange={(value) => setValue("composto_quimico", value)}
+                onValueChange={(value) => setValue("chemical_compound", value)}
               >
                 <SelectTrigger id="residue-set">
                   <SelectValue placeholder="Selecione o composto" />
@@ -82,12 +82,12 @@ export default function TenaECT() {
                   placeholder="Insira aqui"
                   className="max-w-28"
                   type="number"
-                  {...register("concentracao_toxicidade_limite")}
+                  {...register("limit_toxicity_concentration")}
                 />
                 <Select
                   required
                   onValueChange={(value) =>
-                    setValue("concentracao_toxicidade_limite_unidade", value)
+                    setValue("limit_toxicity_concentration_unit", value)
                   }
                 >
                   <SelectTrigger id="residue-set">
@@ -120,12 +120,12 @@ export default function TenaECT() {
                     placeholder="Insira aqui"
                     className="max-w-32"
                     type="number"
-                    {...register("tempo_exposicao")}
+                    {...register("exposure_time")}
                   />
                   <Select
                     required
                     onValueChange={(value) =>
-                      setValue("tempo_exposicao_unidade", value)
+                      setValue("exposure_time_unit", value)
                     }
                   >
                     <SelectTrigger id="residue-set">
@@ -151,7 +151,7 @@ export default function TenaECT() {
                   required
                   id="bibliographic-source"
                   placeholder="Digite a fonte bibliográfica"
-                  {...register("fonte_bibliografica")}
+                  {...register("bibliographical_source")}
                 />
               </div>
             </div>

@@ -11,7 +11,7 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 
 const InvSchema = z.object({
-  especificidade: z.string(),
+  specificity: z.string(),
   item: z.string(),
   formula: z.string(),
 })
@@ -31,7 +31,7 @@ export function SixaETP() {
     console.log(data)
     setNewItem(
       data.item,
-      data.especificidade,
+      data.specificity,
       data.formula,
       currentEtapa,
       currentPhase
@@ -58,7 +58,7 @@ export function SixaETP() {
                 <Input
                   id="especificidade"
                   placeholder="Especificidade"
-                  {...register("especificidade")}
+                  {...register("specificity")}
                   required
                 />
               </div>

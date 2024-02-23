@@ -16,9 +16,9 @@ import { useNavigate } from "react-router-dom"
 import { z } from "zod"
 
 const CmhSchema = z.object({
-  compostos_quimicos: z.string(),
-  potencial_cancerigeno_mutagenico: z.string(),
-  referencia_bibliografica: z.string(),
+  chemical_compound: z.string(),
+  mutagenic_carcinogenic_potential: z.string(),
+  bibliographical_source: z.string(),
 })
 type CmhSchema = z.infer<typeof CmhSchema>
 
@@ -55,7 +55,7 @@ export default function TwelveaCMH() {
     navigate("/ps/1")
   }
   useEffect(() => {
-    setValue("potencial_cancerigeno_mutagenico", potencialCancerigeno)
+    setValue("mutagenic_carcinogenic_potential", potencialCancerigeno)
   }, [potencialCancerigeno, setValue])
 
   return (
@@ -77,7 +77,7 @@ export default function TwelveaCMH() {
             <div className="flex flex-col space-y-2">
               <Select
                 required
-                onValueChange={(value) => setValue("compostos_quimicos", value)}
+                onValueChange={(value) => setValue("chemical_compound", value)}
               >
                 <SelectTrigger id="residue-set">
                   <SelectValue placeholder="Selecione o composto" />
@@ -109,7 +109,7 @@ export default function TwelveaCMH() {
                   required
                   id="bibliographic-source"
                   placeholder="Digite a fonte bibliográfica"
-                  {...register("referencia_bibliografica")}
+                  {...register("bibliographical_source")}
                 />
               </div>
             </div>
