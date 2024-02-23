@@ -60,6 +60,14 @@ export default function PageRoot({ toggleReturnButton = true }) {
       id: "nao",
     },
   ]
+  const handleContactReasonChange = (value: string) => {
+    setContactReason(value)
+    if (contactReason === "problem") {
+      setIsProblemOnCurrentPage(false)
+    } else {
+      setIsProblemOnCurrentPage(true)
+    }
+  }
 
   return (
     <TooltipProvider delayDuration={0}>
@@ -85,7 +93,7 @@ export default function PageRoot({ toggleReturnButton = true }) {
                     <div className="max-w-[300px]">
                       <Select
                         required
-                        onValueChange={(value) => setContactReason(value)}
+                        onValueChange={(value) => handleContactReasonChange(value)}
                       >
                         <SelectTrigger id="reason-select">
                           <SelectValue placeholder="Selecione" />
