@@ -1,25 +1,29 @@
 import { NavBarT } from "@/components/nav"
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
   AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
+  AlertDialogFooter,
 } from "@/components/ui/alert-dialog"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardFooter } from "@/components/ui/card"
+import {
+  AlertDialog,
+  AlertDialogTrigger,
+  AlertDialogContent,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from "../components/ui/alert-dialog"
 import {
   Select,
-  SelectContent,
-  SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+  SelectContent,
+  SelectItem,
+} from "../components/ui/select"
 import { Link } from "react-router-dom"
 
-export default function LandPage() {
+export default function AuthorsPage() {
   return (
     <div>
       <NavBarT
@@ -80,44 +84,12 @@ export default function LandPage() {
       />
       <main className="flex-1">
         <div className="container relative">
-          <section className="mx-auto flex max-w-[980px] flex-col items-center gap-2 py-8 md:py-12 md:pb-8 lg:py-24 lg:pb-20">
-            <a
-              className=" inline-flex items-center rounded-lg border bg-muted bg-white px-3 py-1 text-sm font-medium"
-              href="/docs/changelog"
-            >
-              🎉{" "}
-              <div
-                data-orientation="vertical"
-                role="none"
-                className="mx-2 h-4 w-[1px] shrink-0 bg-border"
-              ></div>{" "}
-              <span className="sm:hidden">New components and more.</span>
-              <span className="hidden sm:inline">
-                Sugestôes podem serem feitas diretamente no Github ou Email
-              </span>
-              <svg
-                width="15"
-                height="15"
-                viewBox="0 0 15 15"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="ml-1 h-4 w-4"
-              >
-                <path
-                  d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z"
-                  fill="currentColor"
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-            </a>
-
+          <section className="mx-auto flex h-screen max-h-[1400px] max-w-[980px] flex-col items-center gap-2 py-8 md:py-12 md:pb-8 lg:py-24 lg:pb-20">
             <h1 className="text-center text-3xl font-bold leading-tight md:text-6xl lg:leading-[1.1] ">
-              SCASYS
+              Conheça nosso time
             </h1>
             <span className="max-w-[750px] text-center text-lg text-muted-foreground sm:text-xl">
-              Um software que auxilia no cálculo e na criação de impactos
-              químicos na natureza
+              As pessoas que fizeram e fazem esse projeto acontecer
             </span>
             <div className="flex w-full items-center justify-center space-x-4 py-4 md:pb-10">
               <Link
@@ -142,8 +114,113 @@ export default function LandPage() {
               </a>
             </div>
           </section>
+          <section className="space-y-8">
+            <Students />
+            <Professors />
+          </section>
         </div>
       </main>
     </div>
+  )
+}
+
+function Students() {
+  return (
+    <div className="space-y-20">
+      <h1 className="text-center text-3xl font-bold leading-tight md:text-6xl lg:leading-[1.1]">
+        Lorem ipsum dolor
+      </h1>
+      <section className="flex flex-row flex-wrap items-center gap-8 gap-y-14 ">
+        <CardComponent
+          name="Cauã Tavares"
+          img="https://github.com/Cauatn.png"
+          role="Progamador"
+        />
+
+        <CardComponent
+          name="José Victor"
+          img="https://github.com/jvictordev1.png"
+          role="Progamador"
+        />
+        <CardComponent
+          name="Arthur Alencar"
+          img="https://github.com/DevAlencar.png"
+          role="Progamador"
+        />
+        <CardComponent name="Vinicius Levi" img="" role="Progamador" />
+        <CardComponent
+          name="Herbert Henrique"
+          img="https://github.com/Hebert-code.png"
+          role="Progamador"
+        />
+      </section>
+    </div>
+  )
+}
+
+function Professors() {
+  return (
+    <div className="space-y-20">
+      <h1 className="text-center text-3xl font-bold leading-tight md:text-6xl lg:leading-[1.1]">
+        Lorem ipsum dolor
+      </h1>
+      <section className="flex flex-row flex-wrap items-center gap-8 gap-y-14 ">
+        <CardComponent
+          name="Guilherme Finazzi "
+          role="Professor"
+          img="https://servicosweb.cnpq.br/wspessoa/servletrecuperafoto?tipo=1&id=K4769830Y8"
+        />
+        <CardComponent
+          name="Ricardo Argeton"
+          role="Professor"
+          img="https://servicosweb.cnpq.br/wspessoa/servletrecuperafoto?tipo=1&id=K4778984D9"
+        />
+      </section>
+    </div>
+  )
+}
+
+function CardComponent({
+  name,
+  role,
+  img,
+}: {
+  name: string
+  role: string
+  img: string
+}) {
+  return (
+    <Card className="max-w-[400px]">
+      <div className="-mt-10 flex justify-center">
+        <img
+          alt="Author"
+          className="rounded-full border-4"
+          height={120}
+          src={img}
+          style={{
+            aspectRatio: "160/160",
+            objectFit: "cover",
+          }}
+          width={120}
+        />
+      </div>
+      <CardContent className="p-4 pb-0">
+        <div className="flex flex-col items-center space-y-2 text-center">
+          <div className="space-y-0.5">
+            <h2 className="text-lg font-bold">{name}</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400">{role}</p>
+          </div>
+          <div className="space-y-2">
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
+              nec odio. Praesent libero. Sed cursus ante dapibus
+            </p>
+          </div>
+        </div>
+      </CardContent>
+      <CardFooter className="p-4">
+        <Button size="sm">View Profile</Button>
+      </CardFooter>
+    </Card>
   )
 }
