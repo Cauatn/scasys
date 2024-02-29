@@ -13,11 +13,11 @@ export default function Navbar({ toggleReturnButton = true }) {
   const navigator = useNavigate()
 
   return (
-    <nav className="mb-10 flex h-[52px] w-full items-center justify-start px-8 pt-3 lg:mb-1">
+    <nav className="mb-10 flex h-[53px] w-full items-center justify-start px-8 lg:mb-1">
       <div className="inline-flex h-full w-full items-center">
         <div className="hidden xl:flex">
           {toggleReturnButton && (
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-4 ">
               <Button
                 onClick={() => navigator(-1)}
                 className="flex items-center space-x-2 py-0"
