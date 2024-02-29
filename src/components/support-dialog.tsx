@@ -1,3 +1,4 @@
+import { useToast } from "@/components/ui/use-toast"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
@@ -40,10 +41,13 @@ export default function Support() {
   const [isProblemOnCurrentPage, setIsProblemOnCurrentPage] = useState(true)
   const [messageState, setMessageState] = useState("")
   const [emailValue, setEmailValue] = useState("")
+  const { toast } = useToast()
 
   useEffect(() => {
     if (isDialogOpen) {
       setContactReason("")
+      setMessageState("")
+      setEmailValue("")
       setIsProblemOnCurrentPage(true)
     }
   }, [isDialogOpen])
@@ -68,6 +72,12 @@ export default function Support() {
     setMessageState("")
     setEmailValue("")
     setIsDialogOpen(!isDialogOpen)
+    toast({
+      title: "Mensagem enviada!",
+      description: "Sua mensagem foi enviada com sucesso!",
+      duration: 3000,
+      style: { backgroundColor: "#030816", color: "white" },
+    })
   }
   const handleMessageChange = (value: string) => {
     setMessageState(value)

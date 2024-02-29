@@ -1,5 +1,6 @@
 import { NavBarT } from "@/components/nav"
 import Support from "@/components/support-dialog"
+import { Toaster } from "@/components/ui/toaster"
 import { Link } from "react-router-dom"
 
 export default function LandPage() {
@@ -80,6 +81,7 @@ export default function LandPage() {
           </section>
         </div>
       </main>
+      <Toaster />
     </div>
   )
 }

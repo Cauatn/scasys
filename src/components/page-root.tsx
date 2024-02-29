@@ -14,6 +14,7 @@ import Navbar from "./navbar"
 import Nav from "./side-bar"
 import Support from "./support-dialog"
 import { Separator } from "./ui/separator"
+import { Toaster } from "./ui/toaster"
 import { TooltipProvider } from "./ui/tooltip"
 
 export default function PageRoot({ toggleReturnButton = true }) {
@@ -95,6 +96,7 @@ export default function PageRoot({ toggleReturnButton = true }) {
           <Outlet />
         </ResizablePanel>
       </ResizablePanelGroup>
+      <Toaster />
     </TooltipProvider>
   )
 }
