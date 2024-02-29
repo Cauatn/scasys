@@ -13,6 +13,13 @@ Trata-se de um software intuitivo, que, de acordo com etapas pré-definidas, per
 
 **Back-end:** Node
 
+### TODOS
+>Lista de tarefas a fazer discutidas em reunião
+
+- [ ] Template 1
+- [ ] Template 2
+- [ ] Template 3
+- [ ] Template 4
 
 ## Instalando localmente
 
