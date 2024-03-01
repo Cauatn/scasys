@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react"
 
 export type ExperimentoContext = {
+  experimento: any
   setExperimentoMetaData: (nome: string, modoDeCalculo: string) => void
   setNewPhase: (nome: string) => void
   currentPhase: string
@@ -140,6 +141,7 @@ export const ExperimentoProvider = ({ children }: any) => {
         setNewEtapa,
         currentEtapa,
         setNewItem,
+        experimento,
       }}
     >
       {children}
