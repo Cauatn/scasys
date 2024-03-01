@@ -17,11 +17,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+
 import { Link } from "react-router-dom"
 
 export default function LandPage() {
   return (
-    <div>
+    <div className="max-w-[1450px m-auto] h-screen max-h-[1000px]">
       <NavBarT
         items={[
           {
@@ -66,7 +67,7 @@ export default function LandPage() {
                       name=""
                       id="problem-description"
                       placeholder="Digite aqui sobre o que você pensando..."
-                    ></textarea>
+                    />
                   </div>
                 </AlertDialogDescription>
               </AlertDialogHeader>
