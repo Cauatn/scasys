@@ -31,6 +31,7 @@ import NotFound from "./routes/NotFound/Page"
 import { AuthenticationPage } from "./routes/authentication/page"
 import LandPage from "./routes/land-page"
 import AuthorsPage from "./routes/authors-page"
+import { Dashboard } from "./routes/dashboard"
 
 export default function AppRouter() {
   return (
@@ -41,6 +42,7 @@ export default function AppRouter() {
           <Route path="/authors" element={<AuthorsPage />} />
           <Route path="/SingIn" element={<AuthenticationPage />} />
           <Route path="/" element={<PageRoot toggleReturnButton={false} />}>
+            <Route path="dashboard" element={<Dashboard />} />
             <Route path="procedure" element={<TrheeaNDP />} />
           </Route>
           <Route path="/inventory" element={<PageRoot />}>

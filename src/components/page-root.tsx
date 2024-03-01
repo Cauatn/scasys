@@ -17,7 +17,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { useEffect, useState } from "react"
-import { Outlet } from "react-router-dom"
+import { Link, Outlet } from "react-router-dom"
 import {
   ResizableHandle,
   ResizablePanel,
@@ -25,7 +25,13 @@ import {
 } from "./ui/resizable"
 
 import { cn } from "@/lib/utils"
-import { AlertTriangle, Globe2, Inbox, Skull } from "lucide-react"
+import {
+  AlertTriangle,
+  Globe2,
+  Inbox,
+  Skull,
+  LayoutDashboard,
+} from "lucide-react"
 import ExperimentSwitcher from "./exp-switcher"
 import { NavBarT } from "./nav"
 import Navbar from "./navbar"
@@ -34,6 +40,7 @@ import Nav from "./side-bar"
 import { Label } from "./ui/label"
 import { Separator } from "./ui/separator"
 import { TooltipProvider } from "./ui/tooltip"
+import { Button, buttonVariants } from "./ui/button"
 
 export default function PageRoot({ toggleReturnButton = true }) {
   const [isCollapsed, setIsCollapsed] = useState(false)
@@ -93,7 +100,9 @@ export default function PageRoot({ toggleReturnButton = true }) {
                     <div className="max-w-[300px]">
                       <Select
                         required
-                        onValueChange={(value) => handleContactReasonChange(value)}
+                        onValueChange={(value) =>
+                          handleContactReasonChange(value)
+                        }
                       >
                         <SelectTrigger id="reason-select">
                           <SelectValue placeholder="Selecione" />
@@ -179,6 +188,24 @@ export default function PageRoot({ toggleReturnButton = true }) {
             <ExperimentSwitcher isCollapsed={isCollapsed} />
           </div>
           <Separator />
+          <nav
+            className={cn(
+              "flex space-x-2 p-1 lg:flex-col lg:space-x-0 lg:space-y-1"
+            )}
+          >
+            <Link
+              to={"/dashboard"}
+              className={cn(
+                buttonVariants({ variant: "ghost" }),
+                "hover:bg-transparent hover:underline",
+                "hover:bg-muted",
+                "justify-start gap-3"
+              )}
+            >
+              <LayoutDashboard className="size-4 " />
+              Dashboard
+            </Link>
+          </nav>
           <Nav
             isCollapsed={isCollapsed}
             links={[
