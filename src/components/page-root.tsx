@@ -35,46 +35,15 @@ import {
 import ExperimentSwitcher from "./exp-switcher"
 import { NavBarT } from "./nav"
 import Navbar from "./navbar"
-import Radio from "./radio-group"
 import Nav from "./side-bar"
-import { Label } from "./ui/label"
+import Support from "./support-dialog"
 import { Separator } from "./ui/separator"
+import { Toaster } from "./ui/toaster"
 import { TooltipProvider } from "./ui/tooltip"
 import { Button, buttonVariants } from "./ui/button"
 
 export default function PageRoot({ toggleReturnButton = true }) {
   const [isCollapsed, setIsCollapsed] = useState(false)
-  const [isDialogOpen, setIsDialogOpen] = useState(false)
-  const [contactReason, setContactReason] = useState("")
-  const [isProblemOnCurrentPage, setIsProblemOnCurrentPage] = useState(true)
-
-  useEffect(() => {
-    if (isDialogOpen) {
-      setContactReason("")
-      setIsProblemOnCurrentPage(true)
-    }
-  }, [isDialogOpen])
-
-  const checkboxes = [
-    {
-      label: "S",
-      value: "Sim",
-      id: "sim",
-    },
-    {
-      label: "N",
-      value: "Não",
-      id: "nao",
-    },
-  ]
-  const handleContactReasonChange = (value: string) => {
-    setContactReason(value)
-    if (contactReason === "problem") {
-      setIsProblemOnCurrentPage(false)
-    } else {
-      setIsProblemOnCurrentPage(true)
-    }
-  }
 
   return (
     <TooltipProvider delayDuration={0}>
@@ -250,6 +219,7 @@ export default function PageRoot({ toggleReturnButton = true }) {
           <Outlet />
         </ResizablePanel>
       </ResizablePanelGroup>
+      <Toaster />
     </TooltipProvider>
   )
 }

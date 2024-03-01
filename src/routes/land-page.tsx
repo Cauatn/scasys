@@ -1,23 +1,6 @@
 import { NavBarT } from "@/components/nav"
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
-
+import Support from "@/components/support-dialog"
+import { Toaster } from "@/components/ui/toaster"
 import { Link } from "react-router-dom"
 
 export default function LandPage() {
@@ -30,54 +13,7 @@ export default function LandPage() {
             href: "/Authors",
           },
         ]}
-        children={
-          <AlertDialog>
-            <AlertDialogTrigger className="flex items-center text-lg font-medium transition-colors hover:text-foreground/80 sm:text-sm">
-              Suporte
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle className="mb-4 space-y-1">
-                  <h3 className="text-xl font-bold">Mande uma mensagem!</h3>
-                  <p className="text-sm font-normal">
-                    Encontrou algum problema ou quer fazer uma sugestão? Envie
-                    uma mensagem para nossa equipe!
-                  </p>
-                </AlertDialogTitle>
-                <AlertDialogDescription className="space-y-4">
-                  <div className="space-y-2">
-                    <h3 className="">Selecione o motivo do seu contato:</h3>
-                    <div className="max-w-[300px]">
-                      <Select required>
-                        <SelectTrigger id="phase-select">
-                          <SelectValue placeholder="Selecione" />
-                        </SelectTrigger>
-                        <SelectContent position="popper">
-                          <SelectItem value="problem">Problema</SelectItem>
-                          <SelectItem value="suggestion">Sugestão</SelectItem>
-                          <SelectItem value="other">Outros</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <h3>Digite a sua mensagem:</h3>
-                    <textarea
-                      className="h-20 max-h-40 min-h-20 w-full rounded-md border-2 p-1 outline-2 outline-[#272e3f]"
-                      name=""
-                      id="problem-description"
-                      placeholder="Digite aqui sobre o que você pensando..."
-                    />
-                  </div>
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>Fechar</AlertDialogCancel>
-                <AlertDialogAction>Enviar</AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
-        }
+        children={<Support />}
       />
       <main className="flex-1">
         <div className="container relative">
@@ -145,6 +81,7 @@ export default function LandPage() {
           </section>
         </div>
       </main>
+      <Toaster />
     </div>
   )
 }
