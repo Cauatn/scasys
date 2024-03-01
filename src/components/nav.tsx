@@ -3,6 +3,18 @@ import useScroll from "@/hooks/use-scroll"
 import { Button } from "@/components/ui/button"
 import { MainNav } from "./main-nav"
 import { UserAccountNav } from "./user-account-nav"
+import { useState } from "react"
+import { Dialog } from "@radix-ui/react-dialog"
+import {
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./ui/dialog"
+import { Label } from "./ui/label"
+import { Input } from "./ui/input"
 
 //import { MainNav } from "./main-nav"
 //import { NormalizedUser, UserAccountNav } from "./user-account-nav"
@@ -31,7 +43,6 @@ export function NavBarT({
   scroll = false,
 }: NavBarProps) {
   const scrolled = useScroll(50)
-  //const signInModal = useSigninModal()
 
   return (
     <header
@@ -44,7 +55,7 @@ export function NavBarT({
         <div className="flex items-center space-x-3">
           {rightElements}
           {
-            /*users */ true ? (
+            /*users */ false ? (
               <UserAccountNav
                 user={{
                   name: "Cauã Tavares",
@@ -53,14 +64,47 @@ export function NavBarT({
                 }}
               />
             ) : (
-              <Button
-                className="px-3"
-                variant="default"
-                size="sm"
-                //onClick={signInModal.onOpen}
-              >
-                Sign In
-              </Button>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button className="px-3" variant="default" size="lg">
+                    Sign In
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-[425px]">
+                  <DialogHeader>
+                    <DialogTitle>Entre no seu perfil !</DialogTitle>
+                    <DialogDescription>
+                      Acesse sua conta para ter acesso a todos os recursos
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div className="grid gap-4 py-4">
+                    <div className="grid grid-cols-4 items-center gap-4">
+                      <Label htmlFor="name" className="text-right">
+                        Email
+                      </Label>
+                      <Input
+                        id="email"
+                        className="col-span-3"
+                        placeholder="example@gmail.com"
+                      />
+                    </div>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                      <Label htmlFor="username" className="text-right">
+                        Senha
+                      </Label>
+                      <Input
+                        id="password"
+                        className="col-span-3"
+                        placeholder="senha123"
+                        type="password"
+                      />
+                    </div>
+                  </div>
+                  <DialogFooter>
+                    <Button type="submit">Entrar</Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
             )
           }
         </div>

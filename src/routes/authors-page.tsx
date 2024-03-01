@@ -149,7 +149,11 @@ function Students() {
           img="https://github.com/DevAlencar.png"
           role="Progamador"
         />
-        <CardComponent name="Vinicius Levi" img="" role="Progamador" />
+        <CardComponent
+          name="Vinicius Levi"
+          img="https://github.com/viniciuslevi.png"
+          role="Progamador"
+        />
         <CardComponent
           name="Herbert Henrique"
           img="https://github.com/Hebert-code.png"
