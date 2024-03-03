@@ -15,9 +15,9 @@ import { useNavigate } from "react-router-dom"
 import { z } from "zod"
 
 const PpwgSchema = z.object({
-  mmr: z.string(),
-  mmr_quantity: z.string(),
-  mmr_unit: z.string(),
+  mrr: z.string(),
+  mrr_quantity: z.string(),
+  mrr_unit: z.string(),
   mtad: z.string(),
   mtad_quantity: z.string(),
   mtad_unit: z.string(),
@@ -62,7 +62,7 @@ export default function TenaPPWG() {
 
           <div className="flex w-full flex-1 flex-col flex-wrap items-center gap-4 sm:flex sm:flex-row sm:justify-center">
             <div className="flex items-center">
-              <Label className="w-16">MMR</Label>
+              <Label className="w-16">mrr</Label>
               <div>
                 <Button variant="secondary">?</Button>
               </div>
@@ -70,18 +70,18 @@ export default function TenaPPWG() {
             <div className="flex w-2/3 flex-wrap justify-start gap-4">
               <div className="flex-col space-y-4 sm:flex sm:flex-row sm:gap-10 sm:space-y-0">
                 <Input
-                  id="mmr"
-                  placeholder="MMR"
+                  id="mrr"
+                  placeholder="mrr"
                   className="w-52 sm:w-20"
                   required
-                  {...register("mmr")}
+                  {...register("mrr")}
                 />
                 <div className="flex justify-between sm:gap-10">
                   <Select
                     required
-                    onValueChange={(value) => setValue("mmr_quantity", value)}
+                    onValueChange={(value) => setValue("mrr_quantity", value)}
                   >
-                    <SelectTrigger id="mmr-options" className="max-w-32">
+                    <SelectTrigger id="mrr-options" className="max-w-32">
                       <SelectValue placeholder="Quantidade" />
                     </SelectTrigger>
                     <SelectContent position="popper">
@@ -91,9 +91,9 @@ export default function TenaPPWG() {
                   </Select>
                   <Select
                     required
-                    onValueChange={(value) => setValue("mmr_unit", value)}
+                    onValueChange={(value) => setValue("mrr_unit", value)}
                   >
-                    <SelectTrigger id="mmr-options" className="max-w-32">
+                    <SelectTrigger id="mrr-options" className="max-w-32">
                       <SelectValue placeholder="Unidade" />
                     </SelectTrigger>
                     <SelectContent position="popper">
@@ -123,9 +123,7 @@ export default function TenaPPWG() {
                 <div className="flex justify-between sm:gap-10">
                   <Select
                     required
-                    onValueChange={(value) =>
-                      setValue("mtad_quantity", value)
-                    }
+                    onValueChange={(value) => setValue("mtad_quantity", value)}
                   >
                     <SelectTrigger id="mtad-options" className="max-w-32">
                       <SelectValue placeholder="Quantidade" />
@@ -170,9 +168,7 @@ export default function TenaPPWG() {
                 <div className="flex justify-between sm:gap-10">
                   <Select
                     required
-                    onValueChange={(value) =>
-                      setValue("mtdr_quantity", value)
-                    }
+                    onValueChange={(value) => setValue("mtdr_quantity", value)}
                   >
                     <SelectTrigger id="mtdr-options" className="max-w-32">
                       <SelectValue placeholder="Quantidade" />
