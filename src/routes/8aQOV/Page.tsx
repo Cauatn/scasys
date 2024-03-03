@@ -14,7 +14,6 @@ import {
   DialogDescription,
   DialogFooter,
   DialogHeader,
-  DialogOverlay,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
@@ -28,7 +27,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { DialogPortal } from "@radix-ui/react-dialog"
+import { useExpContext } from "@/context/ExperimentoContext"
 
 const InvSchema = z.object({
   quantity: z.string().transform(Number),
@@ -38,11 +37,12 @@ const InvSchema = z.object({
 type InvSchema = z.infer<typeof InvSchema>
 
 export default function EightaETP() {
-  // const [isOpen, setIsOpen] = useState(false)
   const [quantityOrValue, setQuantityOrValue] = useState(1)
   const { register, handleSubmit, setValue } = useForm({
     resolver: zodResolver(InvSchema),
   })
+
+  const { currentItem } = useExpContext()
 
   const navigate = useNavigate()
 
@@ -58,7 +58,10 @@ export default function EightaETP() {
     >
       <div className="flex justify-start px-6 py-2">
         <div className="flex w-full flex-col gap-5 space-y-4 ">
-          <h1 className="w-full text-2xl font-bold">Fase de Inventário</h1>
+          <div className="inline-flex w-full justify-between">
+            <h1 className=" text-2xl font-bold">Fase de Inventário</h1>
+            <span className="text-xl text-gray-500">{currentItem}</span>
+          </div>
           <div className="mb-4 mt-4 flex w-full flex-col gap-4 ">
             {Array.from({ length: quantityOrValue }, (_, index) => (
               <div

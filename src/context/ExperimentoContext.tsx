@@ -14,6 +14,7 @@ export type ExperimentoContext = {
     currentEtapa: string,
     currentPhase: string
   ) => void
+  currentItem: string
 }
 
 export const ExperimentoContext = createContext<ExperimentoContext | null>(null)
@@ -51,6 +52,7 @@ export const ExperimentoProvider = ({ children }: any) => {
 
   const [currentPhase, setCurrentPhase] = useState<string>("inicial")
   const [currentEtapa, setCurrentEtapa] = useState<string>("")
+  const [currentItem, setCurrentItem] = useState<string>("")
 
   const setExperimentoMetaData = (nome: string, modoDeCalculo: string) => {
     setExperimento((prev: any) => ({
@@ -125,6 +127,8 @@ export const ExperimentoProvider = ({ children }: any) => {
         },
       },
     }))
+
+    setCurrentItem(item)
   }
 
   useEffect(
@@ -141,6 +145,7 @@ export const ExperimentoProvider = ({ children }: any) => {
         setNewEtapa,
         currentEtapa,
         setNewItem,
+        currentItem,
         experimento,
       }}
     >

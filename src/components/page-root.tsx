@@ -23,6 +23,7 @@ import { Separator } from "./ui/separator"
 import { Toaster } from "./ui/toaster"
 import { TooltipProvider } from "./ui/tooltip"
 import { Button, buttonVariants } from "./ui/button"
+import { ScrollArea } from "./ui/scroll-area"
 
 export default function PageRoot({ toggleReturnButton = true }) {
   const [isCollapsed, setIsCollapsed] = useState(false)
@@ -118,7 +119,9 @@ export default function PageRoot({ toggleReturnButton = true }) {
         <ResizablePanel className="flex h-full w-full flex-col overflow-scroll">
           <Navbar toggleReturnButton={toggleReturnButton} />
           <Separator />
-          <Outlet />
+          <ScrollArea className="flex-1 overflow-y-auto">
+            <Outlet />
+          </ScrollArea>
         </ResizablePanel>
       </ResizablePanelGroup>
       <Toaster />

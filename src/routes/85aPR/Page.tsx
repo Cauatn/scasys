@@ -10,6 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { Textarea } from "@/components/ui/textarea"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { SVGProps, useState } from "react"
 import { useForm } from "react-hook-form"
@@ -58,59 +59,59 @@ export default function EightaPerg() {
       className="flex h-full flex-col justify-between px-8 xl:px-0"
       onSubmit={handleSubmit(handleFormSubmit)}
     >
-      <div className="flex h-full flex-col items-center justify-between px-8 xl:px-0">
-        <div className="flex w-full flex-col gap-4 space-y-4 xl:w-1/2">
-          <h1 className="w-full text-2xl font-bold">Fase de Inventário</h1>
-          <div className="mb-4 grid grid-cols-3 gap-4">
-            <Select
-              onValueChange={(value) => setValue("conj_res_bombona", value)}
-              required
-            >
-              <SelectTrigger id="residue-set">
-                <SelectValue placeholder="Conjunto de resíduos na bombona e:" />
-              </SelectTrigger>
-              <SelectContent position="popper">
-                <SelectItem value="option1">Option 1</SelectItem>
-                <SelectItem value="option2">Option 2</SelectItem>
-              </SelectContent>
-            </Select>
-            <Select
-              onValueChange={(value) => setValue("quant_total", value)}
-              required
-            >
-              <SelectTrigger id="total-quantity">
-                <SelectValue placeholder="quantidade total" />
-              </SelectTrigger>
-              <SelectContent position="popper">
-                <SelectItem value="option1">Option 1</SelectItem>
-                <SelectItem value="option2">Option 2</SelectItem>
-              </SelectContent>
-            </Select>
-            <Select
-              onValueChange={(value) => setValue("unidade", value)}
-              required
-            >
-              <SelectTrigger id="unit">
-                <SelectValue placeholder="kg/etc..." />
-              </SelectTrigger>
-              <SelectContent position="popper">
-                <SelectItem value="kg">Kg</SelectItem>
-                <SelectItem value="liters">Liters</SelectItem>
-              </SelectContent>
-            </Select>
-            <Button className="col-span-3 bg-green-400" variant="secondary">
-              Adicionar novo resíduo
-            </Button>
-          </div>
-          <div className="flex flex-col flex-wrap items-center gap-4 md:flex md:flex-row md:justify-between">
+      <div className="flex h-full flex-col justify-between space-y-4 px-8 xl:p-4">
+        <h1 className="w-full text-2xl font-bold">Fase de Inventário</h1>
+        <div className="flex space-x-4">
+          <div className="flex w-full flex-col gap-4 space-y-4 xl:max-w-[50%]">
+            <div className="mb-4 grid grid-cols-3 gap-4">
+              <Select
+                onValueChange={(value) => setValue("conj_res_bombona", value)}
+                required
+              >
+                <SelectTrigger id="residue-set">
+                  <SelectValue placeholder="Conjunto de resíduos na bombona e:" />
+                </SelectTrigger>
+                <SelectContent position="popper">
+                  <SelectItem value="option1">Option 1</SelectItem>
+                  <SelectItem value="option2">Option 2</SelectItem>
+                </SelectContent>
+              </Select>
+              <Input
+                id="total-quantity"
+                {...register("quant_total")}
+                required
+                type="number"
+                placeholder="Quantidade total"
+              />
+
+              <Select
+                onValueChange={(value) => setValue("unidade", value)}
+                required
+              >
+                <SelectTrigger id="unit">
+                  <SelectValue placeholder="kg/etc..." />
+                </SelectTrigger>
+                <SelectContent position="popper">
+                  <SelectItem value="kg">Kilogramas</SelectItem>
+                  <SelectItem value="liters">Gramas</SelectItem>
+                  <SelectItem value="liters">Litros</SelectItem>
+                  <SelectItem value="liters">Mols</SelectItem>
+                </SelectContent>
+              </Select>
+              <Button className="col-span-3 bg-green-400" variant="secondary">
+                Adicionar novos resíduos ao conjunto selecionado
+              </Button>
+            </div>
             <Button
-              className="flex w-72 items-center space-x-2"
+              className="flex w-full items-center space-x-2"
               variant="secondary"
             >
               <PlusIcon className="h-5 w-5" />
               <span>Adicionar novo conjunto de resíduos</span>
             </Button>
-            <div className="w-72">
+          </div>
+          <div className="space-y-4 xl:max-w-[50%]">
+            <div>
               <Select
                 onValueChange={(value) => setValue("quant_total_nova", value)}
                 required
@@ -124,90 +125,94 @@ export default function EightaPerg() {
                 </SelectContent>
               </Select>
             </div>
-          </div>
-          <div className="flex flex-col items-center gap-8 sm:flex sm:flex-row sm:justify-between">
-            <Label>Qual metodo de avaliação a ser empregado?</Label>
-            <div>
-              <Select
-                onValueChange={(value) => setValue("metodo_avaliacao", value)}
-                required
-              >
-                <SelectTrigger id="added-quantity" className="w-60 sm:max-w-40">
-                  <SelectValue placeholder="Selecione aqui" />
-                </SelectTrigger>
-                <SelectContent position="popper">
-                  <SelectItem value="option1">
-                    Nas condições experimentais
-                  </SelectItem>
-                  <SelectItem value="option2">Em condições extremas</SelectItem>
-                </SelectContent>
-              </Select>
+            <div className="flex flex-col items-center gap-8 sm:flex sm:flex-row sm:justify-between">
+              <Label>Qual metodo de avaliação a ser empregado?</Label>
+              <div>
+                <Select
+                  onValueChange={(value) => setValue("metodo_avaliacao", value)}
+                  required
+                >
+                  <SelectTrigger
+                    id="added-quantity"
+                    className="w-60 sm:max-w-40"
+                  >
+                    <SelectValue placeholder="Selecione aqui" />
+                  </SelectTrigger>
+                  <SelectContent position="popper">
+                    <SelectItem value="option1">
+                      Nas condições experimentais
+                    </SelectItem>
+                    <SelectItem value="option2">
+                      Em condições extremas
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
-            <Input
+            <Textarea
               placeholder="Observações"
-              className="max-w-60"
               {...register("observacoes")}
+              className="max-h-[72px]"
             />
           </div>
-          <Radio
-            label="O objetivo do procedimento é a formação de um produto químico ?"
-            defaultValue="Não"
-            checkboxes={checkboxes}
-            action={() => setIsOpen(!isOpen)}
-          />
-          {isOpen && (
-            <>
-              <div className="flex flex-col justify-between md:flex-row">
-                <Label className="text-sm md:max-w-60">
-                  Qual é a quantidade de reagentes efetivamente empregada no
-                  procedimento?
-                </Label>
-
-                <div className="mt-4 flex w-full flex-row justify-between md:mt-0 md:w-1/2">
-                  <div>
-                    <Input
-                      required
-                      type="number"
-                      className="max-w-32"
-                      {...register("quant_reagentes")}
-                    />
-                  </div>
-                  <div className="max-w-32">
-                    <Select
-                      required
-                      onValueChange={(value) =>
-                        setValue("unidade_reagentes", value)
-                      }
-                    >
-                      <SelectTrigger id="added-quantity">
-                        <SelectValue placeholder="Selecione aqui" />
-                      </SelectTrigger>
-                      <SelectContent position="popper">
-                        <SelectItem value="option1">Kg</SelectItem>
-                        <SelectItem value="option2">g</SelectItem>
-                        <SelectItem value="option3">L</SelectItem>
-                        <SelectItem value="option4">mol</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
+        </div>
+        <Radio
+          label="O objetivo do procedimento é a formação de um produto químico ?"
+          defaultValue="Não"
+          checkboxes={checkboxes}
+          action={() => setIsOpen(!isOpen)}
+        />
+        {isOpen && (
+          <>
+            <div className="flex flex-col md:flex-row">
+              <Label className="text-sm md:max-w-60">
+                Qual é a quantidade de reagentes efetivamente empregada no
+                procedimento?
+              </Label>
+              <div className="mt-4 flex w-full flex-row space-x-8 md:mt-0 md:w-1/2">
+                <div>
+                  <Input
+                    required
+                    type="number"
+                    className="max-w-32"
+                    {...register("quant_reagentes")}
+                  />
+                </div>
+                <div className="max-w-32">
+                  <Select
+                    required
+                    onValueChange={(value) =>
+                      setValue("unidade_reagentes", value)
+                    }
+                  >
+                    <SelectTrigger id="added-quantity">
+                      <SelectValue placeholder="Selecione aqui" />
+                    </SelectTrigger>
+                    <SelectContent position="popper">
+                      <SelectItem value="option1">Kg</SelectItem>
+                      <SelectItem value="option2">g</SelectItem>
+                      <SelectItem value="option3">L</SelectItem>
+                      <SelectItem value="option4">mol</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
-              <div className="flex items-center space-x-4">
-                <FileQuestionIcon className="h-5 w-5" />
-                <Label>
-                  Quantos interferentes há <br />
-                  no procedimento?
-                </Label>
-                <Input
-                  type="number"
-                  required
-                  className="max-w-20"
-                  {...register("quant_interferentes")}
-                />
-              </div>
-            </>
-          )}
-        </div>
+            </div>
+            <div className="flex items-center space-x-4">
+              <FileQuestionIcon className="h-5 w-5" />
+              <Label>
+                Quantos interferentes há <br />
+                no procedimento?
+              </Label>
+              <Input
+                type="number"
+                required
+                className="max-w-20"
+                {...register("quant_interferentes")}
+              />
+            </div>
+          </>
+        )}
       </div>
       <NextPageButton />
     </form>
