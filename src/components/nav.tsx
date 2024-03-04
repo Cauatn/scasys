@@ -1,11 +1,11 @@
 import useScroll from "@/hooks/use-scroll"
 //import { useSigninModal } from "@/hooks/use-signin-modal"
 import { Button } from "@/components/ui/button"
-import { MainNav } from "./main-nav"
-import { useState } from "react"
 import { Dialog } from "@radix-ui/react-dialog"
 import axios from "axios"
+import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { MainNav } from "./main-nav"
 
 import {
   DialogContent,
@@ -15,8 +15,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./ui/dialog"
-import { Label } from "./ui/label"
 import { Input } from "./ui/input"
+import { Label } from "./ui/label"
 
 //import { MainNav } from "./main-nav"
 //import { NormalizedUser, UserAccountNav } from "./user-account-nav"
@@ -52,6 +52,7 @@ export function NavBarT({
   const scrolled = useScroll(50)
 
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean>(false)
   const navigate = useNavigate()
 
   const [formData, setFormData] = useState<FormData>({
@@ -90,6 +91,10 @@ export function NavBarT({
       console.error(error)
     } finally {
       setIsLoading(false)
+      setIsLoginModalOpen(false)
+      // se der erro na hr de enviar pro banco foi por causa disso (provavelmente n vai dar :D)
+      formData.email = ""
+      formData.password = ""
     }
   }
 
@@ -103,7 +108,10 @@ export function NavBarT({
         <MainNav items={items}>{children}</MainNav>
         <div className="flex items-center space-x-3">
           {rightElements}
-          <Dialog>
+          <Dialog
+            onOpenChange={() => setIsLoginModalOpen(!isLoginModalOpen)}
+            open={isLoginModalOpen}
+          >
             <DialogTrigger asChild>
               <Button className="px-3" variant="default" size="lg">
                 Sign In
