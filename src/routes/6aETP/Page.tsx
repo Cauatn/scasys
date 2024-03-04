@@ -5,6 +5,13 @@ import { Label } from "@/components/ui/label"
 import { useNavigate } from "react-router-dom"
 
 import NextPageButton from "@/components/next-page-button"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { useExpContext } from "@/context/ExperimentoContext"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -19,7 +26,7 @@ const InvSchema = z.object({
 type InvSchema = z.infer<typeof InvSchema>
 
 export function SixaETP() {
-  const { register, handleSubmit } = useForm({
+  const { register, handleSubmit, setValue } = useForm({
     resolver: zodResolver(InvSchema),
   })
 
@@ -55,12 +62,28 @@ export function SixaETP() {
             <div className="mx-auto inline-flex w-full  justify-between gap-5">
               <div>
                 <Label htmlFor="especificidade">Especificidade:</Label>
-                <Input
-                  id="especificidade"
-                  placeholder="Especificidade"
-                  {...register("specificity")}
+                <Select
+                  onValueChange={(value) => setValue("specificity", value)}
                   required
-                />
+                >
+                  <SelectTrigger className="w-80" id="phase-select">
+                    <SelectValue placeholder="selecione aqui" />
+                  </SelectTrigger>
+                  <SelectContent position="popper">
+                    <SelectItem value="reagent">Reagente</SelectItem>
+                    <SelectItem value="solvent">Solvente</SelectItem>
+                    <SelectItem value="residue">Resíduo</SelectItem>
+                    <SelectItem value="water">Água</SelectItem>
+                    <SelectItem value="product">Produto</SelectItem>
+                    <SelectItem value="chemical-compost">
+                      Composto Químico
+                    </SelectItem>
+                    <SelectItem value="electric-power-consumption">
+                      Consumo de Energia Elétrica
+                    </SelectItem>
+                    <SelectItem value="others">Outros</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
               <div>
                 <Label htmlFor="Item">Item:</Label>
