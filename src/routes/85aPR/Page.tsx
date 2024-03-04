@@ -17,6 +17,17 @@ import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
 import { JSX } from "react/jsx-runtime"
 import { z } from "zod"
+import { toast } from "@/components/ui/use-toast"
+import { ToastAction } from "@/components/ui/toast"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 
 const InvSchema = z.object({
   conj_res_bombona: z.string(),
@@ -30,6 +41,36 @@ const InvSchema = z.object({
   quant_interferentes: z.string().optional().transform(Number),
 })
 type InvSchema = z.infer<typeof InvSchema>
+
+import { Item, columns } from "@/components/conjuntos/columns"
+import { DataTable } from "@/components/conjuntos/data-table"
+
+let data: Item[] = [
+  {
+    id: "1",
+    amount: 100,
+    status: "selected",
+    residuo: "residuo 1",
+  },
+  {
+    id: "2",
+    amount: 200,
+    status: "not-selected",
+    residuo: "residuo 2",
+  },
+  {
+    id: "3",
+    amount: 300,
+    status: "selected",
+    residuo: "residuo 3",
+  },
+  {
+    id: "4",
+    amount: 400,
+    status: "not-selected",
+    residuo: "residuo 4",
+  },
+]
 
 export default function EightaPerg() {
   const checkboxes = [
@@ -45,9 +86,15 @@ export default function EightaPerg() {
     },
   ]
   const [isOpen, setIsOpen] = useState(false)
+
+  const [conjuntoResiduos, setConjuntoResiduos] = useState<Array<Array<Item>>>(
+    []
+  )
+
   const { handleSubmit, setValue, register } = useForm({
     resolver: zodResolver(InvSchema),
   })
+
   const navigate = useNavigate()
   const handleFormSubmit = (data: any) => {
     console.log(data)
@@ -72,8 +119,13 @@ export default function EightaPerg() {
                   <SelectValue placeholder="Conjunto de resíduos na bombona e:" />
                 </SelectTrigger>
                 <SelectContent position="popper">
-                  <SelectItem value="option1">Option 1</SelectItem>
-                  <SelectItem value="option2">Option 2</SelectItem>
+                  {conjuntoResiduos.map((conjunto, index) => {
+                    return (
+                      <SelectItem key={index} value={index.toString()}>
+                        {"Conjunto " + (index + 1)}
+                      </SelectItem>
+                    )
+                  })}
                 </SelectContent>
               </Select>
               <Input
@@ -89,7 +141,10 @@ export default function EightaPerg() {
                 required
               >
                 <SelectTrigger id="unit">
-                  <SelectValue placeholder="kg/etc..." />
+                  <SelectValue
+                    placeholder="Unidade de Medida"
+                    defaultValue={"kg"}
+                  />
                 </SelectTrigger>
                 <SelectContent position="popper">
                   <SelectItem value="kg">Kilogramas</SelectItem>
@@ -98,13 +153,45 @@ export default function EightaPerg() {
                   <SelectItem value="liters">Mols</SelectItem>
                 </SelectContent>
               </Select>
-              <Button className="col-span-3 bg-green-400" variant="secondary">
-                Adicionar novos resíduos ao conjunto selecionado
-              </Button>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button
+                    className="col-span-3 bg-green-400"
+                    variant="secondary"
+                  >
+                    Adicionar novos resíduos ao conjunto selecionado
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <div className="container mx-auto py-10">
+                    <DataTable columns={columns} data={data} />
+                  </div>
+                  <DialogFooter>
+                    <Button variant="default">Cancelar</Button>
+                    <Button variant="default" className="bg-green-500">
+                      Adicionar
+                    </Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
             </div>
             <Button
               className="flex w-full items-center space-x-2"
               variant="secondary"
+              onClick={() => {
+                toast({
+                  variant: "default",
+                  title: "Novo conjunto Adicionado!",
+                  description: "Um novo conjunto de resíduos foi adicionado.",
+                  action: (
+                    <ToastAction altText="Selecionar">
+                      Selecionar Residuos
+                    </ToastAction>
+                  ),
+                })
+
+                setConjuntoResiduos([...conjuntoResiduos, data])
+              }}
             >
               <PlusIcon className="h-5 w-5" />
               <span>Adicionar novo conjunto de resíduos</span>
@@ -152,7 +239,7 @@ export default function EightaPerg() {
             <Textarea
               placeholder="Observações"
               {...register("observacoes")}
-              className="max-h-[72px]"
+              className="h-[72px] max-h-[72px]"
             />
           </div>
         </div>
