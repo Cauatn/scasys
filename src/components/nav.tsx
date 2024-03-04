@@ -4,8 +4,8 @@ import { Button } from "@/components/ui/button"
 import { MainNav } from "./main-nav"
 import { useState } from "react"
 import { Dialog } from "@radix-ui/react-dialog"
-import axios from 'axios';
-import { useNavigate } from "react-router-dom";
+import axios from "axios"
+import { useNavigate } from "react-router-dom"
 
 import {
   DialogContent,
@@ -38,8 +38,8 @@ interface NavBarProps {
 }
 
 interface FormData {
-  email: string;
-  password: string;
+  email: string
+  password: string
 }
 
 export function NavBarT({
@@ -49,48 +49,55 @@ export function NavBarT({
   rightElements,
   scroll = false,
 }: NavBarProps) {
+  const scrolled = useScroll(50)
 
-  const scrolled = useScroll(50);
-
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const navigate = useNavigate()
 
   const [formData, setFormData] = useState<FormData>({
     email: "",
-    password: ""
+    password: "",
   })
 
-  const handleFormEdit = (event: React.ChangeEvent<HTMLInputElement>, name: keyof FormData) => {
+  const handleFormEdit = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    name: keyof FormData
+  ) => {
     setFormData({
       ...formData,
-      [name]: event.target.value
+      [name]: event.target.value,
     })
   }
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setIsLoading(true);
+    event.preventDefault()
+    setIsLoading(true)
 
     try {
       // Usando POST em vez de GET para a operação de login
-      const response = await axios.post('http://localhost:3333/user/login', JSON.stringify(formData), {
-        headers: {
-          'Content-Type': 'application/json'
+      const response = await axios.post(
+        "http://localhost:3333/user/login",
+        JSON.stringify(formData),
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
-      });
+      )
       //console.log(response);
-      navigate("/procedure");
+      navigate("/procedure")
     } catch (error) {
-      console.error(error.response.data);
+      console.error(error)
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
 
   return (
     <header
-      className={`sticky top-0 z-40 flex w-full justify-center bg-background/60 backdrop-blur-xl transition-all ${scroll ? (scrolled ? "border-b" : "bg-background/0") : "border-b"
-        }`}
+      className={`sticky top-0 z-40 flex w-full justify-center bg-background/60 backdrop-blur-xl transition-all ${
+        scroll ? (scrolled ? "border-b" : "bg-background/0") : "border-b"
+      }`}
     >
       <div className="flex h-16 w-full items-center justify-between p-4">
         <MainNav items={items}>{children}</MainNav>
@@ -117,6 +124,7 @@ export function NavBarT({
                     </Label>
                     <Input
                       id="email"
+                      className="col-span-3"
                       placeholder="nome@example.com"
                       type="email"
                       autoCapitalize="none"
@@ -125,7 +133,9 @@ export function NavBarT({
                       disabled={isLoading}
                       required
                       value={formData.email}
-                      onChange={(e) => { handleFormEdit(e, 'email') }}
+                      onChange={(e) => {
+                        handleFormEdit(e, "email")
+                      }}
                     />
                   </div>
                   <div className="grid grid-cols-4 items-center gap-4">
@@ -135,6 +145,7 @@ export function NavBarT({
                     <Input
                       id="password"
                       placeholder="Senha"
+                      className="col-span-3"
                       type="password"
                       autoCapitalize="none"
                       autoComplete="new-password"
@@ -142,14 +153,16 @@ export function NavBarT({
                       disabled={isLoading}
                       required
                       value={formData.password}
-                      onChange={(e) => { handleFormEdit(e, 'password') }}
+                      onChange={(e) => {
+                        handleFormEdit(e, "password")
+                      }}
                     />
                   </div>
                 </div>
                 <DialogFooter>
-                <Button type="submit" disabled={isLoading}>
-                    {isLoading ? 'Carregando...' : 'Entrar'}
-                    </Button>
+                  <Button type="submit" disabled={isLoading}>
+                    {isLoading ? "Carregando..." : "Entrar"}
+                  </Button>
                 </DialogFooter>
               </form>
             </DialogContent>
