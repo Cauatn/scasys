@@ -22,7 +22,7 @@ import Support from "./support-dialog"
 import { Separator } from "./ui/separator"
 import { Toaster } from "./ui/toaster"
 import { TooltipProvider } from "./ui/tooltip"
-import { Button, buttonVariants } from "./ui/button"
+import { buttonVariants } from "./ui/button"
 import { ScrollArea } from "./ui/scroll-area"
 
 export default function PageRoot({ toggleReturnButton = true }) {

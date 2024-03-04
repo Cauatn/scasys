@@ -2,23 +2,65 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-
+import axios from 'axios';
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> { }
+
+interface FormData {
+	email: string;
+	password: string;
+	confirmPassword: string;
+	name: string;
+	institution: string;
+}
 
 function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const navigate = useNavigate();
 
-	async function onSubmit(event: React.SyntheticEvent) {
+	const [formData, setFormData] = useState<FormData>({
+		email: "",
+		password: "",
+		confirmPassword: "",
+		name: "",
+		institution: ""
+	})
+
+	const handleFormEdit = (event: React.ChangeEvent<HTMLInputElement>, name: keyof FormData) => {
+		setFormData({
+			...formData,
+			[name]: event.target.value
+		})
+	}
+
+	const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		setIsLoading(true);
 
-		setTimeout(() => {
+		try {
+			const response = await axios.post('http://localhost:3333/user/register', JSON.stringify(formData), {
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			});
+
+			//console.log(response);
+
+			// Aqui você pode fornecer feedback ao usuário sobre o sucesso da operação, se necessário
+
+			navigate("/procedure");
+		} catch (error) {
+			console.error(error.response.data);
+
+			// Aqui você pode fornecer feedback ao usuário sobre o erro que ocorreu, se necessário
+		} finally {
 			setIsLoading(false);
-		}, 3000);
+		}
 	}
+
 
 	return (
 		<div className={cn("grid gap-6", className)} {...props}>
@@ -33,9 +75,12 @@ function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 							placeholder="Nome completo"
 							type="text"
 							autoCapitalize="none"
-							autoComplete="email"
+							autoComplete="name"
 							autoCorrect="off"
 							disabled={isLoading}
+							required
+							value={formData.name}
+							onChange={(e) => { handleFormEdit(e, 'name') }}
 						/>
 						<Label className="sr-only" htmlFor="email">
 							Email
@@ -48,18 +93,24 @@ function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 							autoComplete="email"
 							autoCorrect="off"
 							disabled={isLoading}
+							required
+							value={formData.email}
+							onChange={(e) => { handleFormEdit(e, 'email') }}
 						/>
 						<Label className="sr-only" htmlFor="Instituition">
 							Instituição
 						</Label>
 						<Input
-							id="Instituition"
+							id="Institution"
 							placeholder="UNIVASF"
-							type="email"
+							type="institution"
 							autoCapitalize="none"
-							autoComplete="email"
+							autoComplete="institution"
 							autoCorrect="off"
 							disabled={isLoading}
+							required
+							value={formData.institution}
+							onChange={(e) => { handleFormEdit(e, 'institution') }}
 						/>
 						<Label className="sr-only" htmlFor="password">
 							Senha
@@ -69,9 +120,12 @@ function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 							placeholder="Senha"
 							type="password"
 							autoCapitalize="none"
-							autoComplete="password"
+							autoComplete="new-password"
 							autoCorrect="off"
 							disabled={isLoading}
+							required
+							value={formData.password}
+							onChange={(e) => { handleFormEdit(e, 'password') }}
 						/>
 						<Label className="sr-only" htmlFor="confPass">
 							Confirm Password
@@ -81,9 +135,12 @@ function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 							placeholder="Confirme a senha"
 							type="password"
 							autoCapitalize="none"
-							autoComplete="password"
+							autoComplete="new-password"
 							autoCorrect="off"
 							disabled={isLoading}
+							required
+							value={formData.confirmPassword}
+							onChange={(e) => { handleFormEdit(e, 'confirmPassword') }}
 						/>
 					</div>
 					<Button disabled={isLoading}>
@@ -94,6 +151,7 @@ function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 						<Link to={"/procedure"}>Registrar</Link>
 					</Button>
 				</div>
+
 			</form>
 			<div className="relative">
 				<div className="absolute inset-0 flex items-center">
