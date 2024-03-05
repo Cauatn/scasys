@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { SVGProps, useState } from "react"
+import { SVGProps, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
 import { JSX } from "react/jsx-runtime"
@@ -22,10 +22,7 @@ import { ToastAction } from "@/components/ui/toast"
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
-  DialogHeader,
-  DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
 
@@ -44,6 +41,7 @@ type InvSchema = z.infer<typeof InvSchema>
 
 import { Item, columns } from "@/components/conjuntos/columns"
 import { DataTable } from "@/components/conjuntos/data-table"
+import { useConjContext } from "@/context/ConjuntoContext"
 
 let data: Item[] = [
   {
@@ -90,6 +88,8 @@ export default function EightaPerg() {
   const [conjuntoResiduos, setConjuntoResiduos] = useState<Array<Array<Item>>>(
     []
   )
+
+  const { Residuos, addResiduo } = useConjContext()
 
   const { handleSubmit, setValue, register } = useForm({
     resolver: zodResolver(InvSchema),
@@ -148,9 +148,9 @@ export default function EightaPerg() {
                 </SelectTrigger>
                 <SelectContent position="popper">
                   <SelectItem value="kg">Kilogramas</SelectItem>
-                  <SelectItem value="liters">Gramas</SelectItem>
+                  <SelectItem value="gramas">Gramas</SelectItem>
                   <SelectItem value="liters">Litros</SelectItem>
-                  <SelectItem value="liters">Mols</SelectItem>
+                  <SelectItem value="mols">Mols</SelectItem>
                 </SelectContent>
               </Select>
               <Dialog>
@@ -179,6 +179,8 @@ export default function EightaPerg() {
               className="flex w-full items-center space-x-2"
               variant="secondary"
               onClick={() => {
+                console.log(Residuos)
+
                 toast({
                   variant: "default",
                   title: "Novo conjunto Adicionado!",

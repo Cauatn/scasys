@@ -32,6 +32,7 @@ import { AuthenticationPage } from "./routes/authentication/page"
 import LandPage from "./routes/land-page"
 import AuthorsPage from "./routes/authors-page"
 import { Dashboard } from "./routes/dashboard"
+import { ConjuntosProvider } from "./context/ConjuntoContext"
 
 export default function AppRouter() {
   return (
@@ -50,7 +51,14 @@ export default function AppRouter() {
             <Route path="2" element={<FiveaETP />} />
             <Route path="3" element={<SixaETP />} />
             <Route path="4" element={<EightaETP />} />
-            <Route path="5" element={<EightaPerg />} />
+            <Route
+              path="5"
+              element={
+                <ConjuntosProvider>
+                  <EightaPerg />
+                </ConjuntosProvider>
+              }
+            />
           </Route>
           <Route path="/ppwg" element={<PageRoot />}>
             <Route index element={<TenaPPWG />} />
