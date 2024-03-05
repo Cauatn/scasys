@@ -116,28 +116,26 @@ export function NavBarT({
                   Acesse sua conta para ter acesso a todos os recursos
                 </DialogDescription>
               </DialogHeader>
-              <form onSubmit={onSubmit}>
-                <div className="grid gap-4 py-4">
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="name" className="text-right">
-                      Email
-                    </Label>
-                    <Input
-                      id="email"
-                      className="col-span-3"
-                      placeholder="nome@example.com"
-                      type="email"
-                      autoCapitalize="none"
-                      autoComplete="email"
-                      autoCorrect="off"
-                      disabled={isLoading}
-                      required
-                      value={formData.email}
-                      onChange={(e) => {
-                        handleFormEdit(e, "email")
-                      }}
-                    />
-                  </div>
+              <form onSubmit={onSubmit} className="grid gap-4 py-4">
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="name" className="text-right">
+                    Email
+                  </Label>
+                  <Input
+                    id="email"
+                    className="col-span-3"
+                    placeholder="nome@example.com"
+                    type="email"
+                    autoCapitalize="none"
+                    autoComplete="email"
+                    autoCorrect="off"
+                    disabled={isLoading}
+                    required
+                    value={formData.email}
+                    onChange={(e) => {
+                      handleFormEdit(e, "email")
+                    }}
+                  />
                   <div className="grid grid-cols-4 items-center gap-4">
                     <Label htmlFor="username" className="text-right">
                       Senha

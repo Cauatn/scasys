@@ -53,7 +53,7 @@ function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
 			navigate("/procedure");
 		} catch (error) {
-			console.error(error.response.data);
+			console.error(error);
 
 			// Aqui você pode fornecer feedback ao usuário sobre o erro que ocorreu, se necessário
 		} finally {
