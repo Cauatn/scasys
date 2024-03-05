@@ -11,19 +11,19 @@ import {
   AlertTriangle,
   Globe2,
   Inbox,
-  Skull,
   LayoutDashboard,
+  Skull,
 } from "lucide-react"
 import ExperimentSwitcher from "./exp-switcher"
 import { NavBarT } from "./nav"
 import Navbar from "./navbar"
 import Nav from "./side-bar"
 import Support from "./support-dialog"
+import { buttonVariants } from "./ui/button"
+import { ScrollArea } from "./ui/scroll-area"
 import { Separator } from "./ui/separator"
 import { Toaster } from "./ui/toaster"
 import { TooltipProvider } from "./ui/tooltip"
-import { buttonVariants } from "./ui/button"
-import { ScrollArea } from "./ui/scroll-area"
 
 export default function PageRoot({ toggleReturnButton = true }) {
   const [isCollapsed, setIsCollapsed] = useState(false)
