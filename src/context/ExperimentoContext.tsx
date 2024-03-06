@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react"
+import { useConjContext } from "./ConjuntoContext"
 
 export type ExperimentoContext = {
   experimento: any
@@ -19,31 +20,9 @@ export type ExperimentoContext = {
 
 export const ExperimentoContext = createContext<ExperimentoContext | null>(null)
 
-/**
- * @param {
- *          "experimeto": {
- *            "nome": string,
- *            "modoDeCalculo": "string",
- *          "fases" : {
- *           "inicial/int/final" : {
- *            "etapas": {
- *             "nomeEtapa": {
- *              "items": {
- *               "..." : {
- *                "especificidade": string,
- *               "item": string,
- *                 "formula": string
- *               }
- *              }
- *           }
- *         }
- *       }
- *     }
- *   }
- *  }
- **/
-
 export const ExperimentoProvider = ({ children }: any) => {
+  const { residuos, addResiduo } = useConjContext()
+
   const [experimento, setExperimento] = useState<any | undefined>({
     nome: null,
     modoDeCalculo: null,
@@ -129,6 +108,17 @@ export const ExperimentoProvider = ({ children }: any) => {
     }))
 
     setCurrentItem(item)
+
+    if (especificidade === "residue") {
+      addResiduo({
+        id: residuos.length + 1,
+        amount: 0,
+        status: "not-selected",
+        residuo: item,
+        currentEtapa: currentEtapa,
+        currentPhase: currentPhase,
+      })
+    }
   }
 
   useEffect(

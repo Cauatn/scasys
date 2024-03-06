@@ -51,14 +51,7 @@ export default function AppRouter() {
             <Route path="2" element={<FiveaETP />} />
             <Route path="3" element={<SixaETP />} />
             <Route path="4" element={<EightaETP />} />
-            <Route
-              path="5"
-              element={
-                <ConjuntosProvider>
-                  <EightaPerg />
-                </ConjuntosProvider>
-              }
-            />
+            <Route path="5" element={<EightaPerg />} />
           </Route>
           <Route path="/ppwg" element={<PageRoot />}>
             <Route index element={<TenaPPWG />} />

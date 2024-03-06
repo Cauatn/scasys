@@ -39,36 +39,9 @@ const InvSchema = z.object({
 })
 type InvSchema = z.infer<typeof InvSchema>
 
-import { Item, columns } from "@/components/conjuntos/columns"
+import { Item, columnsResidue } from "@/components/conjuntos/columns"
 import { DataTable } from "@/components/conjuntos/data-table"
 import { useConjContext } from "@/context/ConjuntoContext"
-
-let data: Item[] = [
-  {
-    id: "1",
-    amount: 100,
-    status: "selected",
-    residuo: "residuo 1",
-  },
-  {
-    id: "2",
-    amount: 200,
-    status: "not-selected",
-    residuo: "residuo 2",
-  },
-  {
-    id: "3",
-    amount: 300,
-    status: "selected",
-    residuo: "residuo 3",
-  },
-  {
-    id: "4",
-    amount: 400,
-    status: "not-selected",
-    residuo: "residuo 4",
-  },
-]
 
 export default function EightaPerg() {
   const checkboxes = [
@@ -85,11 +58,9 @@ export default function EightaPerg() {
   ]
   const [isOpen, setIsOpen] = useState(false)
 
-  const [conjuntoResiduos, setConjuntoResiduos] = useState<Array<Array<Item>>>(
-    []
-  )
+  const conjuntoResiduos = useState<Item[]>([])
 
-  const { Residuos, addResiduo } = useConjContext()
+  const { residuos } = useConjContext()
 
   const { handleSubmit, setValue, register } = useForm({
     resolver: zodResolver(InvSchema),
@@ -100,6 +71,8 @@ export default function EightaPerg() {
     console.log(data)
     navigate("/ppwg")
   }
+
+  let data: Item[] = residuos
 
   return (
     <form
@@ -164,7 +137,7 @@ export default function EightaPerg() {
                 </DialogTrigger>
                 <DialogContent>
                   <div className="container mx-auto py-10">
-                    <DataTable columns={columns} data={data} />
+                    <DataTable columns={columnsResidue} data={data} />
                   </div>
                   <DialogFooter>
                     <Button variant="default">Cancelar</Button>
@@ -179,8 +152,6 @@ export default function EightaPerg() {
               className="flex w-full items-center space-x-2"
               variant="secondary"
               onClick={() => {
-                console.log(Residuos)
-
                 toast({
                   variant: "default",
                   title: "Novo conjunto Adicionado!",
@@ -192,7 +163,7 @@ export default function EightaPerg() {
                   ),
                 })
 
-                setConjuntoResiduos([...conjuntoResiduos, data])
+                //conjuntoResiduos([...conjuntoResiduos, data])
               }}
             >
               <PlusIcon className="h-5 w-5" />

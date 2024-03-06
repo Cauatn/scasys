@@ -4,15 +4,18 @@ import "./index.css"
 
 import { ExperimentoProvider } from "./context/ExperimentoContext.tsx"
 import AppRouter from "./routes.tsx"
+import { ConjuntosProvider } from "./context/ConjuntoContext.tsx"
 
 const rootElement = document.getElementById("root")
 
 if (rootElement) {
   ReactDOM.createRoot(rootElement).render(
     <React.StrictMode>
-      <ExperimentoProvider>
-        <AppRouter />
-      </ExperimentoProvider>
+      <ConjuntosProvider>
+        <ExperimentoProvider>
+          <AppRouter />
+        </ExperimentoProvider>
+      </ConjuntosProvider>
     </React.StrictMode>
   )
 } else {

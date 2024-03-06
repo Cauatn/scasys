@@ -63,7 +63,9 @@ export function SixaETP() {
               <div>
                 <Label htmlFor="especificidade">Especificidade:</Label>
                 <Select
-                  onValueChange={(value) => setValue("specificity", value)}
+                  onValueChange={(value) => {
+                    setValue("specificity", value)
+                  }}
                   required
                 >
                   <SelectTrigger className="w-80" id="phase-select">

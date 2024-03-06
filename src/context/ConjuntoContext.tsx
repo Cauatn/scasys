@@ -1,27 +1,29 @@
+import { Item } from "@/components/conjuntos/columns"
 import { createContext, useContext, useEffect, useState } from "react"
 
 export type ConjuntosContext = {
-  Residuos: Array<String>
-  addResiduo: (residuo: string) => void
+  residuos: Array<Item>
+  addResiduo: (residuo: any) => void
 }
 
 export const ConjuntosContext = createContext<ConjuntosContext | null>(null)
 
 export const ConjuntosProvider = ({ children }: any) => {
-  const [Residuos, setResiduos] = useState<Array<String> | []>([])
+  const [residuos, setResiduos] = useState<Array<Item> | []>([])
 
-  const addResiduo = (residuo: string) => {
+  //adiciona os residuos selecionados
+  const addResiduo = (residuo: any) => {
     setResiduos((prev: any) => {
       return [...prev, residuo]
     })
-
-    console.log(Residuos)
   }
+
+  useEffect(() => console.log(residuos), [residuos])
 
   return (
     <ConjuntosContext.Provider
       value={{
-        Residuos,
+        residuos,
         addResiduo,
       }}
     >

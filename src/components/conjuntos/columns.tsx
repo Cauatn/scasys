@@ -5,13 +5,15 @@ import { Checkbox } from "@/components/ui/checkbox"
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 export type Item = {
-  id: string
+  id: number
   amount: number
   status: "selected" | "not-selected"
   residuo: string
+  currentPhase: string
+  currentEtapa: string
 }
 
-export const columns: ColumnDef<Item>[] = [
+export const columnsResidue: ColumnDef<Item>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -39,6 +41,14 @@ export const columns: ColumnDef<Item>[] = [
   {
     accessorKey: "residuo",
     header: "Residuo",
+  },
+  {
+    accessorKey: "currentEtapa",
+    header: "etapa-atual",
+  },
+  {
+    accessorKey: "currentPhase",
+    header: "fase-atual",
   },
   {
     accessorKey: "amount",

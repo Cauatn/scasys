@@ -6,18 +6,37 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { useConjContext } from "@/context/ConjuntoContext"
 import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
 }
+
+/**
+ * {
+    id: "3",
+    amount: 300,
+    status: "selected",
+    residuo: "residuo 3",
+  },
+  {
+    id: "4",
+    amount: 400,
+    status: "not-selected",
+    residuo: "residuo 4",
+  },
+ * 
+ * 
+ * 
+ */
 
 export function DataTable<TData, TValue>({
   columns,
@@ -34,6 +53,23 @@ export function DataTable<TData, TValue>({
       rowSelection,
     },
   })
+
+  //função que adiciona um residuo a lista de residuos
+  const { residuos, addResiduo } = useConjContext()
+
+  //filtra elementos selecionados
+  const selectedRows = table
+    .getRowModel()
+    .rows.filter((row) => row.getIsSelected())
+
+  useEffect(() => {
+    //adiciona os residuos selecionados a lista de residuos
+    console.log(selectedRows)
+
+    selectedRows.map((row) => {
+      addResiduo(row.original)
+    })
+  }, [selectedRows])
 
   return (
     <div className="rounded-md border">
