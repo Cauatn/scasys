@@ -66,10 +66,10 @@ export function DataTable<TData, TValue>({
     //adiciona os residuos selecionados a lista de residuos
     console.log(selectedRows)
 
-    selectedRows.map((row) => {
+    selectedRows.forEach((row) => {
       addResiduo(row.original)
     })
-  }, [selectedRows])
+  }, [])
 
   return (
     <div className="rounded-md border">
