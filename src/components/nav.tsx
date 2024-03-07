@@ -1,11 +1,11 @@
 import useScroll from "@/hooks/use-scroll"
 //import { useSigninModal } from "@/hooks/use-signin-modal"
 import { Button } from "@/components/ui/button"
-import { MainNav } from "./main-nav"
-import { useState } from "react"
 import { Dialog } from "@radix-ui/react-dialog"
 import axios from "axios"
+import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { MainNav } from "./main-nav"
 
 import {
   DialogContent,
@@ -15,8 +15,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./ui/dialog"
-import { Label } from "./ui/label"
 import { Input } from "./ui/input"
+import { Label } from "./ui/label"
 
 //import { MainNav } from "./main-nav"
 //import { NormalizedUser, UserAccountNav } from "./user-account-nav"
@@ -106,7 +106,7 @@ export function NavBarT({
           <Dialog>
             <DialogTrigger asChild>
               <Button className="px-3" variant="default" size="lg">
-                Sign In
+                Login
               </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
@@ -116,46 +116,84 @@ export function NavBarT({
                   Acesse sua conta para ter acesso a todos os recursos
                 </DialogDescription>
               </DialogHeader>
-              <form onSubmit={onSubmit}>
-                <div className="grid gap-4 py-4">
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="name" className="text-right">
-                      Email
-                    </Label>
-                    <Input
-                      id="email"
-                      className="col-span-3"
-                      placeholder="nome@example.com"
-                      type="email"
-                      autoCapitalize="none"
-                      autoComplete="email"
-                      autoCorrect="off"
-                      disabled={isLoading}
-                      required
-                      value={formData.email}
-                      onChange={(e) => {
-                        handleFormEdit(e, "email")
-                      }}
-                    />
-
-                    <Label htmlFor="username" className="text-right">
-                      Senha
-                    </Label>
-                    <Input
-                      id="password"
-                      placeholder="Senha"
-                      className="col-span-3 w-full"
-                      type="password"
-                      autoCapitalize="none"
-                      autoComplete="new-password"
-                      autoCorrect="off"
-                      disabled={isLoading}
-                      required
-                      value={formData.password}
-                      onChange={(e) => {
-                        handleFormEdit(e, "password")
-                      }}
-                    />
+              <form className="space-y-4" onSubmit={onSubmit}>
+                <div>
+                  <div className="space-y-2">
+                    <div>
+                      <Label htmlFor="name" className="text-right">
+                        Email
+                      </Label>
+                      <Input
+                        id="email"
+                        className="col-span-3"
+                        placeholder="nome@example.com"
+                        type="email"
+                        autoCapitalize="none"
+                        autoComplete="email"
+                        autoCorrect="off"
+                        disabled={isLoading}
+                        required
+                        value={formData.email}
+                        onChange={(e) => {
+                          handleFormEdit(e, "email")
+                        }}
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="username" className="text-right">
+                        Senha
+                      </Label>
+                      <Input
+                        id="password"
+                        placeholder="Senha"
+                        className="col-span-3 w-full"
+                        type="password"
+                        autoCapitalize="none"
+                        autoComplete="new-password"
+                        autoCorrect="off"
+                        disabled={isLoading}
+                        required
+                        value={formData.password}
+                        onChange={(e) => {
+                          handleFormEdit(e, "password")
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="flex flex-col items-center">
+                  <h4 className="text-sm">
+                    Ou se preferir, faça login através de
+                  </h4>
+                  <div className="flex space-x-3">
+                    <button
+                      type="button"
+                      className="rounded-full bg-red-500 px-3 py-1"
+                    >
+                      G
+                    </button>
+                    <button
+                      type="button"
+                      className="rounded-full bg-red-500 px-3 py-1"
+                    >
+                      F
+                    </button>
+                  </div>
+                </div>
+                <div className="flex flex-row items-center justify-between">
+                  <div className="flex flex-row items-center space-x-2">
+                    <input type="checkbox" id="remember-me" />
+                    <label
+                      className="text-sm font-normal"
+                      htmlFor="remember-me"
+                    >
+                      Lembrar de mim
+                    </label>
+                  </div>
+                  <div>
+                    <a href="#" className="text-light text-xs text-cyan-600">
+                      Esqueceu a senha?
+                    </a>
                   </div>
                 </div>
                 <DialogFooter>
