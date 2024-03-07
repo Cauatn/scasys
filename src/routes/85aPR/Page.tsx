@@ -135,11 +135,11 @@ export default function EightaPerg() {
                     Adicionar novos resíduos ao conjunto selecionado
                   </Button>
                 </DialogTrigger>
-                <DialogContent>
+                <DialogContent className="min-h-[450px] max-w-[1000px]">
                   <div className="container mx-auto py-10">
                     <DataTable columns={columnsResidue} data={data} />
                   </div>
-                  <DialogFooter>
+                  <DialogFooter className="flex items-center">
                     <Button variant="default">Cancelar</Button>
                     <Button variant="default" className="bg-green-500">
                       Adicionar
