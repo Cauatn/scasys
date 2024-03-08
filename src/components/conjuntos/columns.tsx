@@ -44,11 +44,11 @@ export const columnsResidue: ColumnDef<Item>[] = [
   },
   {
     accessorKey: "currentEtapa",
-    header: "etapa-atual",
+    header: "Etapa Atual",
   },
   {
     accessorKey: "currentPhase",
-    header: "fase-atual",
+    header: "Fase Atual",
   },
   {
     accessorKey: "amount",

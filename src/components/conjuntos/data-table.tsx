@@ -14,6 +14,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table"
 import { useEffect, useState } from "react"
+import { set } from "react-hook-form"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -54,22 +55,9 @@ export function DataTable<TData, TValue>({
     },
   })
 
-  //função que adiciona um residuo a lista de residuos
-  const { residuos, addResiduo } = useConjContext()
-
-  //filtra elementos selecionados
   const selectedRows = table
     .getRowModel()
     .rows.filter((row) => row.getIsSelected())
-
-  useEffect(() => {
-    //adiciona os residuos selecionados a lista de residuos
-    console.log(selectedRows)
-
-    selectedRows.forEach((row) => {
-      addResiduo(row.original)
-    })
-  }, [])
 
   return (
     <div className="rounded-md border">

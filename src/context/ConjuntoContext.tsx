@@ -13,12 +13,22 @@ export const ConjuntosProvider = ({ children }: any) => {
 
   //adiciona os residuos selecionados
   const addResiduo = (residuo: any) => {
+    //caso o residuo já esteja na lista, remove
+    const index = residuos.findIndex((r) => r.id === residuo.id)
+    if (index !== -1) {
+      setResiduos((prev: any) => {
+        prev.splice(index, 1)
+        return [...prev]
+      })
+      return
+    }
+
     setResiduos((prev: any) => {
       return [...prev, residuo]
     })
   }
 
-  useEffect(() => console.log(residuos), [residuos])
+  useEffect(() => console.log("lista de residuos: ", residuos), [residuos])
 
   return (
     <ConjuntosContext.Provider

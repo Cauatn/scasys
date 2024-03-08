@@ -16,7 +16,7 @@ import { SVGProps, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
 import { JSX } from "react/jsx-runtime"
-import { z } from "zod"
+import { set, z } from "zod"
 import { toast } from "@/components/ui/use-toast"
 import { ToastAction } from "@/components/ui/toast"
 import {
@@ -27,7 +27,6 @@ import {
 } from "@/components/ui/dialog"
 
 const InvSchema = z.object({
-  conj_res_bombona: z.string(),
   quant_total: z.string(),
   unidade: z.string(),
   quant_total_nova: z.string(),
@@ -58,7 +57,9 @@ export default function EightaPerg() {
   ]
   const [isOpen, setIsOpen] = useState(false)
 
-  const conjuntoResiduos = useState<Item[]>([])
+  const [bombonaResiduos, setBombonaResiduos] = useState<Array<Array<Item>>>([
+    [],
+  ])
 
   const { residuos } = useConjContext()
 
@@ -74,6 +75,12 @@ export default function EightaPerg() {
 
   let data: Item[] = residuos
 
+  useEffect(() => {
+    console.log("lista de residuos: ", bombonaResiduos)
+  }, [bombonaResiduos])
+
+  const [selectedConjunto, setSelectedConjunto] = useState<number>(0)
+
   return (
     <form
       className="flex h-full flex-col justify-between px-8 xl:px-0"
@@ -85,14 +92,15 @@ export default function EightaPerg() {
           <div className="flex w-full flex-col gap-4 space-y-4 xl:max-w-[50%]">
             <div className="mb-4 grid grid-cols-3 gap-4">
               <Select
-                onValueChange={(value) => setValue("conj_res_bombona", value)}
-                required
+                onValueChange={(value) => {
+                  setSelectedConjunto(parseInt(value))
+                }}
               >
                 <SelectTrigger id="residue-set">
                   <SelectValue placeholder="Conjunto de resíduos na bombona e:" />
                 </SelectTrigger>
                 <SelectContent position="popper">
-                  {conjuntoResiduos.map((conjunto, index) => {
+                  {bombonaResiduos.map((conjunto, index) => {
                     return (
                       <SelectItem key={index} value={index.toString()}>
                         {"Conjunto " + (index + 1)}
@@ -163,7 +171,7 @@ export default function EightaPerg() {
                   ),
                 })
 
-                //conjuntoResiduos([...conjuntoResiduos, data])
+                setBombonaResiduos((prev: any) => [...prev, []])
               }}
             >
               <PlusIcon className="h-5 w-5" />
