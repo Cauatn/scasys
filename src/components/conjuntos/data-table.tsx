@@ -7,43 +7,27 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { useConjContext } from "@/context/ConjuntoContext"
+import { useExpContext } from "@/context/ExperimentoContext"
 import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table"
-import { useEffect, useState } from "react"
-import { set } from "react-hook-form"
+import { useEffect, useMemo, useState } from "react"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
 }
 
-/**
- * {
-    id: "3",
-    amount: 300,
-    status: "selected",
-    residuo: "residuo 3",
-  },
-  {
-    id: "4",
-    amount: 400,
-    status: "not-selected",
-    residuo: "residuo 4",
-  },
- * 
- * 
- * 
- */
-
 export function DataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
   const [rowSelection, setRowSelection] = useState({})
+
+  const { setSelectedRows } = useExpContext()
 
   const table = useReactTable({
     data,
@@ -55,9 +39,14 @@ export function DataTable<TData, TValue>({
     },
   })
 
-  const selectedRows = table
-    .getRowModel()
-    .rows.filter((row) => row.getIsSelected())
+  const selectedRowsData = useMemo(
+    () => table.getRowModel().rows.filter((row) => row.getIsSelected()),
+    [table, rowSelection]
+  )
+
+  useEffect(() => {
+    setSelectedRows(selectedRowsData)
+  }, [selectedRowsData])
 
   return (
     <div className="rounded-md border">

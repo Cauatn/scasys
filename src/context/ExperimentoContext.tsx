@@ -1,4 +1,11 @@
-import { createContext, useContext, useEffect, useState } from "react"
+import {
+  Dispatch,
+  SetStateAction,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react"
 import { useConjContext } from "./ConjuntoContext"
 
 export type ExperimentoContext = {
@@ -15,6 +22,8 @@ export type ExperimentoContext = {
     currentEtapa: string,
     currentPhase: string
   ) => void
+  selectedRows: any[]
+  setSelectedRows: Dispatch<SetStateAction<any[]>>
   currentItem: string
 }
 
@@ -32,6 +41,9 @@ export const ExperimentoProvider = ({ children }: any) => {
   const [currentPhase, setCurrentPhase] = useState<string>("inicial")
   const [currentEtapa, setCurrentEtapa] = useState<string>("")
   const [currentItem, setCurrentItem] = useState<string>("")
+
+  //variavel que indica os valores da tabela selecionados
+  const [selectedRows, setSelectedRows] = useState<Array<any>>([])
 
   const setExperimentoMetaData = (nome: string, modoDeCalculo: string) => {
     setExperimento((prev: any) => ({
@@ -121,11 +133,6 @@ export const ExperimentoProvider = ({ children }: any) => {
     }
   }
 
-  useEffect(
-    () => console.log("experimento changed :", experimento),
-    [experimento]
-  )
-
   return (
     <ExperimentoContext.Provider
       value={{
@@ -137,6 +144,8 @@ export const ExperimentoProvider = ({ children }: any) => {
         setNewItem,
         currentItem,
         experimento,
+        setSelectedRows,
+        selectedRows,
       }}
     >
       {children}

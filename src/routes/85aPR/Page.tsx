@@ -41,6 +41,7 @@ type InvSchema = z.infer<typeof InvSchema>
 import { Item, columnsResidue } from "@/components/conjuntos/columns"
 import { DataTable } from "@/components/conjuntos/data-table"
 import { useConjContext } from "@/context/ConjuntoContext"
+import { useExpContext } from "@/context/ExperimentoContext"
 
 export default function EightaPerg() {
   const checkboxes = [
@@ -62,6 +63,7 @@ export default function EightaPerg() {
   ])
 
   const { residuos } = useConjContext()
+  const { selectedRows } = useExpContext()
 
   const { handleSubmit, setValue, register } = useForm({
     resolver: zodResolver(InvSchema),
@@ -75,12 +77,20 @@ export default function EightaPerg() {
 
   let data: Item[] = residuos
 
+  const [selectedConjunto, setSelectedConjunto] = useState<number>(0)
+
+  useEffect(() => {
+    console.log("selected Rows: ", selectedRows)
+
+    setBombonaResiduos((prev: any) => {
+      prev[selectedConjunto] = selectedRows
+      return [...prev]
+    })
+  }, [selectedRows])
+
   useEffect(() => {
     console.log("lista de residuos: ", bombonaResiduos)
   }, [bombonaResiduos])
-
-  const [selectedConjunto, setSelectedConjunto] = useState<number>(0)
-
   return (
     <form
       className="flex h-full flex-col justify-between px-8 xl:px-0"
