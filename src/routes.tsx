@@ -29,10 +29,9 @@ import EightaPerg from "./routes/85aPR/Page"
 import EightaETP from "./routes/8aQOV/Page"
 import NotFound from "./routes/NotFound/Page"
 import { AuthenticationPage } from "./routes/authentication/page"
-import LandPage from "./routes/land-page"
 import AuthorsPage from "./routes/authors-page"
 import { Dashboard } from "./routes/dashboard"
-import { ConjuntosProvider } from "./context/ConjuntoContext"
+import LandPage from "./routes/land-page"
 
 export default function AppRouter() {
   return (
@@ -41,7 +40,7 @@ export default function AppRouter() {
         <Routes>
           <Route path="/" element={<LandPage />} />
           <Route path="/authors" element={<AuthorsPage />} />
-          <Route path="/SingIn" element={<AuthenticationPage />} />
+          <Route path="/SignIn" element={<AuthenticationPage />} />
           <Route path="/" element={<PageRoot toggleReturnButton={false} />}>
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="procedure" element={<TrheeaNDP />} />

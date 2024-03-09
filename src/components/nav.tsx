@@ -4,9 +4,15 @@ import { Button } from "@/components/ui/button"
 import { Dialog } from "@radix-ui/react-dialog"
 import axios from "axios"
 import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { MainNav } from "./main-nav"
 
+import {
+  CredentialResponse,
+  GoogleLogin,
+  GoogleOAuthProvider,
+} from "@react-oauth/google"
+import { jwtDecode } from "jwt-decode"
 import {
   DialogContent,
   DialogDescription,
@@ -92,6 +98,12 @@ export function NavBarT({
       setIsLoading(false)
     }
   }
+  const handleGoogleFormFill = (response: CredentialResponse) => {
+    const token = response.credential!
+    const decoded = jwtDecode(token)
+    console.log(decoded)
+    // caso o user ja tenha conta, tem q dar um jeito de logar ele quando clicar no botao de login com google. Caso não tenha
+  }
 
   return (
     <header
@@ -161,25 +173,15 @@ export function NavBarT({
                     </div>
                   </div>
                 </div>
-                <div className="flex flex-col items-center">
-                  <h4 className="text-sm">
-                    Ou se preferir, faça login através de
-                  </h4>
-                  <div className="flex space-x-3">
-                    <button
-                      type="button"
-                      className="rounded-full bg-red-500 px-3 py-1"
-                    >
-                      G
-                    </button>
-                    <button
-                      type="button"
-                      className="rounded-full bg-red-500 px-3 py-1"
-                    >
-                      F
-                    </button>
-                  </div>
-                </div>
+                <GoogleOAuthProvider clientId="699994521695-ol4mdcbkum77e89giiegueouupac4lbc.apps.googleusercontent.com">
+                  <GoogleLogin
+                    onSuccess={handleGoogleFormFill}
+                    onError={() => {
+                      console.log("Login Failed")
+                    }}
+                    theme="outline"
+                  />
+                </GoogleOAuthProvider>
                 <div className="flex flex-row items-center justify-between">
                   <div className="flex flex-row items-center space-x-2">
                     <input type="checkbox" id="remember-me" />
@@ -195,6 +197,18 @@ export function NavBarT({
                       Esqueceu a senha?
                     </a>
                   </div>
+                </div>
+                <div className="flex flex-row justify-center">
+                  <p className="text-xs">
+                    Ainda não tem uma conta?
+                    <Link
+                      to={"/SignIn"}
+                      className="cursor-pointer font-bold text-cyan-600"
+                    >
+                      {" "}
+                      Registre-se!
+                    </Link>
+                  </p>
                 </div>
                 <DialogFooter>
                   <Button type="submit" disabled={isLoading}>
