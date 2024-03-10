@@ -80,17 +80,9 @@ export default function EightaPerg() {
   const [selectedConjunto, setSelectedConjunto] = useState<number>(0)
 
   useEffect(() => {
-    console.log("selected Rows: ", selectedRows)
-
-    setBombonaResiduos((prev: any) => {
-      prev[selectedConjunto] = selectedRows
-      return [...prev]
-    })
-  }, [selectedRows])
-
-  useEffect(() => {
-    console.log("lista de residuos: ", bombonaResiduos)
+    console.log("bombonaResiduos: ", bombonaResiduos)
   }, [bombonaResiduos])
+
   return (
     <form
       className="flex h-full flex-col justify-between px-8 xl:px-0"
@@ -159,7 +151,29 @@ export default function EightaPerg() {
                   </div>
                   <DialogFooter className="flex items-center">
                     <Button variant="default">Cancelar</Button>
-                    <Button variant="default" className="bg-green-500">
+                    <Button
+                      variant="default"
+                      className="bg-green-500"
+                      onClick={() => {
+                        // adiciona os resíduos selecionados
+                        setBombonaResiduos((prev: any) => {
+                          prev[selectedConjunto] = selectedRows.filter(
+                            (row: any) => row.original.status !== "selected"
+                          )
+                          return [...prev]
+                        })
+
+                        selectedRows.forEach((row: any) => {
+                          console.log("row: ", row)
+
+                          if (row.original.status === "selected") {
+                            // não faz nada
+                          } else {
+                            row.original.status = "selected"
+                          }
+                        })
+                      }}
+                    >
                       Adicionar
                     </Button>
                   </DialogFooter>
