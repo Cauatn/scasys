@@ -3,7 +3,6 @@ import {
   SetStateAction,
   createContext,
   useContext,
-  useEffect,
   useState,
 } from "react"
 import { useConjContext } from "./ConjuntoContext"
@@ -30,7 +29,8 @@ export type ExperimentoContext = {
 export const ExperimentoContext = createContext<ExperimentoContext | null>(null)
 
 export const ExperimentoProvider = ({ children }: any) => {
-  const { residuos, addResiduo, compostos, addCompost } = useConjContext()
+  const { residuos, addResiduo, compostos, addCompost, epcs, addEpc } =
+    useConjContext()
 
   const [experimento, setExperimento] = useState<any | undefined>({
     nome: null,
@@ -120,7 +120,6 @@ export const ExperimentoProvider = ({ children }: any) => {
     }))
 
     setCurrentItem(item)
-
     if (especificidade === "residue") {
       addResiduo({
         id: residuos.length + 1,
@@ -137,6 +136,16 @@ export const ExperimentoProvider = ({ children }: any) => {
         id: compostos.length + 1,
         status: "not-selected",
         composto: item,
+        currentEtapa: currentEtapa,
+        currentPhase: currentPhase,
+      })
+    }
+
+    if (especificidade === "electric-power-consumption") {
+      addEpc({
+        id: epcs.length + 1,
+        status: "not-selected",
+        epc: item,
         currentEtapa: currentEtapa,
         currentPhase: currentPhase,
       })

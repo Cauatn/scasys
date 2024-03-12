@@ -8,12 +8,6 @@ import { Link, useNavigate } from "react-router-dom"
 import { MainNav } from "./main-nav"
 
 import {
-  CredentialResponse,
-  GoogleLogin,
-  GoogleOAuthProvider,
-} from "@react-oauth/google"
-import { jwtDecode } from "jwt-decode"
-import {
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -98,16 +92,10 @@ export function NavBarT({
       setIsLoading(false)
     }
   }
-  const handleGoogleFormFill = (response: CredentialResponse) => {
-    const token = response.credential!
-    const decoded = jwtDecode(token)
-    console.log(decoded)
-    // caso o user ja tenha conta, tem q dar um jeito de logar ele quando clicar no botao de login com google. Caso não tenha
-  }
 
   return (
     <header
-      className={`sticky top-0 z-40 flex w-full justify-center bg-background/60 backdrop-blur-xl transition-all ${
+      className={`backdrop-blur-xxl sticky top-0 z-40 flex w-full justify-center transition-all ${
         scroll ? (scrolled ? "border-b" : "bg-background/0") : "border-b"
       }`}
     >
@@ -173,15 +161,6 @@ export function NavBarT({
                     </div>
                   </div>
                 </div>
-                <GoogleOAuthProvider clientId="699994521695-ol4mdcbkum77e89giiegueouupac4lbc.apps.googleusercontent.com">
-                  <GoogleLogin
-                    onSuccess={handleGoogleFormFill}
-                    onError={() => {
-                      console.log("Login Failed")
-                    }}
-                    theme="outline"
-                  />
-                </GoogleOAuthProvider>
                 <div className="flex flex-row items-center justify-between">
                   <div className="flex flex-row items-center space-x-2">
                     <input type="checkbox" id="remember-me" />

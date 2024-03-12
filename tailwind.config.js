@@ -17,6 +17,9 @@ module.exports = {
       },
     },
     extend: {
+      backgroundImage: {
+        'landPageBackground': "url('/public/background.jpg')",
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

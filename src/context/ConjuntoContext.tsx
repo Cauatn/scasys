@@ -6,6 +6,8 @@ export type ConjuntosContext = {
   addResiduo: (residuo: any) => void
   compostos: Array<Item>
   addCompost: (composto: any) => void
+  epcs: Array<Item>
+  addEpc: (epc: any) => void
 }
 
 export const ConjuntosContext = createContext<ConjuntosContext | null>(null)
@@ -13,6 +15,7 @@ export const ConjuntosContext = createContext<ConjuntosContext | null>(null)
 export const ConjuntosProvider = ({ children }: any) => {
   const [residuos, setResiduos] = useState<Array<Item> | []>([])
   const [compostos, setCompostos] = useState<Array<Item> | []>([])
+  const [epcs, setEpcs] = useState<Array<Item> | []>([])
 
   //adiciona os residuos selecionados
   const addResiduo = (residuo: any) => {
@@ -47,6 +50,22 @@ export const ConjuntosProvider = ({ children }: any) => {
     })
   }
 
+  const addEpc = (epc: any) => {
+    //caso o residuo já esteja na lista, remove
+    const index = epcs.findIndex((e) => e.id === e.id)
+    if (index !== -1) {
+      setEpcs((prev: any) => {
+        prev.splice(index, 1)
+        return [...prev]
+      })
+      return
+    }
+
+    setEpcs((prev: any) => {
+      return [...prev, epc]
+    })
+  }
+
   useEffect(() => console.log("lista de residuos: ", residuos), [residuos])
 
   return (
@@ -56,6 +75,8 @@ export const ConjuntosProvider = ({ children }: any) => {
         addResiduo,
         compostos,
         addCompost,
+        epcs,
+        addEpc,
       }}
     >
       {children}
