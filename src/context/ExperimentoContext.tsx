@@ -30,7 +30,7 @@ export type ExperimentoContext = {
 export const ExperimentoContext = createContext<ExperimentoContext | null>(null)
 
 export const ExperimentoProvider = ({ children }: any) => {
-  const { residuos, addResiduo } = useConjContext()
+  const { residuos, addResiduo, compostos, addCompost } = useConjContext()
 
   const [experimento, setExperimento] = useState<any | undefined>({
     nome: null,
@@ -127,6 +127,16 @@ export const ExperimentoProvider = ({ children }: any) => {
         amount: 0,
         status: "not-selected",
         residuo: item,
+        currentEtapa: currentEtapa,
+        currentPhase: currentPhase,
+      })
+    }
+
+    if (especificidade === "compost") {
+      addCompost({
+        id: compostos.length + 1,
+        status: "not-selected",
+        composto: item,
         currentEtapa: currentEtapa,
         currentPhase: currentPhase,
       })

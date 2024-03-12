@@ -13,6 +13,14 @@ export type Item = {
   currentEtapa: string
 }
 
+export type compostItem = {
+  id: number
+  status: "selected" | "not-selected"
+  composto: string
+  currentPhase: string
+  currentEtapa: string
+}
+
 export const columnsResidue: ColumnDef<Item>[] = [
   {
     id: "select",
@@ -53,5 +61,44 @@ export const columnsResidue: ColumnDef<Item>[] = [
   {
     accessorKey: "amount",
     header: "Amount",
+  },
+]
+
+export const columnsCompost: ColumnDef<compostItem>[] = [
+  {
+    id: "select",
+    header: ({ table }) => (
+      <Checkbox
+        checked={
+          table.getIsAllPageRowsSelected() ||
+          (table.getIsSomePageRowsSelected() && "indeterminate")
+        }
+        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        aria-label="Select all"
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        aria-label="Select row"
+      />
+    ),
+  },
+  {
+    accessorKey: "status",
+    header: "Status",
+  },
+  {
+    accessorKey: "composto",
+    header: "Composto",
+  },
+  {
+    accessorKey: "currentEtapa",
+    header: "Etapa Atual",
+  },
+  {
+    accessorKey: "currentPhase",
+    header: "Fase Atual",
   },
 ]
