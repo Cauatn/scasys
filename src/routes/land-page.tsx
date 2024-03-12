@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 
 export default function LandPage() {
   return (
-    <div className="max-w-[1450px m-auto] bg-landPageBackground h-screen max-h-[1000px] bg-cover bg-no-repeat">
+    <div className="max-w-[1450px m-auto] h-screen max-h-[1000px] bg-landPageBackground bg-cover bg-no-repeat">
       <div className="h-full">
         <NavBarT
           items={[
@@ -16,9 +16,9 @@ export default function LandPage() {
           ]}
           children={<Support />}
         />
-        <section className="my-48 flex flex-col items-center justify-center gap-y-5">
+        <section className="my-48 flex flex-col items-center justify-center gap-y-2">
           <a
-            className=" inline-flex items-center rounded-lg border bg-muted bg-white px-3 py-1 text-sm font-medium"
+            className=" inline-flex items-center rounded-lg bg-muted bg-zinc-800 px-3 py-1 text-sm font-medium"
             href="/docs/changelog"
           >
             🎉{" "}
@@ -28,7 +28,7 @@ export default function LandPage() {
               className="mx-2 h-4 w-[1px] shrink-0 bg-border"
             ></div>{" "}
             <span className="sm:hidden">New components and more.</span>
-            <span className="hidden sm:inline">
+            <span className="hidden text-white sm:inline">
               Sugestôes podem serem feitas diretamente no Github ou Email
             </span>
             <svg
@@ -37,7 +37,7 @@ export default function LandPage() {
               viewBox="0 0 15 15"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              className="ml-1 h-4 w-4"
+              className="ml-1 h-4 w-4 text-white"
             >
               <path
                 d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z"
@@ -50,8 +50,8 @@ export default function LandPage() {
           <h1 className="text-center text-5xl font-bold leading-tight text-white md:text-[180px] lg:leading-[1.1]">
             SCASYS
           </h1>
-          <div className="max-w-96 text-center">
-            <span className="font-medium text-muted-foreground text-zinc-950 sm:text-xl">
+          <div className="max-w-[600px] text-center">
+            <span className="font-medium text-white sm:text-xl">
               Um software que auxilia no cálculo e na criação de impactos
               químicos na natureza
             </span>

@@ -94,11 +94,7 @@ export function NavBarT({
   }
 
   return (
-    <header
-      className={`backdrop-blur-xxl sticky top-0 z-40 flex w-full justify-center transition-all ${
-        scroll ? (scrolled ? "border-b" : "bg-background/0") : "border-b"
-      }`}
-    >
+    <header className="backdrop-blur-xxl sticky top-0 z-40 flex w-full justify-center transition-all">
       <div className="flex h-16 w-full items-center justify-between p-4">
         <MainNav items={items}>{children}</MainNav>
         <div className="flex items-center space-x-3">

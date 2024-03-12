@@ -105,7 +105,7 @@ export default function Support() {
       open={isDialogOpen}
       onOpenChange={() => setIsDialogOpen(!isDialogOpen)}
     >
-      <AlertDialogTrigger className="flex items-center text-lg font-medium transition-colors hover:text-foreground/80 sm:text-sm">
+      <AlertDialogTrigger className="flex items-center text-lg font-bold text-white sm:text-sm">
         Suporte
       </AlertDialogTrigger>
       <AlertDialogContent>
