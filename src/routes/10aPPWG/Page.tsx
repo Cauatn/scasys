@@ -62,7 +62,7 @@ export default function TenaPPWG() {
 
           <div className="flex w-full flex-1 flex-col flex-wrap items-center gap-4 sm:flex sm:flex-row sm:justify-center">
             <div className="flex items-center">
-              <Label className="w-16">mrr</Label>
+              <Label className="w-16">MRR</Label>
               <div>
                 <Button variant="secondary">?</Button>
               </div>
@@ -71,7 +71,7 @@ export default function TenaPPWG() {
               <div className="flex-col space-y-4 sm:flex sm:flex-row sm:gap-10 sm:space-y-0">
                 <Input
                   id="mrr"
-                  placeholder="mrr"
+                  placeholder="MRR"
                   className="w-52 sm:w-20"
                   required
                   {...register("mrr")}
