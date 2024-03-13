@@ -65,7 +65,7 @@ export function ItemsTable(props: any) {
   }, [experimento])
 
   return (
-    <div className="m-4 rounded-md border">
+    <div className=" rounded-md border">
       <Table className={props.class}>
         <TableHeader>
           <TableRow>

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 
 export default function LandPage() {
   return (
-    <div className="max-w-[1450px m-auto] h-screen max-h-[1000px] bg-landPageBackground bg-cover bg-no-repeat">
+    <div className="m-auto h-screen max-h-[1000px] max-w-[1450px] bg-landPageBackground bg-cover bg-no-repeat">
       <div className="h-full">
         <NavBarT
           items={[

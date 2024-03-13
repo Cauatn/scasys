@@ -52,37 +52,39 @@ export default function TrheeaNDP() {
         className="flex h-full flex-col justify-between px-8 xl:px-0"
         onSubmit={handleSubmit(handleFormSubmit)}
       >
-        <div className="flex w-full flex-col items-center justify-center gap-5 xl:gap-10">
-          <div className="w-full max-w-2xl">
-            <Label className="mb-3 font-bold">
-              Forneça um nome para o procedimento, a ser avaliado:
-            </Label>
-            <Input
-              placeholder="Forneça um nome"
-              className="h-9 w-full pl-2"
-              {...register("procedureName")}
-              required
-            />
-          </div>
-          <div className="flex w-full max-w-2xl flex-col justify-between gap-4">
-            <p>Escolha um modo de cálculo:</p>
-            <Select
-              onValueChange={(value) => setValue("calculusMethod", value)}
-              required
-            >
-              <SelectTrigger className="flex w-full flex-row justify-between gap-1 rounded-md border pl-2 pr-2">
-                <SelectValue placeholder="Selecione o composto" />
-              </SelectTrigger>
-              <SelectContent className="w-48">
-                <SelectItem value="Reducionista">Reducionista</SelectItem>
-                <SelectSeparator />
-                <SelectItem value="Guiado">Guiado</SelectItem>
-                <SelectSeparator />
-                <SelectItem value="Expandido">Expandido</SelectItem>
-                <SelectSeparator />
-                <SelectItem value="Exaustivo">Exaustivo</SelectItem>
-              </SelectContent>
-            </Select>
+        <div className="flex w-full flex-col gap-5 p-4 xl:gap-5 ">
+          <div className="space-y-4">
+            <div className="w-full max-w-2xl">
+              <Label className="mb-3 font-bold">
+                Forneça um nome para o procedimento, a ser avaliado:
+              </Label>
+              <Input
+                placeholder="Forneça um nome"
+                className="h-9 w-full pl-2"
+                {...register("procedureName")}
+                required
+              />
+            </div>
+            <div className="flex w-full max-w-2xl flex-col justify-between gap-4">
+              <p>Escolha um modo de cálculo:</p>
+              <Select
+                onValueChange={(value) => setValue("calculusMethod", value)}
+                required
+              >
+                <SelectTrigger className="flex w-full flex-row justify-between gap-1 rounded-md border pl-2 pr-2">
+                  <SelectValue placeholder="Selecione o modo de cálculo" />
+                </SelectTrigger>
+                <SelectContent className="w-48">
+                  <SelectItem value="Reducionista">Reducionista</SelectItem>
+                  <SelectSeparator />
+                  <SelectItem value="Guiado">Guiado</SelectItem>
+                  <SelectSeparator />
+                  <SelectItem value="Expandido">Expandido</SelectItem>
+                  <SelectSeparator />
+                  <SelectItem value="Exaustivo">Exaustivo</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
           <div className="flex h-full w-full max-w-2xl flex-col justify-between">
             <Card className="w-full">
