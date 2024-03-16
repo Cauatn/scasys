@@ -56,7 +56,7 @@ export default function EightaETP() {
       className="flex h-full flex-col justify-between px-8 xl:px-0"
       onSubmit={handleSubmit(handleFormSubmit)}
     >
-      <div className="flex justify-start px-6 py-2">
+      <div className="flex justify-start space-x-4 px-6 py-2">
         <div className="flex w-full flex-col gap-5 space-y-4 ">
           <div className="inline-flex w-full justify-between">
             <h1 className=" text-2xl font-bold">Fase de Inventário</h1>

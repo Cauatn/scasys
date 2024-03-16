@@ -9,30 +9,6 @@ import {
 import { useExpContext } from "@/context/ExperimentoContext"
 import { useEffect, useState } from "react"
 
-/**
- * @param {
- *          "experimeto": {
- *            "nome": string,
- *            "modoDeCalculo": "string",
- *          "fases" : {
- *           "inicial/int/final" : {
- *            "etapas": {
- *             "nomeEtapa": {
- *              "items": {
- *               "..." : {
- *                "especificidade": string,
- *               "item": string,
- *                 "formula": string
- *               }
- *              }
- *           }
- *         }
- *       }
- *     }
- *   }
- *  }
- **/
-
 export function ItemsTable(props: any) {
   const [rows, setRows] = useState<
     | {

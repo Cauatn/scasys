@@ -1,5 +1,13 @@
+import { ExpItems, columnsItems } from "@/components/conjuntos/columns"
+import { DataTable } from "@/components/conjuntos/data-table"
 import NextPageButton from "@/components/next-page-button"
 import { Button } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import {
   Select,
@@ -8,6 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { useExpContext } from "@/context/ExperimentoContext"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Label } from "@radix-ui/react-dropdown-menu"
 import { useForm } from "react-hook-form"
@@ -41,6 +50,7 @@ export default function TenaPPWG() {
     console.log(data)
     navigate("/etc")
   }
+
   return (
     <form
       className="flex h-full flex-col justify-between px-8 xl:px-0"
@@ -273,8 +283,30 @@ export default function TenaPPWG() {
             </div>
           </div>
         </div>
+        <Teste />
       </div>
       <NextPageButton />
     </form>
+  )
+}
+
+function Teste() {
+  const { listItems } = useExpContext()
+
+  let data: ExpItems[] = listItems
+
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button className="col-span-3 bg-green-400" variant="secondary">
+          asd
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="min-h-[450px] max-w-[1000px]">
+        <div className="container mx-auto py-10">
+          <DataTable columns={columnsItems} data={data} />
+        </div>
+      </DialogContent>
+    </Dialog>
   )
 }

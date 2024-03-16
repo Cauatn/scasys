@@ -8,6 +8,7 @@ import {
 import { useConjContext } from "./ConjuntoContext"
 
 export type ExperimentoContext = {
+  listItems: any
   experimento: any
   setExperimentoMetaData: (nome: string, modoDeCalculo: string) => void
   setNewPhase: (nome: string) => void
@@ -41,6 +42,7 @@ export const ExperimentoProvider = ({ children }: any) => {
   const [currentPhase, setCurrentPhase] = useState<string>("inicial")
   const [currentEtapa, setCurrentEtapa] = useState<string>("")
   const [currentItem, setCurrentItem] = useState<string>("")
+  const [listItems, setListItems] = useState<any[]>([]) //lista de itens da tabela [residuos, compostos, epcs
 
   //variavel que indica os valores da tabela selecionados
   const [selectedRows, setSelectedRows] = useState<Array<any>>([])
@@ -120,6 +122,19 @@ export const ExperimentoProvider = ({ children }: any) => {
     }))
 
     setCurrentItem(item)
+    setListItems([
+      ...listItems,
+      {
+        id: residuos.length + 1,
+        items: item,
+
+        especificidade: especificidade,
+        formula: formula,
+        currentEtapa: currentEtapa,
+        currentPhase: currentPhase,
+      },
+    ])
+
     if (especificidade === "residue") {
       addResiduo({
         id: residuos.length + 1,
@@ -165,6 +180,7 @@ export const ExperimentoProvider = ({ children }: any) => {
         experimento,
         setSelectedRows,
         selectedRows,
+        listItems,
       }}
     >
       {children}

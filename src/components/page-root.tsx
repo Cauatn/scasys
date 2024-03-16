@@ -23,7 +23,12 @@ import { buttonVariants } from "./ui/button"
 import { ScrollArea } from "./ui/scroll-area"
 import { Separator } from "./ui/separator"
 import { Toaster } from "./ui/toaster"
-import { TooltipProvider } from "./ui/tooltip"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "./ui/tooltip"
 
 export default function PageRoot({ toggleReturnButton = true }) {
   const [isCollapsed, setIsCollapsed] = useState(false)
@@ -60,23 +65,51 @@ export default function PageRoot({ toggleReturnButton = true }) {
             <ExperimentSwitcher isCollapsed={isCollapsed} />
           </div>
           <Separator />
-          <nav
-            className={cn(
-              "flex space-x-2 p-1 lg:flex-col lg:space-x-0 lg:space-y-1"
+          <nav className="my-2">
+            {isCollapsed ? (
+              <div className="grid gap-1 px-2 group-[[data-collapsed=true]]:justify-center group-[[data-collapsed=true]]:px-2">
+                <Tooltip delayDuration={0}>
+                  <TooltipTrigger asChild>
+                    <Link
+                      to="#"
+                      className={cn(
+                        buttonVariants({ size: "icon", variant: "ghost" }),
+                        "h-9 w-9",
+                        "dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white"
+                      )}
+                    >
+                      <LayoutDashboard className="size-4 " />
+                      <span className="sr-only">Dashboard</span>
+                    </Link>
+                  </TooltipTrigger>
+                  <TooltipContent
+                    side="right"
+                    className="flex items-center gap-4"
+                  >
+                    DashBoard
+                  </TooltipContent>
+                </Tooltip>
+              </div>
+            ) : (
+              <div
+                className={cn(
+                  "flex space-x-2 p-1 lg:flex-col lg:space-x-0 lg:space-y-1"
+                )}
+              >
+                <Link
+                  to={"/dashboard"}
+                  className={cn(
+                    buttonVariants({ variant: "ghost" }),
+                    "hover:bg-transparent hover:underline",
+                    "hover:bg-muted",
+                    "justify-start gap-3"
+                  )}
+                >
+                  <LayoutDashboard className="size-4 " />
+                  Dashboard
+                </Link>
+              </div>
             )}
-          >
-            <Link
-              to={"/dashboard"}
-              className={cn(
-                buttonVariants({ variant: "ghost" }),
-                "hover:bg-transparent hover:underline",
-                "hover:bg-muted",
-                "justify-start gap-3"
-              )}
-            >
-              <LayoutDashboard className="size-4 " />
-              Dashboard
-            </Link>
           </nav>
           <Nav
             isCollapsed={isCollapsed}
