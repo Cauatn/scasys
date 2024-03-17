@@ -2,12 +2,7 @@ import { ExpItems, columnsItems } from "@/components/conjuntos/columns"
 import { DataTable } from "@/components/conjuntos/data-table"
 import NextPageButton from "@/components/next-page-button"
 import { Button } from "@/components/ui/button"
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogTrigger,
-} from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import {
   Select,
@@ -19,6 +14,7 @@ import {
 import { useExpContext } from "@/context/ExperimentoContext"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Label } from "@radix-ui/react-dropdown-menu"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
 import { z } from "zod"
@@ -45,6 +41,12 @@ export default function TenaPPWG() {
   const { handleSubmit, setValue, register } = useForm({
     resolver: zodResolver(PpwgSchema),
   })
+
+  const [itemsMRR, setItemsMRR] = useState<string[]>([])
+  const [itemsMTAD, setItemsMTAD] = useState<string[]>([])
+  const [itemsMTDR, setItemsMTDR] = useState<string[]>([])
+  const [itemsTD, setItemsTD] = useState<string[]>([])
+
   const navigate = useNavigate()
   const handleFormSubmit = (data: any) => {
     console.log(data)
@@ -79,6 +81,7 @@ export default function TenaPPWG() {
             </div>
             <div className="flex w-2/3 flex-wrap justify-start gap-4">
               <div className="flex-col space-y-4 sm:flex sm:flex-row sm:gap-10 sm:space-y-0">
+                <ShowTable name="MRR" />
                 <Input
                   id="mrr"
                   placeholder="MRR"
@@ -87,18 +90,14 @@ export default function TenaPPWG() {
                   {...register("mrr")}
                 />
                 <div className="flex justify-between sm:gap-10">
-                  <Select
+                  <Input
                     required
-                    onValueChange={(value) => setValue("mrr_quantity", value)}
-                  >
-                    <SelectTrigger id="mrr-options" className="max-w-32">
-                      <SelectValue placeholder="Quantidade" />
-                    </SelectTrigger>
-                    <SelectContent position="popper">
-                      <SelectItem value="option1">Option 1</SelectItem>
-                      <SelectItem value="option2">Option 2</SelectItem>
-                    </SelectContent>
-                  </Select>
+                    onChange={(e) => setValue("mrr_quantity", e.target.value)}
+                    placeholder="Quantidade"
+                    type="number"
+                    min={0}
+                    className="w-32"
+                  />
                   <Select
                     required
                     onValueChange={(value) => setValue("mrr_unit", value)}
@@ -124,6 +123,7 @@ export default function TenaPPWG() {
             </div>
             <div className="flex w-2/3 flex-wrap justify-start gap-4">
               <div className="flex-col gap-5 space-y-4 sm:flex sm:flex-row sm:gap-10 sm:space-y-0">
+                <ShowTable name="MTAD" />
                 <Input
                   id="mtad"
                   placeholder="MTAD"
@@ -131,18 +131,15 @@ export default function TenaPPWG() {
                   {...register("mtad")}
                 />
                 <div className="flex justify-between sm:gap-10">
-                  <Select
+                  <Input
                     required
-                    onValueChange={(value) => setValue("mtad_quantity", value)}
-                  >
-                    <SelectTrigger id="mtad-options" className="max-w-32">
-                      <SelectValue placeholder="Quantidade" />
-                    </SelectTrigger>
-                    <SelectContent position="popper">
-                      <SelectItem value="option1">Option 1</SelectItem>
-                      <SelectItem value="option2">Option 2</SelectItem>
-                    </SelectContent>
-                  </Select>
+                    onChange={(e) => setValue("mtad_quantity", e.target.value)}
+                    placeholder="Quantidade"
+                    type="number"
+                    min={0}
+                    className="w-32"
+                  />
+
                   <Select
                     required
                     onValueChange={(value) => setValue("mtad_unit", value)}
@@ -168,6 +165,7 @@ export default function TenaPPWG() {
             </div>
             <div className="flex w-2/3 flex-wrap justify-start gap-4">
               <div className="flex-col gap-5 space-y-4 sm:flex sm:flex-row sm:gap-10 sm:space-y-0">
+                <ShowTable name="MTDR" />
                 <Input
                   required
                   id="mtdr"
@@ -176,18 +174,14 @@ export default function TenaPPWG() {
                   {...register("mtdr")}
                 />
                 <div className="flex justify-between sm:gap-10">
-                  <Select
+                  <Input
                     required
-                    onValueChange={(value) => setValue("mtdr_quantity", value)}
-                  >
-                    <SelectTrigger id="mtdr-options" className="max-w-32">
-                      <SelectValue placeholder="Quantidade" />
-                    </SelectTrigger>
-                    <SelectContent position="popper">
-                      <SelectItem value="option1">Option 1</SelectItem>
-                      <SelectItem value="option2">Option 2</SelectItem>
-                    </SelectContent>
-                  </Select>
+                    onChange={(e) => setValue("mtdr_quantity", e.target.value)}
+                    placeholder="Quantidade"
+                    type="number"
+                    min={0}
+                    className="w-32"
+                  />
                   <Select
                     required
                     onValueChange={(value) => setValue("mtdr_unit", value)}
@@ -213,6 +207,7 @@ export default function TenaPPWG() {
             </div>
             <div className="flex w-2/3 flex-wrap justify-start gap-4">
               <div className="flex-col gap-5 space-y-4 sm:flex sm:flex-row sm:gap-10 sm:space-y-0">
+                <ShowTable name="TD" />
                 <Input
                   required
                   id="td"
@@ -221,18 +216,14 @@ export default function TenaPPWG() {
                   {...register("td")}
                 />
                 <div className="flex justify-between sm:gap-10">
-                  <Select
+                  <Input
                     required
-                    onValueChange={(value) => setValue("td_quantity", value)}
-                  >
-                    <SelectTrigger id="td-options" className="max-w-32">
-                      <SelectValue placeholder="Quantidade" />
-                    </SelectTrigger>
-                    <SelectContent position="popper">
-                      <SelectItem value="option1">Option 1</SelectItem>
-                      <SelectItem value="option2">Option 2</SelectItem>
-                    </SelectContent>
-                  </Select>
+                    onChange={(e) => setValue("td_quantity", e.target.value)}
+                    placeholder="Quantidade"
+                    type="number"
+                    min={0}
+                    className="w-32"
+                  />
                   <Select
                     required
                     onValueChange={(value) => setValue("td_unit", value)}
@@ -283,14 +274,13 @@ export default function TenaPPWG() {
             </div>
           </div>
         </div>
-        <Teste />
       </div>
       <NextPageButton />
     </form>
   )
 }
 
-function Teste() {
+function ShowTable({ name }: { name: string }) {
   const { listItems } = useExpContext()
 
   let data: ExpItems[] = listItems
@@ -298,8 +288,11 @@ function Teste() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="col-span-3 bg-green-400" variant="secondary">
-          asd
+        <Button
+          className="h-9 w-20 max-w-[100px] border bg-white text-slate-700 hover:bg-green-300 hover:before:transition-transform"
+          variant="secondary"
+        >
+          {name}
         </Button>
       </DialogTrigger>
       <DialogContent className="min-h-[450px] max-w-[1000px]">
