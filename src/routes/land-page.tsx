@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 
 export default function LandPage() {
   return (
-    <div className="m-auto h-screen max-h-[1000px] max-w-[1450px] bg-landPageBackground bg-cover bg-no-repeat">
+    <div className="m-auto h-screen bg-landPageBackground bg-cover bg-no-repeat">
       <div className="h-full">
         <NavBarT
           items={[
@@ -16,7 +16,7 @@ export default function LandPage() {
           ]}
           children={<Support />}
         />
-        <section className="my-48 flex flex-col items-center justify-center gap-y-2">
+        <section className="my-32 flex flex-col items-center justify-center gap-y-2">
           <a
             className=" inline-flex items-center rounded-lg bg-muted bg-zinc-800 px-3 py-1 text-sm font-medium"
             href="/docs/changelog"
@@ -27,7 +27,7 @@ export default function LandPage() {
               role="none"
               className="mx-2 h-4 w-[1px] shrink-0 bg-border"
             ></div>{" "}
-            <span className="sm:hidden">New components and more.</span>
+            <span className="text-white sm:hidden">Conheça o projeto!</span>
             <span className="hidden text-white sm:inline">
               Sugestôes podem serem feitas diretamente no Github ou Email
             </span>
@@ -47,10 +47,10 @@ export default function LandPage() {
               ></path>
             </svg>
           </a>
-          <h1 className="text-center text-5xl font-bold leading-tight text-white md:text-[180px] lg:leading-[1.1]">
+          <h1 className="text-center text-[80px] font-bold leading-tight text-white md:text-[180px] lg:leading-[1.1]">
             SCASYS
           </h1>
-          <div className="max-w-[600px] text-center">
+          <div className="w-60 max-w-[600px] text-center sm:w-[600px]">
             <span className="font-medium text-white sm:text-xl">
               Um software que auxilia no cálculo e na criação de impactos
               químicos na natureza

@@ -20,6 +20,7 @@ interface MainNavProps {
 
 export function MainNav({ items, children }: MainNavProps) {
   //const segment = useSelectedLayoutSegment()
+  const pathname = window.location.pathname
   const [showMobileMenu, setShowMobileMenu] = React.useState<boolean>(false)
 
   const toggleMobileMenu = () => {
@@ -45,8 +46,13 @@ export function MainNav({ items, children }: MainNavProps) {
   return (
     <div className="flex gap-6 md:gap-10">
       <Link to="/" className="hidden items-center space-x-2 md:flex">
-        <Sun className="text-white" />
-        <span className="font-urban mb-1 hidden text-xl font-bold text-white sm:inline-block">
+        <Sun className={pathname == "/" ? "text-white" : "text-zinc-900"} />
+        <span
+          className={cn(
+            "text-lg font-bold",
+            pathname === "/" ? "text-white" : "text-zinc-900"
+          )}
+        >
           SCASYS
         </span>
       </Link>
@@ -57,17 +63,17 @@ export function MainNav({ items, children }: MainNavProps) {
               key={index}
               to={item.disabled ? "#" : item.href}
               className={cn(
-                "flex items-center text-lg font-bold text-white sm:text-sm",
-
-                item.disabled && "cursor-not-allowed opacity-80"
+                "flex items-center text-lg font-bold sm:text-sm",
+                item.disabled && "cursor-not-allowed opacity-80",
+                pathname === "/" ? "text-white" : "text-zinc-900"
               )}
             >
               {item.title}
             </Link>
           ))}
-          {children}
         </nav>
       ) : null}
+      {children}
       <button
         className="flex items-center space-x-2 md:hidden"
         onClick={toggleMobileMenu}

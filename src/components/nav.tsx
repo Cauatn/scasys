@@ -2,11 +2,11 @@ import useScroll from "@/hooks/use-scroll"
 //import { useSigninModal } from "@/hooks/use-signin-modal"
 import { Button } from "@/components/ui/button"
 import { Dialog } from "@radix-ui/react-dialog"
-import axios from "axios"
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { MainNav } from "./main-nav"
 
+import { cn } from "@/lib/utils"
 import {
   DialogContent,
   DialogDescription,
@@ -17,7 +17,6 @@ import {
 } from "./ui/dialog"
 import { Input } from "./ui/input"
 import { Label } from "./ui/label"
-import { loginUser } from "@/hooks/user-login"
 
 //import { MainNav } from "./main-nav"
 //import { NormalizedUser, UserAccountNav } from "./user-account-nav"
@@ -82,7 +81,12 @@ export function NavBarT({
   }
 
   return (
-    <header className="backdrop-blur-xxl sticky top-0 z-40 flex w-full justify-center transition-all">
+    <header
+      className={cn(
+        "sticky top-0 z-40 flex w-full justify-center transition-all",
+        window.location.pathname == "/" ? "bg-transparent" : "backdrop-blur-3xl"
+      )}
+    >
       <div className="flex h-16 w-full items-center justify-between p-4">
         <MainNav items={items}>{children}</MainNav>
         <div className="flex items-center space-x-3">
@@ -93,7 +97,7 @@ export function NavBarT({
                 Login
               </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px]">
+            <DialogContent className="w-[80%] sm:max-w-[425px]">
               <DialogHeader>
                 <DialogTitle>Entre no seu perfil</DialogTitle>
                 <DialogDescription>
