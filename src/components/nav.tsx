@@ -17,6 +17,7 @@ import {
 } from "./ui/dialog"
 import { Input } from "./ui/input"
 import { Label } from "./ui/label"
+import { loginUser } from "@/hooks/user-login"
 
 //import { MainNav } from "./main-nav"
 //import { NormalizedUser, UserAccountNav } from "./user-account-nav"
@@ -73,24 +74,11 @@ export function NavBarT({
     event.preventDefault()
     setIsLoading(true)
 
-    try {
-      // Usando POST em vez de GET para a operação de login
-      const response = await axios.post(
-        "http://localhost:3333/user/login",
-        JSON.stringify(formData),
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      //console.log(response);
-      navigate("/procedure")
-    } catch (error) {
-      console.error(error)
-    } finally {
-      setIsLoading(false)
-    }
+    console.log(formData)
+
+    //loginUser(formData)
+
+    //setIsLoading(false)
   }
 
   return (
@@ -107,7 +95,7 @@ export function NavBarT({
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
               <DialogHeader>
-                <DialogTitle>Entre no seu perfil !</DialogTitle>
+                <DialogTitle>Entre no seu perfil</DialogTitle>
                 <DialogDescription>
                   Acesse sua conta para ter acesso a todos os recursos
                 </DialogDescription>
