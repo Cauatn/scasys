@@ -1,4 +1,5 @@
 import { useToast } from "@/components/ui/use-toast"
+import { cn } from "@/lib/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
@@ -105,7 +106,12 @@ export default function Support() {
       open={isDialogOpen}
       onOpenChange={() => setIsDialogOpen(!isDialogOpen)}
     >
-      <AlertDialogTrigger className="flex items-center text-lg font-bold text-white sm:text-sm">
+      <AlertDialogTrigger
+        className={cn(
+          "flex items-center text-lg font-bold sm:text-sm",
+          window.location.pathname == "/" ? "text-white" : "text-slate-900"
+        )}
+      >
         Suporte
       </AlertDialogTrigger>
       <AlertDialogContent>

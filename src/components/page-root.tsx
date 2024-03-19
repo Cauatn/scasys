@@ -35,10 +35,7 @@ export default function PageRoot({ toggleReturnButton = true }) {
 
   return (
     <TooltipProvider delayDuration={0}>
-      <NavBarT
-        items={[{ title: "About", href: "/about" }]}
-        children={<Support />}
-      />
+      <NavBarT children={<Support />} />
       <ResizablePanelGroup
         direction="horizontal"
         className="h-full max-h-[800px] items-stretch"
