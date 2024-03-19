@@ -74,11 +74,9 @@ export function NavBarT({
     event.preventDefault()
     setIsLoading(true)
 
-    console.log(formData)
+    loginUser(formData)
 
-    //loginUser(formData)
-
-    //setIsLoading(false)
+    setIsLoading(false)
   }
 
   return (

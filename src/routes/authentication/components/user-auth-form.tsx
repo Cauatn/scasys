@@ -53,17 +53,18 @@ function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         }
       )
 
-      //console.log(response);
+      console.log(response)
+
+      localStorage.setItem("user", JSON.stringify(response.data))
 
       // Aqui você pode fornecer feedback ao usuário sobre o sucesso da operação, se necessário
-
-      navigate("/procedure")
     } catch (error) {
       console.error(error)
 
       // Aqui você pode fornecer feedback ao usuário sobre o erro que ocorreu, se necessário
     } finally {
       setIsLoading(false)
+      navigate("/procedure")
     }
   }
 
@@ -163,7 +164,7 @@ function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 							//<Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
 							<div>{""}</div>
 						)*/}
-            <Link to={"/procedure"}>Registrar</Link>
+            Registrar
           </Button>
         </div>
       </form>

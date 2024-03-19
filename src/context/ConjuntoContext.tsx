@@ -1,4 +1,4 @@
-import { Item } from "@/components/conjuntos/columns"
+import { Item } from "@/components/data-table/columns"
 import { createContext, useContext, useEffect, useState } from "react"
 
 export type ConjuntosContext = {

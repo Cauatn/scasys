@@ -3,6 +3,7 @@ import {
   SetStateAction,
   createContext,
   useContext,
+  useEffect,
   useState,
 } from "react"
 import { useConjContext } from "./ConjuntoContext"
@@ -43,6 +44,10 @@ export const ExperimentoProvider = ({ children }: any) => {
   const [currentEtapa, setCurrentEtapa] = useState<string>("")
   const [currentItem, setCurrentItem] = useState<string>("")
   const [listItems, setListItems] = useState<any[]>([]) //lista de itens da tabela [residuos, compostos, epcs
+
+  useEffect(() => {
+    localStorage.setItem("experimento", JSON.stringify(experimento))
+  }, [experimento])
 
   //variavel que indica os valores da tabela selecionados
   const [selectedRows, setSelectedRows] = useState<Array<any>>([])

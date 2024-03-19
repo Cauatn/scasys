@@ -8,7 +8,7 @@ export const createExperiment = async (experimento: {
 }) => {
   try {
     const response = await axios.post(
-      `http://localhost:3333/exp/newExp/:${experimento.autor_id}`,
+      `http://localhost:3333/register`,
       experimento,
       {
         headers: {
