@@ -1,5 +1,5 @@
-import { ExpItems, columnsItems } from "@/components/conjuntos/columns"
-import { DataTable } from "@/components/conjuntos/data-table"
+import { ExpItems, columnsItems } from "@/components/data-table/columns"
+import { DataTable } from "@/components/data-table/data-table"
 import NextPageButton from "@/components/next-page-button"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"

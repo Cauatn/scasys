@@ -38,10 +38,12 @@ const InvSchema = z.object({
 })
 type InvSchema = z.infer<typeof InvSchema>
 
-import { Item, columnsResidue } from "@/components/conjuntos/columns"
-import { DataTable } from "@/components/conjuntos/data-table"
+import { Item, columnsResidue } from "@/components/data-table/columns"
+import { DataTable } from "@/components/data-table/data-table"
 import { useConjContext } from "@/context/ConjuntoContext"
 import { useExpContext } from "@/context/ExperimentoContext"
+
+import { createExperiment } from "@/hooks/create-experiment"
 
 export default function EightaPerg() {
   const checkboxes = [
@@ -72,6 +74,7 @@ export default function EightaPerg() {
   const navigate = useNavigate()
   const handleFormSubmit = (data: any) => {
     console.log(data)
+
     navigate("/ppwg")
   }
 
