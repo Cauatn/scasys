@@ -25,6 +25,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { createExperiment } from "@/hooks/create-experiment"
+import { useEffect, useState } from "react"
 
 const NmSchema = z.object({
   procedureName: z.string().nonempty("O nome do procedimento é obrigatório"),
@@ -45,14 +46,13 @@ export default function TrheeaNDP() {
   const handleFormSubmit = (data: any) => {
     setExperimentoMetaData(data.procedureName, data.calculusMethod)
 
-    createExperiment({
-      autor: "autor",
-      autor_id: "autor_id",
-      name_of_experiment: data.procedureName,
-      modo_de_calculo: data.calculusMethod,
-    })
-
-    navigate("/inventory/1")
+    createExperiment(data)
+      .then(() => {
+        navigate("/inventory/1")
+      })
+      .catch((error) => {
+        console.error("Erro ao criar experimento", error)
+      })
   }
 
   return (
