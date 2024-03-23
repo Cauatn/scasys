@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 
 import { ItemsTable } from "@/components/Items-table"
@@ -28,16 +28,28 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { useExpContext } from "@/context/ExperimentoContext"
+import { Trash2 } from "lucide-react"
 
 const InvSchema = z.object({
-  quantity: z.string().transform(Number),
-  unit: z.string(),
+  quantitys: z
+    .object({
+      quantity: z.number(),
+      unit: z.string(),
+    })
+    .array()
+    .nonempty(),
   observacoes: z.string().optional(),
 })
 type InvSchema = z.infer<typeof InvSchema>
 
 export default function EightaETP() {
-  const [quantityOrValue, setQuantityOrValue] = useState(1)
+  const [quantityOrValues, setQuantityOrValues] = useState<
+    Array<{
+      quantity: number
+      unit: string
+    }>
+  >([])
+
   const { register, handleSubmit, setValue } = useForm({
     resolver: zodResolver(InvSchema),
   })
@@ -47,9 +59,14 @@ export default function EightaETP() {
   const navigate = useNavigate()
 
   const handleFormSubmit = (data: any) => {
-    console.log(data)
-    navigate("/inventory/5")
+    console.log("to aquiiii:", quantityOrValues)
+    //navigate("/inventory/5")
   }
+
+  useEffect(() => {
+    console.log(quantityOrValues)
+    setValue("quantitys", quantityOrValues)
+  }, [quantityOrValues])
 
   return (
     <form
@@ -63,58 +80,93 @@ export default function EightaETP() {
             <span className="text-xl text-gray-500">{currentItem}</span>
           </div>
           <div className="mb-4 mt-4 flex w-full flex-col gap-4 ">
-            {Array.from({ length: quantityOrValue }, (_, index) => (
-              <div
-                className="flex flex-col gap-3"
-                key={index + quantityOrValue}
-              >
-                <Label htmlFor="quantitade" className="pl-2">
-                  Quantidade ou valor:
-                </Label>
-                <div className="inline-flex gap-2">
-                  <Input
-                    id="quantitade"
-                    placeholder="quantitade"
-                    className=""
-                    type="number"
-                    {...register("quantity")}
-                    required
-                  />
-                  <div className="">
-                    <Select
-                      onValueChange={(value) => setValue("unit", value)}
-                      required
+            {quantityOrValues.map((_, index) => {
+              return (
+                <div className="flex flex-col gap-3" key={index + _.quantity}>
+                  <Label htmlFor="quantitade" className="pl-2">
+                    Quantidade ou valor:
+                  </Label>
+                  <div className="inline-flex gap-2">
+                    <Input
+                      id="quantitade"
+                      placeholder="quantitade"
+                      defaultValue={quantityOrValues[index]?.quantity}
+                      className=""
+                      type="number"
+                      onChange={(event) => {
+                        setQuantityOrValues(
+                          quantityOrValues.map((item, i) => {
+                            if (i === index) {
+                              return {
+                                ...item,
+                                quantity: Number(event.target.value),
+                              }
+                            }
+                            return item
+                          })
+                        )
+                      }}
+                    />
+                    <div>
+                      <Select
+                        onValueChange={(value) =>
+                          setQuantityOrValues(
+                            quantityOrValues.map((item, i) => {
+                              if (i === index) {
+                                return {
+                                  ...item,
+                                  unit: value,
+                                }
+                              }
+                              return item
+                            })
+                          )
+                        }
+                        defaultValue={quantityOrValues[index]?.unit}
+                      >
+                        <SelectTrigger id="unidade-select">
+                          <SelectValue placeholder="Selecione aqui" />
+                        </SelectTrigger>
+                        <SelectContent position="popper">
+                          <SelectItem value="kilograma">
+                            Kilograma (kg)
+                          </SelectItem>
+                          <SelectItem value="grama">Grama (g)</SelectItem>
+                          <SelectItem value="litro">Litro (L)</SelectItem>
+                          <SelectItem value="mol">Mol (mol)</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <Button
+                      variant={"ghost"}
+                      className="border"
+                      onClick={() => {
+                        setQuantityOrValues((prev) =>
+                          prev.filter((_, i) => i !== index)
+                        )
+                      }}
                     >
-                      <SelectTrigger id="unidade-select">
-                        <SelectValue placeholder="Selecione aqui" />
-                      </SelectTrigger>
-                      <SelectContent position="popper">
-                        <SelectItem value="kilograma">
-                          Kilograma (kg)
-                        </SelectItem>
-                        <SelectItem value="grama">Grama (g)</SelectItem>
-                        <SelectItem value="litro">Litro (L)</SelectItem>
-                        <SelectItem value="mol">Mol (mol)</SelectItem>
-                      </SelectContent>
-                    </Select>
+                      <Trash2 className="size-4" />
+                    </Button>
                   </div>
                 </div>
-              </div>
-            ))}
+              )
+            })}
             <div className="inline-flex content-center items-center justify-start gap-6">
               <Button
                 className="rounded-md bg-green-400 p-3"
-                onClick={() => setQuantityOrValue(quantityOrValue + 1)}
+                onClick={() =>
+                  setQuantityOrValues((prev) => [
+                    ...prev,
+                    { quantity: 0, unit: "" },
+                  ])
+                }
               >
                 Adicionar nova quantidade e(ou) valor
               </Button>
             </div>
             <div className="flex flex-col gap-3">
-              <Label
-                htmlFor="Item"
-                className="pl-2"
-                {...register("observacao")}
-              >
+              <Label htmlFor="Item" className="pl-2">
                 Observações :
               </Label>
               <Textarea {...register("observacoes")} />
@@ -124,7 +176,7 @@ export default function EightaETP() {
                 Adicionar novo item ao inventario?
               </Label>
               <Link to={"/inventory/3"}>
-                <Button onClick={() => {}}>Sim</Button>
+                <Button>Sim</Button>
               </Link>
               <Dialog>
                 <DialogTrigger asChild>

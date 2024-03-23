@@ -21,6 +21,8 @@ const InvSchema = z.object({
   specificity: z.string(),
   item: z.string(),
   formula: z.string(),
+  biodegradable: z.boolean(),
+  recyclable: z.boolean(),
 })
 
 type InvSchema = z.infer<typeof InvSchema>
@@ -61,49 +63,71 @@ export function SixaETP() {
           <div className="">
             <div className="mx-auto inline-flex w-full  justify-between gap-5">
               <div>
-                <Label htmlFor="especificidade">Especificidade:</Label>
-                <Select
-                  onValueChange={(value) => {
-                    setValue("specificity", value)
-                  }}
-                  required
-                >
-                  <SelectTrigger className="w-80" id="phase-select">
-                    <SelectValue placeholder="selecione aqui" />
-                  </SelectTrigger>
-                  <SelectContent position="popper">
-                    <SelectItem value="reagent">Reagente</SelectItem>
-                    <SelectItem value="solvent">Solvente</SelectItem>
-                    <SelectItem value="residue">Resíduo</SelectItem>
-                    <SelectItem value="water">Água</SelectItem>
-                    <SelectItem value="product">Produto</SelectItem>
-                    <SelectItem value="chemical-compost">
-                      Composto Químico
-                    </SelectItem>
-                    <SelectItem value="electric-power-consumption">
-                      Consumo de Energia Elétrica
-                    </SelectItem>
-                    <SelectItem value="others">Outros</SelectItem>
-                  </SelectContent>
-                </Select>
+                <div>
+                  <Label htmlFor="especificidade">Especificidade:</Label>
+                  <Select
+                    onValueChange={(value) => {
+                      setValue("specificity", value)
+                    }}
+                    required
+                  >
+                    <SelectTrigger className="w-80" id="phase-select">
+                      <SelectValue placeholder="selecione aqui" />
+                    </SelectTrigger>
+                    <SelectContent position="popper">
+                      <SelectItem value="reagent">Reagente</SelectItem>
+                      <SelectItem value="solvent">Solvente</SelectItem>
+                      <SelectItem value="residue">Resíduo</SelectItem>
+                      <SelectItem value="water">Água</SelectItem>
+                      <SelectItem value="product">Produto</SelectItem>
+                      <SelectItem value="chemical-compost">
+                        Composto Químico
+                      </SelectItem>
+                      <SelectItem value="electric-power-consumption">
+                        Consumo de Energia Elétrica
+                      </SelectItem>
+                      <SelectItem value="others">Outros</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <Label htmlFor="Item">Item:</Label>
+                  <Input
+                    id="Item"
+                    placeholder="Item"
+                    {...register("item")}
+                    required
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="Formula">Formula Química:</Label>
+                  <Input
+                    id="Formula"
+                    placeholder="Formula"
+                    {...register("formula")}
+                    required
+                  />
+                </div>
               </div>
-              <div>
-                <Label htmlFor="Item">Item:</Label>
-                <Input
-                  id="Item"
-                  placeholder="Item"
-                  {...register("item")}
-                  required
-                />
-              </div>
-              <div>
-                <Label htmlFor="Formula">Formula Química:</Label>
-                <Input
-                  id="Formula"
-                  placeholder="Formula"
-                  {...register("formula")}
-                  required
-                />
+              <div className="flex flex-col justify-end space-y-4">
+                <div className="inline-flex items-center justify-end space-x-2">
+                  <Label htmlFor="biodegradable">É biodegradável:</Label>
+                  <Input
+                    className="h-5 w-5 accent-green-500"
+                    type="checkbox"
+                    id="biodegradable"
+                    {...register("biodegradable")}
+                  />
+                </div>
+                <div className="inline-flex items-center justify-end space-x-2">
+                  <Label htmlFor="recyclable">É Reciclável:</Label>
+                  <Input
+                    className="h-5 w-5 accent-green-500"
+                    id="recyclable"
+                    {...register("recyclable")}
+                    type="checkbox"
+                  />
+                </div>
               </div>
             </div>
           </div>
