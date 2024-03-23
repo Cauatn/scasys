@@ -21,7 +21,7 @@ import { loginUser } from "@/hooks/user-login"
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
 
 //import { MainNav } from "./main-nav"
-//import { NormalizedUser, UserAccountNav } from "./user-account-nav"
+import { NormalizedUser, UserAccountNav } from "./user-account-nav"
 
 export type NavItem = {
   title: string
@@ -94,10 +94,14 @@ export function NavBarT({
         <div className="flex items-center space-x-3">
           {rightElements}
           {localStorage.getItem("user_id") ? (
-            <Avatar>
-              <AvatarImage alt="Image" />
-              <AvatarFallback>LB</AvatarFallback>
-            </Avatar>
+            <UserAccountNav
+              user={{
+                name: "User Name",
+                email: "",
+                imageUrl:
+                  "https://vercel.com/api/www/avatar/aNg0cL7uEl5AMHFP3N4AUbUV?s=64",
+              }}
+            />
           ) : (
             <Dialog>
               <DialogTrigger asChild>

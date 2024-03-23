@@ -87,7 +87,15 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
         >
           <div className="flex items-center space-x-2.5">
             <LogOut className="h-4 w-4" />
-            <p className="text-sm">Log out </p>
+            <button
+              onClick={() => {
+                localStorage.removeItem("token")
+                localStorage.removeItem("user_id")
+                window.location.reload()
+              }}
+            >
+              <p className="text-sm">Log Out</p>
+            </button>
           </div>
         </DropdownMenuItem>
       </DropdownMenuContent>
