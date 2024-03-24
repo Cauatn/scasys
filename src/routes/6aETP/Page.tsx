@@ -16,12 +16,15 @@ import { useExpContext } from "@/context/ExperimentoContext"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
+import { useState } from "react"
 
 const InvSchema = z.object({
   specificity: z.string(),
   item: z.string(),
   formula: z.string(),
   biodegradable: z.boolean(),
+  biodegradableTime: z.string().transform(Number).optional(),
+  src: z.string().optional(),
   recyclable: z.boolean(),
 })
 
@@ -35,6 +38,8 @@ export function SixaETP() {
   const navigate = useNavigate()
 
   const { setNewItem, currentEtapa, currentPhase } = useExpContext()
+
+  const [isDegradable, setIsDegradable] = useState(false)
 
   const handleFormSubmit = (data: any) => {
     console.log(data)
@@ -61,52 +66,76 @@ export function SixaETP() {
             <span className="text-xl text-gray-500">{currentPhase}</span>
           </div>
           <div className="">
-            <div className="mx-auto inline-flex w-full  justify-between gap-5">
-              <div>
+            <div className="mx-auto inline-flex w-full justify-between gap-5">
+              <div className="inline-flex space-x-8">
                 <div>
-                  <Label htmlFor="especificidade">Especificidade:</Label>
-                  <Select
-                    onValueChange={(value) => {
-                      setValue("specificity", value)
-                    }}
-                    required
-                  >
-                    <SelectTrigger className="w-80" id="phase-select">
-                      <SelectValue placeholder="selecione aqui" />
-                    </SelectTrigger>
-                    <SelectContent position="popper">
-                      <SelectItem value="reagent">Reagente</SelectItem>
-                      <SelectItem value="solvent">Solvente</SelectItem>
-                      <SelectItem value="residue">Resíduo</SelectItem>
-                      <SelectItem value="water">Água</SelectItem>
-                      <SelectItem value="product">Produto</SelectItem>
-                      <SelectItem value="chemical-compost">
-                        Composto Químico
-                      </SelectItem>
-                      <SelectItem value="electric-power-consumption">
-                        Consumo de Energia Elétrica
-                      </SelectItem>
-                      <SelectItem value="others">Outros</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <div>
+                    <Label htmlFor="especificidade">Especificidade:</Label>
+                    <Select
+                      onValueChange={(value) => {
+                        setValue("specificity", value)
+                      }}
+                      required
+                    >
+                      <SelectTrigger className="w-80" id="phase-select">
+                        <SelectValue placeholder="selecione aqui" />
+                      </SelectTrigger>
+                      <SelectContent position="popper">
+                        <SelectItem value="reagent">Reagente</SelectItem>
+                        <SelectItem value="solvent">Solvente</SelectItem>
+                        <SelectItem value="residue">Resíduo</SelectItem>
+                        <SelectItem value="water">Água</SelectItem>
+                        <SelectItem value="product">Produto</SelectItem>
+                        <SelectItem value="chemical-compost">
+                          Composto Químico
+                        </SelectItem>
+                        <SelectItem value="electric-power-consumption">
+                          Consumo de Energia Elétrica
+                        </SelectItem>
+                        <SelectItem value="others">Outros</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div>
+                    <Label htmlFor="Item">Item:</Label>
+                    <Input
+                      id="Item"
+                      placeholder="Item"
+                      {...register("item")}
+                      required
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="Formula">Formula Química:</Label>
+                    <Input
+                      id="Formula"
+                      placeholder="Formula"
+                      {...register("formula")}
+                      required
+                    />
+                  </div>
                 </div>
                 <div>
-                  <Label htmlFor="Item">Item:</Label>
-                  <Input
-                    id="Item"
-                    placeholder="Item"
-                    {...register("item")}
-                    required
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="Formula">Formula Química:</Label>
-                  <Input
-                    id="Formula"
-                    placeholder="Formula"
-                    {...register("formula")}
-                    required
-                  />
+                  {isDegradable && (
+                    <div>
+                      <Label>Tempo de degradação :</Label>
+                      <Input
+                        id="biodegradable"
+                        type="number"
+                        placeholder="Digite o tempo de degradação"
+                        required
+                        {...register("biodegradableTime")}
+                      />
+                      <Label>Tempo de degradação :</Label>
+                      <Input
+                        id="srcBiodegradable"
+                        type="text"
+                        placeholder="Fonte da informação"
+                        required
+                        {...register("src")}
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="flex flex-col justify-end space-y-4">
@@ -117,6 +146,7 @@ export function SixaETP() {
                     type="checkbox"
                     id="biodegradable"
                     {...register("biodegradable")}
+                    onChange={(e) => setIsDegradable(e.target.checked)}
                   />
                 </div>
                 <div className="inline-flex items-center justify-end space-x-2">

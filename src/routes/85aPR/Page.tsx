@@ -35,6 +35,7 @@ const InvSchema = z.object({
   quant_reagentes: z.string().optional().transform(Number),
   unidade_reagentes: z.string().optional(),
   quant_interferentes: z.string().optional().transform(Number),
+  observations: z.string().optional(),
 })
 type InvSchema = z.infer<typeof InvSchema>
 
@@ -42,8 +43,6 @@ import { Item, columnsResidue } from "@/components/data-table/columns"
 import { DataTable } from "@/components/data-table/data-table"
 import { useConjContext } from "@/context/ConjuntoContext"
 import { useExpContext } from "@/context/ExperimentoContext"
-
-import { createExperiment } from "@/hooks/create-experiment"
 
 export default function EightaPerg() {
   const checkboxes = [
@@ -121,7 +120,6 @@ export default function EightaPerg() {
                 type="number"
                 placeholder="Quantidade total"
               />
-
               <Select
                 onValueChange={(value) => setValue("unidade", value)}
                 required

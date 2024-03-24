@@ -29,15 +29,16 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { useExpContext } from "@/context/ExperimentoContext"
 import { Trash2 } from "lucide-react"
+import { createInventory } from "@/hooks/create-inventory"
 
 const InvSchema = z.object({
   quantitys: z
     .object({
       quantity: z.number(),
-      unit: z.string(),
     })
     .array()
     .nonempty(),
+  unit: z.string(),
   observacoes: z.string().optional(),
 })
 type InvSchema = z.infer<typeof InvSchema>
@@ -46,20 +47,22 @@ export default function EightaETP() {
   const [quantityOrValues, setQuantityOrValues] = useState<
     Array<{
       quantity: number
-      unit: string
     }>
   >([])
 
-  const { register, handleSubmit, setValue } = useForm({
+  const { register, handleSubmit, setValue, getValues } = useForm({
     resolver: zodResolver(InvSchema),
   })
 
-  const { currentItem } = useExpContext()
+  const { currentItem, setQuantity } = useExpContext()
 
   const navigate = useNavigate()
 
   const handleFormSubmit = (data: any) => {
-    console.log("to aquiiii:", quantityOrValues)
+    setQuantity(currentItem, data)
+
+    createInventory()
+
     //navigate("/inventory/5")
   }
 
@@ -110,19 +113,9 @@ export default function EightaETP() {
                     <div>
                       <Select
                         onValueChange={(value) =>
-                          setQuantityOrValues(
-                            quantityOrValues.map((item, i) => {
-                              if (i === index) {
-                                return {
-                                  ...item,
-                                  unit: value,
-                                }
-                              }
-                              return item
-                            })
-                          )
+                          setValue("unit", value as string)
                         }
-                        defaultValue={quantityOrValues[index]?.unit}
+                        defaultValue={getValues("unit")}
                       >
                         <SelectTrigger id="unidade-select">
                           <SelectValue placeholder="Selecione aqui" />
@@ -156,10 +149,7 @@ export default function EightaETP() {
               <Button
                 className="rounded-md bg-green-400 p-3"
                 onClick={() =>
-                  setQuantityOrValues((prev) => [
-                    ...prev,
-                    { quantity: 0, unit: "" },
-                  ])
+                  setQuantityOrValues((prev) => [...prev, { quantity: 0 }])
                 }
               >
                 Adicionar nova quantidade e(ou) valor

@@ -14,7 +14,7 @@ export type ExperimentoContext = {
   setExperimentoMetaData: (nome: string, modoDeCalculo: string) => void
   setNewPhase: (nome: string) => void
   currentPhase: string
-  setNewEtapa: (nome: string, rep: number, fase: string) => void
+  setNewEtapa: (nome: string, num_of_reps: number, fase: string) => void
   currentEtapa: string
   setNewItem: (
     item: string,
@@ -23,6 +23,7 @@ export type ExperimentoContext = {
     currentEtapa: string,
     currentPhase: string
   ) => void
+  setQuantity: (item: string, obj: any) => void
   selectedRows: any[]
   setSelectedRows: Dispatch<SetStateAction<any[]>>
   currentItem: string
@@ -75,7 +76,7 @@ export const ExperimentoProvider = ({ children }: any) => {
     setCurrentPhase(nome)
   }
 
-  const setNewEtapa = (nome: string, rep: number, fase: string) => {
+  const setNewEtapa = (nome: string, num_of_reps: number, fase: string) => {
     setExperimento((prev: any) => ({
       nome: prev.nome,
       modoDeCalculo: prev.modoDeCalculo,
@@ -85,7 +86,7 @@ export const ExperimentoProvider = ({ children }: any) => {
           etapas: {
             ...prev.fases[fase].etapas,
             [nome]: {
-              rep,
+              num_of_reps,
               items: {},
             },
           },
@@ -112,7 +113,8 @@ export const ExperimentoProvider = ({ children }: any) => {
           etapas: {
             ...prev.fases[currentPhase].etapas,
             [currentEtapa]: {
-              rep: prev.fases[currentPhase].etapas[currentEtapa].rep,
+              num_of_reps:
+                prev.fases[currentPhase].etapas[currentEtapa].num_of_reps,
               items: {
                 ...prev.fases[currentPhase].etapas[currentEtapa].items,
                 [item]: {
@@ -172,6 +174,32 @@ export const ExperimentoProvider = ({ children }: any) => {
     }
   }
 
+  const setQuantity = (item: string, obj: any) => {
+    setExperimento((prev: any) => ({
+      nome: prev.nome,
+      modoDeCalculo: prev.modoDeCalculo,
+      fases: {
+        ...prev.fases,
+        [currentPhase]: {
+          etapas: {
+            ...prev.fases[currentPhase].etapas,
+            [currentEtapa]: {
+              num_of_reps:
+                prev.fases[currentPhase].etapas[currentEtapa].num_of_reps,
+              items: {
+                ...prev.fases[currentPhase].etapas[currentEtapa].items,
+                [item]: {
+                  ...prev.fases[currentPhase].etapas[currentEtapa].items[item],
+                  ...obj,
+                },
+              },
+            },
+          },
+        },
+      },
+    }))
+  }
+
   return (
     <ExperimentoContext.Provider
       value={{
@@ -184,6 +212,7 @@ export const ExperimentoProvider = ({ children }: any) => {
         currentItem,
         experimento,
         setSelectedRows,
+        setQuantity,
         selectedRows,
         listItems,
       }}
