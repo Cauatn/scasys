@@ -62,7 +62,7 @@ export default function PageRoot({ toggleReturnButton = true }) {
             <ExperimentSwitcher isCollapsed={isCollapsed} />
           </div>
           <Separator />
-          <nav className="my-2">
+          <nav className="mt-1">
             {isCollapsed ? (
               <div className="grid gap-1 px-2 group-[[data-collapsed=true]]:justify-center group-[[data-collapsed=true]]:px-2">
                 <Tooltip delayDuration={0}>
@@ -70,12 +70,12 @@ export default function PageRoot({ toggleReturnButton = true }) {
                     <Link
                       to="#"
                       className={cn(
-                        buttonVariants({ size: "icon", variant: "ghost" }),
+                        buttonVariants({ variant: "ghost", size: "icon" }),
                         "h-9 w-9",
                         "dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white"
                       )}
                     >
-                      <LayoutDashboard className="size-4 " />
+                      <LayoutDashboard className="size-4" />
                       <span className="sr-only">Dashboard</span>
                     </Link>
                   </TooltipTrigger>

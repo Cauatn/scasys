@@ -126,11 +126,11 @@ export function SixaETP() {
                         required
                         {...register("biodegradableTime")}
                       />
-                      <Label>Tempo de degradação :</Label>
+                      <Label>Fonte bibliográfica :</Label>
                       <Input
                         id="srcBiodegradable"
                         type="text"
-                        placeholder="Fonte da informação"
+                        placeholder="Fonte do tempo"
                         required
                         {...register("src")}
                       />
