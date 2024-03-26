@@ -34,19 +34,19 @@ import { createInventory } from "@/hooks/create-inventory"
 const InvSchema = z.object({
   quantitys: z
     .object({
-      quantity: z.number(),
+      value: z.number(),
     })
     .array()
     .nonempty(),
   unit: z.string(),
-  observacoes: z.string().optional(),
+  observation: z.string().optional(),
 })
 type InvSchema = z.infer<typeof InvSchema>
 
 export default function EightaETP() {
   const [quantityOrValues, setQuantityOrValues] = useState<
     Array<{
-      quantity: number
+      value: number
     }>
   >([])
 
@@ -54,14 +54,14 @@ export default function EightaETP() {
     resolver: zodResolver(InvSchema),
   })
 
-  const { currentItem, setQuantity } = useExpContext()
+  const { currentItem, setQuantity, inventoryStage } = useExpContext()
 
   const navigate = useNavigate()
 
   const handleFormSubmit = (data: any) => {
-    setQuantity(currentItem, data)
+    setQuantity(data)
 
-    createInventory()
+    createInventory(inventoryStage)
 
     //navigate("/inventory/5")
   }
@@ -85,7 +85,7 @@ export default function EightaETP() {
           <div className="mb-4 mt-4 flex w-full flex-col gap-4 ">
             {quantityOrValues.map((_, index) => {
               return (
-                <div className="flex flex-col gap-3" key={index + _.quantity}>
+                <div className="flex flex-col gap-3" key={index + _.value}>
                   <Label htmlFor="quantitade" className="pl-2">
                     Quantidade ou valor:
                   </Label>
@@ -93,7 +93,7 @@ export default function EightaETP() {
                     <Input
                       id="quantitade"
                       placeholder="quantitade"
-                      defaultValue={quantityOrValues[index]?.quantity}
+                      defaultValue={quantityOrValues[index]?.value}
                       className=""
                       type="number"
                       onChange={(event) => {
@@ -102,7 +102,7 @@ export default function EightaETP() {
                             if (i === index) {
                               return {
                                 ...item,
-                                quantity: Number(event.target.value),
+                                value: Number(event.target.value),
                               }
                             }
                             return item
@@ -149,7 +149,7 @@ export default function EightaETP() {
               <Button
                 className="rounded-md bg-green-400 p-3"
                 onClick={() =>
-                  setQuantityOrValues((prev) => [...prev, { quantity: 0 }])
+                  setQuantityOrValues((prev) => [...prev, { value: 0 }])
                 }
               >
                 Adicionar nova quantidade e(ou) valor
@@ -159,7 +159,7 @@ export default function EightaETP() {
               <Label htmlFor="Item" className="pl-2">
                 Observações :
               </Label>
-              <Textarea {...register("observacoes")} />
+              <Textarea {...register("observation")} />
             </div>
             <div className="inline-flex w-fit items-center gap-3">
               <Label htmlFor="" className="pl-2">

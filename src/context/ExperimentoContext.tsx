@@ -10,8 +10,6 @@ import { useConjContext } from "./ConjuntoContext"
 
 export type ExperimentoContext = {
   listItems: any
-  experimento: any
-  setExperimentoMetaData: (nome: string, modoDeCalculo: string) => void
   setNewPhase: (nome: string) => void
   currentPhase: string
   setNewEtapa: (nome: string, num_of_reps: number, fase: string) => void
@@ -20,13 +18,15 @@ export type ExperimentoContext = {
     item: string,
     especificidade: string,
     formula: string,
-    currentEtapa: string,
-    currentPhase: string
+    isRecyclable: boolean,
+    isBioDeposited: boolean,
+    isDegradable: Array<any>
   ) => void
-  setQuantity: (item: string, obj: any) => void
+  setQuantity: (obj: any) => void
   selectedRows: any[]
   setSelectedRows: Dispatch<SetStateAction<any[]>>
   currentItem: string
+  inventoryStage: any
 }
 
 export const ExperimentoContext = createContext<ExperimentoContext | null>(null)
@@ -35,11 +35,7 @@ export const ExperimentoProvider = ({ children }: any) => {
   const { residuos, addResiduo, compostos, addCompost, epcs, addEpc } =
     useConjContext()
 
-  const [experimento, setExperimento] = useState<any | undefined>({
-    nome: null,
-    modoDeCalculo: null,
-    fases: {},
-  })
+  const [inventoryStage, setInventoryStage] = useState<any | undefined>([])
 
   const [currentPhase, setCurrentPhase] = useState<string>("inicial")
   const [currentEtapa, setCurrentEtapa] = useState<string>("")
@@ -47,88 +43,71 @@ export const ExperimentoProvider = ({ children }: any) => {
   const [listItems, setListItems] = useState<any[]>([]) //lista de itens da tabela [residuos, compostos, epcs
 
   useEffect(() => {
-    localStorage.setItem("experimento", JSON.stringify(experimento))
-  }, [experimento])
+    console.log("inventario mudou: ", inventoryStage)
+  }, [inventoryStage])
 
   //variavel que indica os valores da tabela selecionados
   const [selectedRows, setSelectedRows] = useState<Array<any>>([])
 
-  const setExperimentoMetaData = (nome: string, modoDeCalculo: string) => {
-    setExperimento((prev: any) => ({
-      nome,
-      modoDeCalculo,
-      fases: prev.fases,
-    }))
-  }
-
   const setNewPhase = (nome: string) => {
-    setExperimento((prev: any) => ({
-      nome: prev.nome,
-      modoDeCalculo: prev.modoDeCalculo,
-      fases: {
-        ...prev.fases,
-        [nome]: {
-          etapas: {},
-        },
-      },
-    }))
-
     setCurrentPhase(nome)
+
+    setInventoryStage((prev: any) => {
+      return [
+        ...prev,
+        {
+          name: nome,
+          etapa: [],
+        },
+      ]
+    })
   }
 
-  const setNewEtapa = (nome: string, num_of_reps: number, fase: string) => {
-    setExperimento((prev: any) => ({
-      nome: prev.nome,
-      modoDeCalculo: prev.modoDeCalculo,
-      fases: {
-        ...prev.fases,
-        [fase]: {
-          etapas: {
-            ...prev.fases[fase].etapas,
-            [nome]: {
-              num_of_reps,
-              items: {},
-            },
-          },
-        },
-      },
-    }))
-
+  const setNewEtapa = (nome: string, num_of_reps: number) => {
     setCurrentEtapa(nome)
+
+    setInventoryStage((prev: any) => {
+      const index = prev.findIndex((item: any) => item.name === currentPhase)
+      const newEtapa = {
+        name: nome,
+        num_of_reps: num_of_reps,
+        elements: [],
+      }
+
+      prev[index].etapa.push(newEtapa)
+      return [...prev]
+    })
   }
 
   const setNewItem = (
     item: string,
     especificidade: string,
     formula: string,
-    currentEtapa: string,
-    currentPhase: string
+    isRecyclable: boolean,
+    isBioDeposited: boolean,
+    isDegradable: Array<any>
   ) => {
-    setExperimento((prev: any) => ({
-      nome: prev.nome,
-      modoDeCalculo: prev.modoDeCalculo,
-      fases: {
-        ...prev.fases,
-        [currentPhase]: {
-          etapas: {
-            ...prev.fases[currentPhase].etapas,
-            [currentEtapa]: {
-              num_of_reps:
-                prev.fases[currentPhase].etapas[currentEtapa].num_of_reps,
-              items: {
-                ...prev.fases[currentPhase].etapas[currentEtapa].items,
-                [item]: {
-                  especificidade,
-                  formula,
-                },
-              },
-            },
-          },
-        },
-      },
-    }))
-
     setCurrentItem(item)
+
+    setInventoryStage((prev: any) => {
+      const index = prev.findIndex((item: any) => item.name === currentPhase)
+      const etapaIndex = prev[index].etapa.findIndex(
+        (item: any) => item.name === currentEtapa
+      )
+
+      const newItem = {
+        item: item,
+        especifity: especificidade,
+        chem_form: formula,
+        isRecyclable: isRecyclable,
+        isBioDeposited: isBioDeposited,
+        isDegradable: isDegradable,
+      }
+
+      prev[index].etapa[etapaIndex].elements.push(newItem)
+      return [...prev]
+    })
+
     setListItems([
       ...listItems,
       {
@@ -174,47 +153,41 @@ export const ExperimentoProvider = ({ children }: any) => {
     }
   }
 
-  const setQuantity = (item: string, obj: any) => {
-    setExperimento((prev: any) => ({
-      nome: prev.nome,
-      modoDeCalculo: prev.modoDeCalculo,
-      fases: {
-        ...prev.fases,
-        [currentPhase]: {
-          etapas: {
-            ...prev.fases[currentPhase].etapas,
-            [currentEtapa]: {
-              num_of_reps:
-                prev.fases[currentPhase].etapas[currentEtapa].num_of_reps,
-              items: {
-                ...prev.fases[currentPhase].etapas[currentEtapa].items,
-                [item]: {
-                  ...prev.fases[currentPhase].etapas[currentEtapa].items[item],
-                  ...obj,
-                },
-              },
-            },
-          },
-        },
-      },
-    }))
+  const setQuantity = (obj: any) => {
+    setInventoryStage((prev: any) => {
+      const index = prev.findIndex((item: any) => item.name === currentPhase)
+      const etapaIndex = prev[index].etapa.findIndex(
+        (item: any) => item.name === currentEtapa
+      )
+      const elementIndex = prev[index].etapa[etapaIndex].elements.findIndex(
+        (element: any) => element.item === currentItem
+      )
+
+      prev[index].etapa[etapaIndex].elements[elementIndex] = {
+        ...prev[index].etapa[etapaIndex].elements[elementIndex],
+        unit: obj.unit,
+        observation: obj.observation,
+      }
+      prev[index].etapa[etapaIndex].elements[elementIndex].quantity =
+        obj.quantitys
+      return [...prev]
+    })
   }
 
   return (
     <ExperimentoContext.Provider
       value={{
-        setExperimentoMetaData,
         setNewPhase,
         currentPhase,
         setNewEtapa,
         currentEtapa,
         setNewItem,
         currentItem,
-        experimento,
         setSelectedRows,
         setQuantity,
         selectedRows,
         listItems,
+        inventoryStage,
       }}
     >
       {children}

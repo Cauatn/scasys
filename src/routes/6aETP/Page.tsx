@@ -42,13 +42,20 @@ export function SixaETP() {
   const [isDegradable, setIsDegradable] = useState(false)
 
   const handleFormSubmit = (data: any) => {
-    console.log(data)
     setNewItem(
       data.item,
       data.specificity,
       data.formula,
-      currentEtapa,
-      currentPhase
+      data.recyclable,
+      data.biodegradable,
+      data.biodegradable
+        ? [
+            {
+              ft: data.biodegradableTime,
+              src: data.src,
+            },
+          ]
+        : []
     )
 
     navigate("/inventory/4")

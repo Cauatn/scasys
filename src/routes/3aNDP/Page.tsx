@@ -41,11 +41,9 @@ export default function TrheeaNDP() {
 
   const navigate = useNavigate()
 
-  const { setExperimentoMetaData } = useExpContext()
+  const {} = useExpContext()
 
   const handleFormSubmit = (data: any) => {
-    setExperimentoMetaData(data.procedureName, data.calculusMethod)
-
     createExperiment(data)
       .then(() => {
         navigate("/inventory/1")
