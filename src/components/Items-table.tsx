@@ -8,37 +8,46 @@ import {
 } from "@/components/ui/table"
 import { useExpContext } from "@/context/ExperimentoContext"
 import { useEffect, useState } from "react"
+import { set } from "react-hook-form"
 
 export function ItemsTable(props: any) {
   const [rows, setRows] = useState<
-    | {
-        fase: string
-        etapa: string
-        especificidade: string
-        item: string
-      }[]
-    | []
+    Array<{
+      fase: string
+      etapa: string
+      especificidade: string
+      item: string
+      quantidade: number
+      total: number
+    }>
   >([])
 
-  const { experimento } = useExpContext()
+  const { inventoryStage, listItems } = useExpContext()
+
+  useEffect(() => {}, [inventoryStage])
 
   useEffect(() => {
-    let rows: any = []
-    for (let fase in experimento.fases) {
-      for (let etapa in experimento.fases[fase].etapas) {
-        for (let item in experimento.fases[fase].etapas[etapa].items) {
-          rows.push({
-            fase: fase,
-            etapa: etapa,
-            especificidade:
-              experimento.fases[fase].etapas[etapa].items[item].especificidade,
-            item: item,
-          })
+    console.log("oie: ", listItems)
+
+    setRows(() => {
+      let rows = listItems.map((e: any) => {
+        return {
+          fase: e.currentPhase,
+          etapa: e.currentEtapa,
+          especificidade: e.especificidade,
+          item: e.items,
+          properties: {
+            quantity: e.properties.quantity,
+            total: e.properties.total,
+          },
         }
-      }
-    }
-    setRows(rows)
-  }, [experimento])
+      })
+
+      return rows
+    })
+
+    console.log("linhas:", rows)
+  }, [listItems])
 
   return (
     <div className=" rounded-md border">
@@ -49,7 +58,7 @@ export function ItemsTable(props: any) {
             <TableHead>Etapa procedimental</TableHead>
             <TableHead>Especificidade</TableHead>
             <TableHead>Item</TableHead>
-            <TableHead>Quantidade</TableHead>
+            {listItems}
             <TableHead>Total</TableHead>
           </TableRow>
         </TableHeader>
@@ -60,9 +69,12 @@ export function ItemsTable(props: any) {
                 <TableCell className="font-medium">{e.fase}</TableCell>
                 <TableCell className="font-medium">{e.etapa}</TableCell>
                 <TableCell className="font-medium">
-                  {e.especificidade || ""}
+                  {e.especificidade}
                 </TableCell>
                 <TableCell className="font-medium">{e.item || ""}</TableCell>
+                <TableCell className="font-medium">
+                  {e.total.toString() || ""}
+                </TableCell>
               </TableRow>
             )
           })}
