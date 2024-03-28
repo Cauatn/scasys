@@ -54,7 +54,14 @@ export default function EightaETP() {
     resolver: zodResolver(InvSchema),
   })
 
-  const { currentItem, setQuantity, inventoryStage } = useExpContext()
+  const {
+    currentItem,
+    setQuantity,
+    inventoryStage,
+    setListItems,
+    currentEtapa,
+    currentPhase,
+  } = useExpContext()
 
   const navigate = useNavigate()
 
@@ -67,8 +74,22 @@ export default function EightaETP() {
   }
 
   useEffect(() => {
-    console.log(quantityOrValues)
+    console.log("teste:", quantityOrValues)
     setValue("quantitys", quantityOrValues)
+
+    setListItems((prev) => {
+      const index = prev.findIndex(
+        (item: any) =>
+          item.items === currentItem && item.currentEtapa === currentEtapa
+      )
+      let sum = 0
+      quantityOrValues.forEach((element: any) => {
+        sum += element.value
+      })
+      prev[index].properties.quantity = quantityOrValues
+      prev[index].properties.total = sum
+      return [...prev]
+    })
   }, [quantityOrValues])
 
   return (

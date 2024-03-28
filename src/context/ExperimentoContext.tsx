@@ -27,13 +27,13 @@ export type ExperimentoContext = {
   setSelectedRows: Dispatch<SetStateAction<any[]>>
   currentItem: string
   inventoryStage: any
+  setListItems: Dispatch<SetStateAction<any[]>>
 }
 
 export const ExperimentoContext = createContext<ExperimentoContext | null>(null)
 
 export const ExperimentoProvider = ({ children }: any) => {
-  const { residuos, addResiduo, compostos, addCompost, epcs, addEpc } =
-    useConjContext()
+  const {} = useConjContext()
 
   const [inventoryStage, setInventoryStage] = useState<any | undefined>([])
 
@@ -111,16 +111,20 @@ export const ExperimentoProvider = ({ children }: any) => {
     setListItems([
       ...listItems,
       {
-        id: residuos.length + 1,
+        id: listItems.length + 1,
         items: item,
-
         especificidade: especificidade,
         formula: formula,
         currentEtapa: currentEtapa,
         currentPhase: currentPhase,
+        properties: {
+          quantity: [],
+          total: 0,
+        },
       },
     ])
 
+    /*
     if (especificidade === "residue") {
       addResiduo({
         id: residuos.length + 1,
@@ -150,7 +154,7 @@ export const ExperimentoProvider = ({ children }: any) => {
         currentEtapa: currentEtapa,
         currentPhase: currentPhase,
       })
-    }
+    } */
   }
 
   const setQuantity = (obj: any) => {
@@ -172,6 +176,23 @@ export const ExperimentoProvider = ({ children }: any) => {
         obj.quantitys
       return [...prev]
     })
+
+    setListItems((prev: any) => {
+      const index = prev.findIndex(
+        (item: any) =>
+          item.items === currentItem && item.currentEtapa === currentEtapa
+      )
+
+      //somando valores de quantidade
+      let sum = 0
+      obj.quantitys.forEach((element: any) => {
+        sum += element.value
+      })
+
+      prev[index].properties.quantity = obj.quantitys
+      prev[index].properties.total = sum
+      return [...prev]
+    })
   }
 
   return (
@@ -188,6 +209,7 @@ export const ExperimentoProvider = ({ children }: any) => {
         selectedRows,
         listItems,
         inventoryStage,
+        setListItems,
       }}
     >
       {children}

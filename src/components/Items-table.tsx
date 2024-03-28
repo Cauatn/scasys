@@ -27,8 +27,6 @@ export function ItemsTable(props: any) {
   useEffect(() => {}, [inventoryStage])
 
   useEffect(() => {
-    console.log("oie: ", listItems)
-
     setRows(() => {
       let rows = listItems.map((e: any) => {
         return {
@@ -58,23 +56,35 @@ export function ItemsTable(props: any) {
             <TableHead>Etapa procedimental</TableHead>
             <TableHead>Especificidade</TableHead>
             <TableHead>Item</TableHead>
-            {listItems}
+            <TableHead>Quantidade(s)</TableHead>
             <TableHead>Total</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {rows.map((e: any, index: number) => {
             return (
-              <TableRow key={index}>
+              <TableRow key={crypto.randomUUID() + index}>
                 <TableCell className="font-medium">{e.fase}</TableCell>
                 <TableCell className="font-medium">{e.etapa}</TableCell>
                 <TableCell className="font-medium">
                   {e.especificidade}
                 </TableCell>
                 <TableCell className="font-medium">{e.item || ""}</TableCell>
-                <TableCell className="font-medium">
-                  {e.total.toString() || ""}
-                </TableCell>
+                {
+                  <TableCell className="font-medium">
+                    {e.properties.quantity.map((a: any, index: number) => {
+                      if (index === 0) return <>{`[${a.value},`}</>
+                      if (index === e.properties.quantity.length - 1)
+                        return <>{`${a.value}]`}</>
+                      return <>{`${a.value},`}</>
+                    })}
+                  </TableCell>
+                }
+                {
+                  <TableCell className="font-medium">
+                    {e.properties.total.toString()}
+                  </TableCell>
+                }
               </TableRow>
             )
           })}
