@@ -22,7 +22,7 @@ const InvSchema = z.object({
   specificity: z.string(),
   item: z.string(),
   formula: z.string(),
-  biodegradable: z.boolean(),
+  biodegradable: z.boolean().or(z.undefined()),
   biodegradableTime: z.string().transform(Number).optional(),
   src: z.string().optional(),
   recyclable: z.boolean(),
@@ -51,11 +51,11 @@ export function SixaETP() {
       data.biodegradable
         ? [
             {
-              ft: data.biodegradableTime,
+              ft: 28 / data.biodegradableTime,
               src: data.src,
             },
           ]
-        : []
+        : undefined
     )
 
     navigate("/inventory/4")

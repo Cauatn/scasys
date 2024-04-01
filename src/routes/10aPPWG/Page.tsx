@@ -2,7 +2,12 @@ import { ExpItems, columnsItems } from "@/components/data-table/columns"
 import { DataTable } from "@/components/data-table/data-table"
 import NextPageButton from "@/components/next-page-button"
 import { Button } from "@/components/ui/button"
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import {
   Select,
@@ -281,9 +286,14 @@ export default function TenaPPWG() {
 }
 
 function ShowTable({ name }: { name: string }) {
-  const { listItems } = useExpContext()
+  const { listItems, selectedRows, setMrrItems } = useExpContext()
 
-  let data: ExpItems[] = listItems
+  let data: ExpItems[] = listItems.map((e: any) => {
+    return {
+      ...e,
+      status: "not-selected",
+    }
+  })
 
   return (
     <Dialog>
@@ -295,10 +305,27 @@ function ShowTable({ name }: { name: string }) {
           {name}
         </Button>
       </DialogTrigger>
-      <DialogContent className="min-h-[450px] max-w-[1000px]">
+      <DialogContent className="min-h-[450px] max-w-[1000px] ">
         <div className="container mx-auto py-10">
           <DataTable columns={columnsItems} data={data} />
         </div>
+        <DialogFooter className="flex justify-end px-10">
+          <Button
+            onClick={() => {
+              console.log("linhas selecionadas: ", selectedRows)
+
+              selectedRows.forEach((element: any) => {
+                setMrrItems(
+                  element.original.currentEtapa,
+                  element.original.currentPhase,
+                  element.original.items
+                )
+              })
+            }}
+          >
+            Selecionar
+          </Button>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   )

@@ -19,7 +19,7 @@ export const createExperiment = async (data: any) => {
         }
       )
       .then((response) => {
-        console.log(response)
+        localStorage.setItem("experiment_id", response.data.id)
       })
 
     return response

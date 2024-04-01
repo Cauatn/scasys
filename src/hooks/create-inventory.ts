@@ -1,8 +1,6 @@
 import axios from "axios"
 
 /*
-const mongoose = require("mongoose");
-
 const ExpDataSchema = new mongoose.Schema(
     {
         autor: {
@@ -21,7 +19,7 @@ const ExpDataSchema = new mongoose.Schema(
         },
         inventory_stage: [
             {
-                stage: {
+                name: {
                     type: String,
                 },
                 etapa: [
@@ -46,9 +44,6 @@ const ExpDataSchema = new mongoose.Schema(
                                 },
                                 isDegradable: [
                                     {
-                                        verification: {
-                                            type: Boolean,
-                                        },
                                         ft: {
                                             type: Number,
                                         },
@@ -82,15 +77,13 @@ const ExpDataSchema = new mongoose.Schema(
                     },
                 ],
             },
-        ],
-);
-*/
+        ], */
 
 export const createInventory = async (experimento: any) => {
   try {
     const response = await axios
       .post(
-        `http://localhost:3333/exp/invetoryStage/6602c58c7d54aed233689aea`,
+        `http://localhost:3333/exp/invetoryStage/${localStorage.getItem("experiment_id")}`,
         {
           inventory_stage: experimento,
         },

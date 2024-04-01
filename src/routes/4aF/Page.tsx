@@ -71,7 +71,8 @@ export default function FouraF() {
             </Select>
           </div>
           <Button className="w-full max-w-[350px] bg-green-500 text-white">
-            <PlusIcon></PlusIcon> <span>Adicionar fase intermediaria</span>
+            <PlusIcon />
+            <span>Adicionar fase intermediaria</span>
           </Button>
         </div>
         <div className="h-full max-h-[600px]">

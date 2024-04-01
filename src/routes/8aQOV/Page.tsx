@@ -25,11 +25,13 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
+import { set, useForm } from "react-hook-form"
 import { z } from "zod"
 import { useExpContext } from "@/context/ExperimentoContext"
 import { Trash2 } from "lucide-react"
 import { createInventory } from "@/hooks/create-inventory"
+import { get } from "http"
+import { v4 as uuidv4 } from "uuid"
 
 const InvSchema = z.object({
   quantitys: z
@@ -49,6 +51,7 @@ export default function EightaETP() {
       value: number
     }>
   >([])
+  const [unit, setUnit] = useState("")
 
   const { register, handleSubmit, setValue, getValues } = useForm({
     resolver: zodResolver(InvSchema),
@@ -70,35 +73,43 @@ export default function EightaETP() {
 
     createInventory(inventoryStage)
 
-    //navigate("/inventory/5")
+    navigate("/inventory/5")
   }
 
   useEffect(() => {
-    console.log("teste:", quantityOrValues)
     setValue("quantitys", quantityOrValues)
+
+    setQuantity({
+      quantitys: quantityOrValues,
+      unit: unit,
+    })
 
     setListItems((prev) => {
       const index = prev.findIndex(
         (item: any) =>
           item.items === currentItem && item.currentEtapa === currentEtapa
       )
+      console.log("index", index)
+
       let sum = 0
       quantityOrValues.forEach((element: any) => {
         sum += element.value
       })
       prev[index].properties.quantity = quantityOrValues
       prev[index].properties.total = sum
+      prev[index].properties.unit = unit
+
       return [...prev]
     })
-  }, [quantityOrValues])
+  }, [quantityOrValues, unit])
 
   return (
     <form
       className="flex h-full flex-col justify-between px-8 xl:px-0"
       onSubmit={handleSubmit(handleFormSubmit)}
     >
-      <div className="flex justify-start space-x-4 px-6 py-2">
-        <div className="flex w-full flex-col gap-5 space-y-4 ">
+      <div className="flex justify-between space-x-4 px-6 py-2">
+        <div className="flex w-[45%] flex-col gap-5 space-y-4">
           <div className="inline-flex w-full justify-between">
             <h1 className=" text-2xl font-bold">Fase de Inventário</h1>
             <span className="text-xl text-gray-500">{currentItem}</span>
@@ -106,7 +117,7 @@ export default function EightaETP() {
           <div className="mb-4 mt-4 flex w-full flex-col gap-4 ">
             {quantityOrValues.map((_, index) => {
               return (
-                <div className="flex flex-col gap-3" key={index + _.value}>
+                <div className="flex flex-col gap-3" key={uuidv4()}>
                   <Label htmlFor="quantitade" className="pl-2">
                     Quantidade ou valor:
                   </Label>
@@ -133,10 +144,13 @@ export default function EightaETP() {
                     />
                     <div>
                       <Select
-                        onValueChange={(value) =>
-                          setValue("unit", value as string)
-                        }
+                        onValueChange={(value) => {
+                          setValue("unit", value)
+
+                          setUnit(value)
+                        }}
                         defaultValue={getValues("unit")}
+                        value={unit}
                       >
                         <SelectTrigger id="unidade-select">
                           <SelectValue placeholder="Selecione aqui" />
@@ -169,6 +183,7 @@ export default function EightaETP() {
             <div className="inline-flex content-center items-center justify-start gap-6">
               <Button
                 className="rounded-md bg-green-400 p-3"
+                type="button"
                 onClick={() =>
                   setQuantityOrValues((prev) => [...prev, { value: 0 }])
                 }

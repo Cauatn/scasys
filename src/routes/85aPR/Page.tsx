@@ -63,7 +63,7 @@ export default function EightaPerg() {
     [],
   ])
 
-  const { residuos } = useConjContext()
+  const {} = useConjContext()
   const { selectedRows } = useExpContext()
 
   const { handleSubmit, setValue, register } = useForm({
@@ -77,7 +77,7 @@ export default function EightaPerg() {
     navigate("/ppwg")
   }
 
-  let data: Item[] = residuos
+  let data: Item[] = []
 
   const [selectedConjunto, setSelectedConjunto] = useState<number>(0)
 
