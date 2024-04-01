@@ -50,7 +50,7 @@ export default function EightaETP() {
     Array<{
       value: number
     }>
-  >([])
+  >([{ value: 0 }])
   const [unit, setUnit] = useState("")
 
   const { register, handleSubmit, setValue, getValues } = useForm({

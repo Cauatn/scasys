@@ -68,7 +68,7 @@ export default function PageRoot({ toggleReturnButton = true }) {
                 <Tooltip delayDuration={0}>
                   <TooltipTrigger asChild>
                     <Link
-                      to="#"
+                      to="/dashboard"
                       className={cn(
                         buttonVariants({ variant: "ghost", size: "icon" }),
                         "h-9 w-9",
@@ -117,7 +117,13 @@ export default function PageRoot({ toggleReturnButton = true }) {
                 icon: Inbox,
                 variant: "ghost",
                 path: "/inventory",
-                sublinks: ["tela 1", "tela 2", "tela 3", "tela 4", "tela 5"],
+                sublinks: [
+                  "Adicionar Fase",
+                  "Adicionar Etapa",
+                  "Adicionar Item",
+                  "Quantidade e observações",
+                  "Perguntas",
+                ],
               },
               {
                 title: "Toxicidade",
@@ -143,7 +149,6 @@ export default function PageRoot({ toggleReturnButton = true }) {
               },
             ]}
           />
-          <Separator />
         </ResizablePanel>
         <ResizableHandle withHandle className="hidden xl:flex" />
         <ResizablePanel className="flex h-full w-full flex-col overflow-scroll">
