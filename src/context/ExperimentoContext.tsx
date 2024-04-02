@@ -20,7 +20,7 @@ export type ExperimentoContext = {
     formula: string,
     isRecyclable: boolean,
     isBioDeposited: boolean,
-    isDegradable: Array<any>
+    isDegradable: Array<any> | undefined
   ) => void
   setQuantity: (obj: any) => void
   selectedRows: any[]
@@ -28,6 +28,7 @@ export type ExperimentoContext = {
   currentItem: string
   inventoryStage: any
   setListItems: Dispatch<SetStateAction<any[]>>
+  setMrrItems: (etapa: string, phase: string, itemName: string) => void
 }
 
 export const ExperimentoContext = createContext<ExperimentoContext | null>(null)
@@ -85,7 +86,7 @@ export const ExperimentoProvider = ({ children }: any) => {
     formula: string,
     isRecyclable: boolean,
     isBioDeposited: boolean,
-    isDegradable: Array<any>
+    isDegradable: Array<any> | undefined
   ) => {
     setCurrentItem(item)
 
@@ -195,6 +196,22 @@ export const ExperimentoProvider = ({ children }: any) => {
     })
   }
 
+  const setMrrItems = (etapa: string, phase: string, itemName: string) => {
+    setInventoryStage((prev: any) => {
+      const index = prev.findIndex((item: any) => item.name === phase)
+      const etapaIndex = prev[index].etapa.findIndex(
+        (item: any) => item.name === etapa
+      )
+      const elementIndex = prev[index].etapa[etapaIndex].elements.findIndex(
+        (element: any) => element.item === itemName
+      )
+
+      //mudando valor de isRecyclable
+      prev[index].etapa[etapaIndex].elements[elementIndex].isRecyclable = true
+      return [...prev]
+    })
+  }
+
   return (
     <ExperimentoContext.Provider
       value={{
@@ -210,6 +227,7 @@ export const ExperimentoProvider = ({ children }: any) => {
         listItems,
         inventoryStage,
         setListItems,
+        setMrrItems,
       }}
     >
       {children}
@@ -219,7 +237,7 @@ export const ExperimentoProvider = ({ children }: any) => {
 
 export function useExpContext() {
   const contexto = useContext(ExperimentoContext)
-  console.log(contexto)
+
   if (!contexto) {
     throw new Error("useExp Context precisa estar em seu respectivo provider")
   }

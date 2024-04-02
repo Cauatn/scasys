@@ -32,6 +32,7 @@ import { AuthenticationPage } from "./routes/authentication/page"
 import AuthorsPage from "./routes/authors-page"
 import { Dashboard } from "./routes/dashboard"
 import LandPage from "./routes/land-page"
+import { ShowProcedure } from "./routes/show-procedure"
 
 export default function AppRouter() {
   return (
@@ -44,6 +45,7 @@ export default function AppRouter() {
           <Route path="/" element={<PageRoot toggleReturnButton={false} />}>
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="procedure" element={<TrheeaNDP />} />
+            <Route path="/showProcedure" element={<ShowProcedure />} />
           </Route>
           <Route path="/inventory" element={<PageRoot />}>
             <Route path="1" element={<FouraF />} />
