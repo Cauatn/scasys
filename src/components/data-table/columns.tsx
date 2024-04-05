@@ -143,11 +143,11 @@ export const columnsItems: ColumnDef<ExpItems>[] = [
   },
   {
     accessorKey: "especificidade",
-    header: "Especificidade",
+    header: "Especificidade associada",
   },
   {
     accessorKey: "currentEtapa",
-    header: "Etapa",
+    header: "Etapa associada",
   },
   {
     accessorKey: "currentPhase",

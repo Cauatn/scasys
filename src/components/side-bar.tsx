@@ -12,7 +12,7 @@ export default function Nav({ links, isCollapsed, path }: any) {
   return (
     <div
       data-collapsed={isCollapsed}
-      className="group flex flex-col gap-4 py-2 data-[collapsed=true]:py-2"
+      className="group flex flex-col gap-4 data-[collapsed=true]:py-2"
     >
       <nav>
         {links.map((link: any, index: number) =>
@@ -21,7 +21,7 @@ export default function Nav({ links, isCollapsed, path }: any) {
               <Tooltip key={index} delayDuration={0}>
                 <TooltipTrigger asChild>
                   <Link
-                    to="#"
+                    to={`${link.path}/${index + 1}`}
                     className={cn(
                       buttonVariants({ variant: link.variant, size: "icon" }),
                       "h-9 w-9",

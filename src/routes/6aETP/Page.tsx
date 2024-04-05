@@ -68,9 +68,12 @@ export function SixaETP() {
     >
       <div className="flex px-6 py-4">
         <div className="flex w-full flex-col gap-5 space-y-4">
-          <div className="inline-flex">
-            <h1 className="w-full text-2xl font-bold"> Fase de Inventário</h1>
-            <span className="text-xl text-gray-500">{currentPhase}</span>
+          <div className="inline-flex justify-between">
+            <h1 className="w-full text-2xl font-bold">Fase de Inventário</h1>
+            <div className="container max-w-fit justify-end space-x-2">
+              <span className="text-xl text-gray-500">{currentPhase}</span>
+              <span className="text-xl text-gray-500">{currentEtapa}</span>
+            </div>
           </div>
           <div className="">
             <div className="mx-auto inline-flex w-full justify-between gap-5">

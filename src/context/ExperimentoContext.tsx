@@ -191,7 +191,7 @@ export const ExperimentoProvider = ({ children }: any) => {
       })
 
       prev[index].properties.quantity = obj.quantitys
-      prev[index].properties.total = sum
+      prev[index].properties.total = sum.toFixed(3)
       return [...prev]
     })
   }

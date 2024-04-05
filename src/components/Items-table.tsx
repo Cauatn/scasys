@@ -9,6 +9,7 @@ import {
 import { useExpContext } from "@/context/ExperimentoContext"
 import { useEffect, useState } from "react"
 import { set } from "react-hook-form"
+import { v4 as uuidv4 } from "uuid"
 
 export function ItemsTable(props: any) {
   const [rows, setRows] = useState<
@@ -22,9 +23,7 @@ export function ItemsTable(props: any) {
     }>
   >([])
 
-  const { inventoryStage, listItems } = useExpContext()
-
-  useEffect(() => {}, [inventoryStage])
+  const { listItems } = useExpContext()
 
   useEffect(() => {
     setRows(() => {
@@ -37,6 +36,7 @@ export function ItemsTable(props: any) {
           properties: {
             quantity: e.properties.quantity,
             total: e.properties.total,
+            unit: e.properties.unit,
           },
         }
       })
@@ -48,7 +48,7 @@ export function ItemsTable(props: any) {
   }, [listItems])
 
   return (
-    <div className=" rounded-md border">
+    <div className="rounded-md border">
       <Table className={props.class}>
         <TableHeader>
           <TableRow>
@@ -63,7 +63,7 @@ export function ItemsTable(props: any) {
         <TableBody>
           {rows.map((e: any, index: number) => {
             return (
-              <TableRow key={crypto.randomUUID() + index}>
+              <TableRow key={uuidv4()}>
                 <TableCell className="font-medium">{e.fase}</TableCell>
                 <TableCell className="font-medium">{e.etapa}</TableCell>
                 <TableCell className="font-medium">
@@ -73,6 +73,8 @@ export function ItemsTable(props: any) {
                 {
                   <TableCell className="font-medium">
                     {e.properties.quantity.map((a: any, index: number) => {
+                      if (e.properties.quantity.length === 1)
+                        return <>{`[${a.value}]`}</>
                       if (index === 0) return <>{`[${a.value},`}</>
                       if (index === e.properties.quantity.length - 1)
                         return <>{`${a.value}]`}</>
@@ -82,7 +84,9 @@ export function ItemsTable(props: any) {
                 }
                 {
                   <TableCell className="font-medium">
-                    {e.properties.total.toString()}
+                    {e.properties.total.toFixed(3).toString() +
+                      " " +
+                      e.properties.unit}
                   </TableCell>
                 }
               </TableRow>

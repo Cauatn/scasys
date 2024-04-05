@@ -101,6 +101,10 @@ export default function EightaETP() {
 
       return [...prev]
     })
+
+    if (quantityOrValues.length === 0) {
+      setQuantityOrValues([{ value: 0 }])
+    }
   }, [quantityOrValues, unit])
 
   return (
