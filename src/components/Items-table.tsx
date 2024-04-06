@@ -61,37 +61,49 @@ export function ItemsTable(props: any) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {rows.map((e: any, index: number) => {
-            return (
-              <TableRow key={uuidv4()}>
-                <TableCell className="font-medium">{e.fase}</TableCell>
-                <TableCell className="font-medium">{e.etapa}</TableCell>
-                <TableCell className="font-medium">
-                  {e.especificidade}
-                </TableCell>
-                <TableCell className="font-medium">{e.item || ""}</TableCell>
-                {
+          {rows.length > 0 ? (
+            rows.map((e: any, index: number) => {
+              return (
+                <TableRow key={uuidv4()}>
+                  <TableCell className="font-medium">{e.fase}</TableCell>
+                  <TableCell className="font-medium">{e.etapa}</TableCell>
                   <TableCell className="font-medium">
-                    {e.properties.quantity.map((a: any, index: number) => {
-                      if (e.properties.quantity.length === 1)
-                        return <>{`[${a.value}]`}</>
-                      if (index === 0) return <>{`[${a.value},`}</>
-                      if (index === e.properties.quantity.length - 1)
-                        return <>{`${a.value}]`}</>
-                      return <>{`${a.value},`}</>
-                    })}
+                    {e.especificidade}
                   </TableCell>
-                }
-                {
-                  <TableCell className="font-medium">
-                    {e.properties.total.toFixed(3).toString() +
-                      " " +
-                      e.properties.unit}
-                  </TableCell>
-                }
-              </TableRow>
-            )
-          })}
+                  <TableCell className="font-medium">{e.item || ""}</TableCell>
+                  {
+                    <TableCell className="font-medium">
+                      {e.properties.quantity.map((a: any, index: number) => {
+                        if (e.properties.quantity.length === 1)
+                          return <>{`[${a.value}]`}</>
+                        if (index === 0) return <>{`[${a.value},`}</>
+                        if (index === e.properties.quantity.length - 1)
+                          return <>{`${a.value}]`}</>
+                        return <>{`${a.value},`}</>
+                      })}
+                    </TableCell>
+                  }
+                  {
+                    <TableCell className="font-medium">
+                      {e.properties.total.toFixed(3).toString() +
+                        " " +
+                        e.properties.unit}
+                    </TableCell>
+                  }
+                </TableRow>
+              )
+            })
+          ) : (
+            <TableRow>
+              <TableCell
+                colSpan={6}
+                className="text-center text-sm font-medium"
+              >
+                Informe os campos do item para que ele seja adicionado ao
+                experimento
+              </TableCell>
+            </TableRow>
+          )}
         </TableBody>
       </Table>
     </div>
