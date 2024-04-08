@@ -175,6 +175,11 @@ export const ExperimentoProvider = ({ children }: any) => {
       }
       prev[index].etapa[etapaIndex].elements[elementIndex].quantity =
         obj.quantitys
+
+      //faça isso para observation
+      prev[index].etapa[etapaIndex].elements[elementIndex].observation =
+        obj.observation
+
       return [...prev]
     })
 

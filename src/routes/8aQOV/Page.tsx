@@ -52,6 +52,7 @@ export default function EightaETP() {
     }>
   >([{ value: 0 }])
   const [unit, setUnit] = useState("")
+  const [observation, setObservation] = useState("")
 
   const { register, handleSubmit, setValue, getValues } = useForm({
     resolver: zodResolver(InvSchema),
@@ -69,8 +70,6 @@ export default function EightaETP() {
   const navigate = useNavigate()
 
   const handleFormSubmit = (data: any) => {
-    setQuantity(data)
-
     createInventory(inventoryStage)
 
     navigate("/inventory/5")
@@ -82,6 +81,7 @@ export default function EightaETP() {
     setQuantity({
       quantitys: quantityOrValues,
       unit: unit,
+      observation: observation,
     })
 
     setListItems((prev) => {
@@ -89,7 +89,6 @@ export default function EightaETP() {
         (item: any) =>
           item.items === currentItem && item.currentEtapa === currentEtapa
       )
-      console.log("index", index)
 
       let sum = 0
       quantityOrValues.forEach((element: any) => {
@@ -105,7 +104,7 @@ export default function EightaETP() {
     if (quantityOrValues.length === 0) {
       setQuantityOrValues([{ value: 0 }])
     }
-  }, [quantityOrValues, unit])
+  }, [quantityOrValues, unit, observation])
 
   return (
     <form
@@ -199,7 +198,9 @@ export default function EightaETP() {
               <Label htmlFor="Item" className="pl-2">
                 Observações :
               </Label>
-              <Textarea {...register("observation")} />
+              <Textarea
+                onChange={(event) => setObservation(event.target.value)}
+              />
             </div>
             <div className="inline-flex w-fit items-center gap-3">
               <Label htmlFor="" className="pl-2">
