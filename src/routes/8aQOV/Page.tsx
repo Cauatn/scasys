@@ -48,7 +48,7 @@ type InvSchema = z.infer<typeof InvSchema>
 export default function EightaETP() {
   const [quantityOrValues, setQuantityOrValues] = useState<
     Array<{
-      value: number
+      value: GLfloat
     }>
   >([{ value: 0 }])
   const [unit, setUnit] = useState("")
@@ -127,17 +127,17 @@ export default function EightaETP() {
                   <div className="inline-flex gap-2">
                     <Input
                       id="quantitade"
-                      placeholder="quantitade"
-                      defaultValue={quantityOrValues[index]?.value}
-                      className=""
+                      placeholder="quantidade"
                       type="number"
+                      min={0}
+                      defaultValue={quantityOrValues[index]?.value}
                       onChange={(event) => {
                         setQuantityOrValues(
                           quantityOrValues.map((item, i) => {
                             if (i === index) {
                               return {
                                 ...item,
-                                value: Number(event.target.value),
+                                value: parseFloat(event.target.value),
                               }
                             }
                             return item
@@ -165,6 +165,13 @@ export default function EightaETP() {
                           <SelectItem value="grama">Grama (g)</SelectItem>
                           <SelectItem value="litro">Litro (L)</SelectItem>
                           <SelectItem value="mol">Mol (mol)</SelectItem>
+                          <SelectItem value="mL">Mili Litro (mL)</SelectItem>
+                          <SelectItem value="kWh">
+                            Quilowatt-hora (kWh)
+                          </SelectItem>
+                          <SelectItem value="undefined">
+                            Não informar
+                          </SelectItem>
                         </SelectContent>
                       </Select>
                     </div>

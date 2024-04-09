@@ -80,7 +80,7 @@ export function SixaETP() {
               <div className="inline-flex space-x-8">
                 <div>
                   <div>
-                    <Label htmlFor="especificidade">Especificidade:</Label>
+                    <Label htmlFor="especificidade">Especificidade :</Label>
                     <Select
                       onValueChange={(value) => {
                         setValue("specificity", value)

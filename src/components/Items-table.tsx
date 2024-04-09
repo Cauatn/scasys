@@ -85,9 +85,11 @@ export function ItemsTable(props: any) {
                   }
                   {
                     <TableCell className="font-medium">
-                      {e.properties.total.toFixed(3).toString() +
-                        " " +
-                        e.properties.unit}
+                      {e.properties.unit == "undefined"
+                        ? e.properties.total.toFixed(3).toString()
+                        : e.properties.total.toFixed(3).toString() +
+                          " " +
+                          e.properties.unit}
                     </TableCell>
                   }
                 </TableRow>
