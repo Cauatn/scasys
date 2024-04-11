@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button"
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 
 import { ItemsTable } from "@/components/Items-table"
@@ -53,6 +53,7 @@ export default function EightaETP() {
   >([{ value: 0 }])
   const [unit, setUnit] = useState("")
   const [observation, setObservation] = useState("")
+  const [aux, setAux] = useState("")
 
   const { register, handleSubmit, setValue, getValues } = useForm({
     resolver: zodResolver(InvSchema),
@@ -128,21 +129,14 @@ export default function EightaETP() {
                     <Input
                       id="quantitade"
                       placeholder="quantidade"
-                      type="number"
                       min={0}
-                      defaultValue={quantityOrValues[index]?.value}
+                      type="number"
+                      value={quantityOrValues[index].value}
                       onChange={(event) => {
-                        setQuantityOrValues(
-                          quantityOrValues.map((item, i) => {
-                            if (i === index) {
-                              return {
-                                ...item,
-                                value: parseFloat(event.target.value),
-                              }
-                            }
-                            return item
-                          })
-                        )
+                        setQuantityOrValues((prev: any) => {
+                          prev[index].value = parseFloat(event.target.value)
+                          return [...prev]
+                        })
                       }}
                     />
                     <div>

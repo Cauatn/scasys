@@ -91,11 +91,24 @@ export function SixaETP() {
                         <SelectValue placeholder="selecione aqui" />
                       </SelectTrigger>
                       <SelectContent position="popper">
+                        <SelectItem value="auxiliary">Auxiliar</SelectItem>
                         <SelectItem value="reagent">Reagente</SelectItem>
                         <SelectItem value="solvent">Solvente</SelectItem>
                         <SelectItem value="residue">Resíduo</SelectItem>
                         <SelectItem value="water">Água</SelectItem>
                         <SelectItem value="product">Produto</SelectItem>
+                        <SelectItem value="energetic-waste">
+                          Gasto Energetico
+                        </SelectItem>
+                        <SelectItem value="electrolyte-support">
+                          Eletrólito de suporte
+                        </SelectItem>
+                        <SelectItem value="aatodo">Catodo</SelectItem>
+                        <SelectItem value="anodo">Anodo</SelectItem>
+                        <SelectItem value="reagent">Reagente</SelectItem>
+                        <SelectItem value="gas-emissor">
+                          Emissões de Gases
+                        </SelectItem>
                         <SelectItem value="chemical-compost">
                           Composto Químico
                         </SelectItem>
