@@ -3,6 +3,7 @@ import * as React from "react"
 import { cn } from "@/lib/utils"
 import { BookOpen, DoorClosed, Sun } from "lucide-react"
 import { Link } from "react-router-dom"
+import { v4 } from "uuid"
 
 export type NavItem = {
   title: string
@@ -60,7 +61,7 @@ export function MainNav({ items, children }: MainNavProps) {
         <nav className="hidden gap-6 md:flex">
           {items?.map((item, index) => (
             <Link
-              key={index}
+              key={v4()}
               to={item.disabled ? "#" : item.href}
               className={cn(
                 "flex items-center text-lg font-bold sm:text-sm",

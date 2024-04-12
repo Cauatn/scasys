@@ -25,7 +25,8 @@ const InvSchema = z.object({
   biodegradable: z.boolean().or(z.undefined()),
   biodegradableTime: z.string().transform(Number).optional(),
   src: z.string().optional(),
-  recyclable: z.boolean(),
+  recyclable: z.boolean().optional(),
+  isBioDeposited: z.boolean().optional(),
 })
 
 type InvSchema = z.infer<typeof InvSchema>
@@ -47,7 +48,7 @@ export function SixaETP() {
       data.specificity,
       data.formula,
       data.recyclable,
-      data.biodegradable,
+      data.isBioDeposited,
       data.biodegradable
         ? [
             {
@@ -105,7 +106,7 @@ export function SixaETP() {
                         </SelectItem>
                         <SelectItem value="aatodo">Catodo</SelectItem>
                         <SelectItem value="anodo">Anodo</SelectItem>
-                        <SelectItem value="reagent">Reagente</SelectItem>
+
                         <SelectItem value="gas-emissor">
                           Emissões de Gases
                         </SelectItem>
@@ -163,7 +164,7 @@ export function SixaETP() {
               </div>
               <div className="flex flex-col justify-end space-y-4">
                 <div className="inline-flex items-center justify-end space-x-2">
-                  <Label htmlFor="biodegradable">É biodegradável:</Label>
+                  <Label htmlFor="biodegradable">É degradável:</Label>
                   <Input
                     className="h-5 w-5 accent-green-500"
                     type="checkbox"
@@ -178,6 +179,15 @@ export function SixaETP() {
                     className="h-5 w-5 accent-green-500"
                     id="recyclable"
                     {...register("recyclable")}
+                    type="checkbox"
+                  />
+                </div>
+                <div className="inline-flex items-center justify-end space-x-2">
+                  <Label htmlFor="isBioDeposited">É Bio-Depositavel:</Label>
+                  <Input
+                    className="h-5 w-5 accent-green-500"
+                    id="isBioDeposited"
+                    {...register("isBioDeposited")}
                     type="checkbox"
                   />
                 </div>

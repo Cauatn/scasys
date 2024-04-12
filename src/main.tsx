@@ -10,13 +10,11 @@ const rootElement = document.getElementById("root")
 
 if (rootElement) {
   ReactDOM.createRoot(rootElement).render(
-    <React.StrictMode>
-      <ConjuntosProvider>
-        <ExperimentoProvider>
-          <AppRouter />
-        </ExperimentoProvider>
-      </ConjuntosProvider>
-    </React.StrictMode>
+    <ConjuntosProvider>
+      <ExperimentoProvider>
+        <AppRouter />
+      </ExperimentoProvider>
+    </ConjuntosProvider>
   )
 } else {
   console.error("Root element with ID 'root' not found in the DOM")

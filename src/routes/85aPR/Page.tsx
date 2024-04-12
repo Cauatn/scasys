@@ -308,6 +308,7 @@ export default function EightaPerg() {
         )}
       </div>
       <NextPageButton />
+      <button onClick={() => navigate("/ppwg")}>PASSAR</button>
     </form>
   )
 }
