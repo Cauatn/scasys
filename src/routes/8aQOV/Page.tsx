@@ -129,7 +129,6 @@ export default function EightaETP() {
                     <Input
                       id="quantitade"
                       placeholder="quantidade"
-                      min={0}
                       type="number"
                       value={quantityOrValues[index].value}
                       onChange={(event) => {

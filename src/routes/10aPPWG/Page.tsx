@@ -100,7 +100,6 @@ export default function TenaPPWG() {
                     onChange={(e) => setValue("mrr_quantity", e.target.value)}
                     placeholder="Quantidade"
                     type="number"
-                    min={0}
                     className="w-32"
                   />
                   <Select
@@ -141,7 +140,6 @@ export default function TenaPPWG() {
                     onChange={(e) => setValue("mtad_quantity", e.target.value)}
                     placeholder="Quantidade"
                     type="number"
-                    min={0}
                     className="w-32"
                   />
 
@@ -184,7 +182,6 @@ export default function TenaPPWG() {
                     onChange={(e) => setValue("mtdr_quantity", e.target.value)}
                     placeholder="Quantidade"
                     type="number"
-                    min={0}
                     className="w-32"
                   />
                   <Select
@@ -226,7 +223,6 @@ export default function TenaPPWG() {
                     onChange={(e) => setValue("td_quantity", e.target.value)}
                     placeholder="Quantidade"
                     type="number"
-                    min={0}
                     className="w-32"
                   />
                   <Select
