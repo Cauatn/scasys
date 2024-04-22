@@ -251,7 +251,7 @@ export default function EightaPerg() {
         </div>
         <Radio
           label="O objetivo do procedimento é a formação de um produto químico ?"
-          defaultValue="Não"
+          defaultValue="Sim"
           checkboxes={checkboxes}
           action={() => setIsOpen(!isOpen)}
         />
