@@ -7,6 +7,7 @@ import {
   useState,
 } from "react"
 import { useConjContext } from "./ConjuntoContext"
+import { set } from "react-hook-form"
 
 export type ExperimentoContext = {
   listItems: any
@@ -22,11 +23,13 @@ export type ExperimentoContext = {
     isBioDeposited: boolean,
     isDegradable: Array<any> | undefined
   ) => void
+  undoLastAction: () => void
   setQuantity: (obj: any) => void
   selectedRows: any[]
   setSelectedRows: Dispatch<SetStateAction<any[]>>
   currentItem: string
   inventoryStage: any
+  setInventoryStage: Dispatch<SetStateAction<any>>
   setListItems: Dispatch<SetStateAction<any[]>>
   setMrrItems: (etapa: string, phase: string, itemName: string) => void
 }
@@ -43,9 +46,27 @@ export const ExperimentoProvider = ({ children }: any) => {
   const [currentItem, setCurrentItem] = useState<string>("")
   const [listItems, setListItems] = useState<any[]>([]) //lista de itens da tabela [residuos, compostos, epcs
 
+  const [isB, setIsB] = useState<boolean>(false)
+
+  //lista que armazena os estados anteriores da tabela
+  const [previousStates, setPreviousStates] = useState<any[]>([])
+
   useEffect(() => {
     console.log("inventario mudou: ", inventoryStage)
+    if (isB) {
+      setInventoryStage(previousStates[previousStates.length - 1])
+      setIsB(false)
+    } else {
+      setPreviousStates((prev) => [
+        ...prev,
+        JSON.parse(JSON.stringify(inventoryStage)),
+      ])
+    }
   }, [inventoryStage])
+
+  useEffect(() => {
+    console.log("previousStates mudou: ", previousStates)
+  }, [previousStates])
 
   //variavel que indica os valores da tabela selecionados
   const [selectedRows, setSelectedRows] = useState<Array<any>>([])
@@ -124,65 +145,9 @@ export const ExperimentoProvider = ({ children }: any) => {
         },
       },
     ])
-
-    /*
-    if (especificidade === "residue") {
-      addResiduo({
-        id: residuos.length + 1,
-        amount: 0,
-        status: "not-selected",
-        residuo: item,
-        currentEtapa: currentEtapa,
-        currentPhase: currentPhase,
-      })
-    }
-
-    if (especificidade === "compost") {
-      addCompost({
-        id: compostos.length + 1,
-        status: "not-selected",
-        composto: item,
-        currentEtapa: currentEtapa,
-        currentPhase: currentPhase,
-      })
-    }
-
-    if (especificidade === "electric-power-consumption") {
-      addEpc({
-        id: epcs.length + 1,
-        status: "not-selected",
-        epc: item,
-        currentEtapa: currentEtapa,
-        currentPhase: currentPhase,
-      })
-    } */
   }
 
   const setQuantity = (obj: any) => {
-    setInventoryStage((prev: any) => {
-      const index = prev.findIndex((item: any) => item.name === currentPhase)
-      const etapaIndex = prev[index].etapa.findIndex(
-        (item: any) => item.name === currentEtapa
-      )
-      const elementIndex = prev[index].etapa[etapaIndex].elements.findIndex(
-        (element: any) => element.item === currentItem
-      )
-
-      prev[index].etapa[etapaIndex].elements[elementIndex] = {
-        ...prev[index].etapa[etapaIndex].elements[elementIndex],
-        unit: obj.unit,
-        observation: obj.observation,
-      }
-      prev[index].etapa[etapaIndex].elements[elementIndex].quantity =
-        obj.quantitys
-
-      //faça isso para observation
-      prev[index].etapa[etapaIndex].elements[elementIndex].observation =
-        obj.observation
-
-      return [...prev]
-    })
-
     setListItems((prev: any) => {
       const index = prev.findIndex(
         (item: any) =>
@@ -217,6 +182,19 @@ export const ExperimentoProvider = ({ children }: any) => {
     })
   }
 
+  const undoLastAction = () => {
+    setIsB(true)
+
+    if (previousStates.length > 1) {
+      setInventoryStage(previousStates[previousStates.length - 2])
+
+      setPreviousStates((prev) => {
+        prev.pop()
+        return [...prev]
+      })
+    }
+  }
+
   return (
     <ExperimentoContext.Provider
       value={{
@@ -233,6 +211,8 @@ export const ExperimentoProvider = ({ children }: any) => {
         inventoryStage,
         setListItems,
         setMrrItems,
+        undoLastAction,
+        setInventoryStage,
       }}
     >
       {children}
