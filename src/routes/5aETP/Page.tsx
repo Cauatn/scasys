@@ -26,11 +26,20 @@ function FiveaETP() {
 
   const navigate = useNavigate()
 
-  const { setNewEtapa, currentPhase } = useExpContext()
+  const {
+    setNewEtapa,
+    currentPhase,
+    currentEtapa,
+    currentNumOfReps,
+    setCurrentEtapa,
+    setCurrentNumOfReps,
+  } = useExpContext()
 
   const handleFormSubmit = (data: any) => {
-    console.log(data)
-    setNewEtapa(data.stageName, data.rep, currentPhase)
+    setCurrentEtapa(data.stageName)
+    setCurrentNumOfReps(data.rep)
+
+    setNewEtapa(data.stageName, data.rep)
 
     navigate("/inventory/3")
   }
@@ -43,12 +52,13 @@ function FiveaETP() {
       <div className="flex justify-center">
         <div className="flex w-full max-w-full flex-col gap-5 space-y-4 xl:w-1/2">
           <div className="inline-flex ">
-            <h1 className="w-full text-2xl font-bold"> Fase de Inventário</h1>
+            <h1 className="w-full text-2xl font-bold">Fase de Inventário</h1>
             <span className="text-xl text-gray-500">{currentPhase}</span>
           </div>
           <div className="max-w-[300px]">
             <Input
               placeholder="Forneça o nome para etapa"
+              defaultValue={currentEtapa}
               required
               {...register("stageName")}
             />
@@ -59,21 +69,24 @@ function FiveaETP() {
                 <label className="w-44" htmlFor="rep">
                   Número de repetições da etapa procedimental:
                 </label>
-                <Input
-                  id="rep"
-                  type="number"
-                  className="w-16"
-                  min="1"
-                  required
-                  {...register("rep")}
-                />
+                {
+                  <Input
+                    id="rep"
+                    type="number"
+                    className="w-16"
+                    defaultValue={currentNumOfReps}
+                    required
+                    {...register("rep")}
+                  />
+                }
               </div>
-              <div className="space-x-2">
+              {/*
+                <div className="space-x-2">
                 <span>Adicionar etapa procedimental?</span>
                 <Button className="rounded-full bg-green-500 p-3">
                   <PlusIcon className="p-0" />
                 </Button>
-              </div>
+              </div> */}
             </div>
           </div>
           <ItemsTable />

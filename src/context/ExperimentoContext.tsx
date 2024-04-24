@@ -13,7 +13,7 @@ export type ExperimentoContext = {
   listItems: any
   setNewPhase: (nome: string) => void
   currentPhase: string
-  setNewEtapa: (nome: string, num_of_reps: number, fase: string) => void
+  setNewEtapa: (nome: string, num_of_reps: number) => void
   currentEtapa: string
   setNewItem: (
     item: string,
@@ -28,6 +28,12 @@ export type ExperimentoContext = {
   selectedRows: any[]
   setSelectedRows: Dispatch<SetStateAction<any[]>>
   currentItem: string
+  currentNumOfReps: number
+  setCurrentNumOfReps: Dispatch<SetStateAction<number>>
+  setCurrentEtapa: Dispatch<SetStateAction<string>>
+  setCurrentItem: Dispatch<SetStateAction<string>>
+  setCurrentQuemicalForm: Dispatch<SetStateAction<string>>
+  currentQuemicalForm: string
   inventoryStage: any
   setInventoryStage: Dispatch<SetStateAction<any>>
   setListItems: Dispatch<SetStateAction<any[]>>
@@ -44,8 +50,9 @@ export const ExperimentoProvider = ({ children }: any) => {
   const [currentPhase, setCurrentPhase] = useState<string>("inicial")
   const [currentEtapa, setCurrentEtapa] = useState<string>("")
   const [currentItem, setCurrentItem] = useState<string>("")
-  const [listItems, setListItems] = useState<any[]>([]) //lista de itens da tabela [residuos, compostos, epcs
-
+  const [currentNumOfReps, setCurrentNumOfReps] = useState<number>(0)
+  const [currentQuemicalForm, setCurrentQuemicalForm] = useState<string>("")
+  const [listItems, setListItems] = useState<any[]>([])
   const [isB, setIsB] = useState<boolean>(false)
 
   //lista que armazena os estados anteriores da tabela
@@ -53,16 +60,26 @@ export const ExperimentoProvider = ({ children }: any) => {
 
   useEffect(() => {
     console.log("inventario mudou: ", inventoryStage)
+
+    setPreviousStates((prev) => {
+      return [...prev, JSON.parse(JSON.stringify(inventoryStage))]
+    })
+  }, [inventoryStage])
+
+  useEffect(() => {
     if (isB) {
-      setInventoryStage(previousStates[previousStates.length - 1])
+      setPreviousStates((prev) => {
+        prev.pop()
+        prev.pop()
+
+        return [...prev]
+      })
+
       setIsB(false)
     } else {
-      setPreviousStates((prev) => [
-        ...prev,
-        JSON.parse(JSON.stringify(inventoryStage)),
-      ])
     }
-  }, [inventoryStage])
+    console.log("sd")
+  }, [isB])
 
   useEffect(() => {
     console.log("previousStates mudou: ", previousStates)
@@ -86,8 +103,6 @@ export const ExperimentoProvider = ({ children }: any) => {
   }
 
   const setNewEtapa = (nome: string, num_of_reps: number) => {
-    setCurrentEtapa(nome)
-
     setInventoryStage((prev: any) => {
       const index = prev.findIndex((item: any) => item.name === currentPhase)
       const newEtapa = {
@@ -186,12 +201,9 @@ export const ExperimentoProvider = ({ children }: any) => {
     setIsB(true)
 
     if (previousStates.length > 1) {
-      setInventoryStage(previousStates[previousStates.length - 2])
-
-      setPreviousStates((prev) => {
-        prev.pop()
-        return [...prev]
-      })
+      setInventoryStage(
+        JSON.parse(JSON.stringify(previousStates[previousStates.length - 2]))
+      )
     }
   }
 
@@ -213,6 +225,12 @@ export const ExperimentoProvider = ({ children }: any) => {
         setMrrItems,
         undoLastAction,
         setInventoryStage,
+        currentNumOfReps,
+        setCurrentNumOfReps,
+        setCurrentEtapa,
+        setCurrentItem,
+        setCurrentQuemicalForm,
+        currentQuemicalForm,
       }}
     >
       {children}
