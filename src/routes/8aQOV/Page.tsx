@@ -92,6 +92,11 @@ export default function EightaETP() {
       prev[index].etapa[etapaIndex].elements[elementIndex].quantity =
         quantityOrValues
 
+      prev[index].etapa[etapaIndex].elements[elementIndex].unit = unit
+      prev[index].etapa[etapaIndex].elements[elementIndex].observation =
+        observation
+      prev[index].etapa[etapaIndex].elements[elementIndex].total = sum
+
       return [...prev]
     })
 
@@ -122,6 +127,7 @@ export default function EightaETP() {
       prev[index].properties.quantity = quantityOrValues
       prev[index].properties.total = sum
       prev[index].properties.unit = unit
+      prev[index].properties.observation = observation
 
       return [...prev]
     })

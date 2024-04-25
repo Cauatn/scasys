@@ -200,63 +200,6 @@ export default function TenaPPWG() {
               </div>
             </div>
           </div>
-          <div className="flex w-full flex-1 flex-col flex-wrap items-center gap-4 sm:flex sm:flex-row sm:justify-center">
-            <div className="flex items-center">
-              <Label className="w-16">TD</Label>
-              <div>
-                <Button variant="secondary">?</Button>
-              </div>
-            </div>
-            <div className="flex w-2/3 flex-wrap justify-start gap-4">
-              <div className="flex-col gap-5 space-y-4 sm:flex sm:flex-row sm:gap-10 sm:space-y-0">
-                <ShowTable name="TD" />
-                <Input
-                  required
-                  id="td"
-                  placeholder="TD"
-                  className="w-52 sm:w-20"
-                  {...register("td")}
-                />
-                <div className="flex justify-between sm:gap-10">
-                  <Input
-                    required
-                    onChange={(e) => setValue("td_quantity", e.target.value)}
-                    placeholder="Quantidade"
-                    type="number"
-                    className="w-32"
-                  />
-                  <Select
-                    required
-                    onValueChange={(value) => setValue("td_unit", value)}
-                  >
-                    <SelectTrigger id="td-options" className="max-w-32">
-                      <SelectValue placeholder="Unidade" />
-                    </SelectTrigger>
-                    <SelectContent position="popper">
-                      <SelectItem value="option1">Option 1</SelectItem>
-                      <SelectItem value="option2">Option 2</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="flex w-full flex-1 flex-col flex-wrap items-center gap-4 sm:flex sm:flex-row sm:justify-center">
-            <div className="flex items-center">
-              <Label className="w-16">F</Label>
-              <div>
-                <Button variant="secondary">?</Button>
-              </div>
-            </div>
-            <div className="flex w-2/3 flex-wrap justify-start gap-4">
-              <Input
-                required
-                className="w-52 max-w-[370px] sm:w-full"
-                placeholder="Inserir quantidade ou..."
-                {...register("f")}
-              />
-            </div>
-          </div>
           <div className="mt-6 w-full pl-24">
             <label
               className="mt-2 block text-sm font-medium text-gray-700"
