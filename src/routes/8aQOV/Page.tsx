@@ -53,9 +53,8 @@ export default function EightaETP() {
   >([{ value: 0 }])
   const [unit, setUnit] = useState("")
   const [observation, setObservation] = useState("")
-  const [aux, setAux] = useState("")
 
-  const { register, handleSubmit, setValue, getValues } = useForm({
+  const { handleSubmit, setValue, getValues } = useForm({
     resolver: zodResolver(InvSchema),
   })
 
@@ -66,11 +65,36 @@ export default function EightaETP() {
     setListItems,
     currentEtapa,
     currentPhase,
+    setInventoryStage,
+    setCurrentItem,
+    setCurrentQuemicalForm,
+    setCurrentEtapa,
   } = useExpContext()
 
   const navigate = useNavigate()
 
   const handleFormSubmit = (data: any) => {
+    setInventoryStage((prev: any) => {
+      const index = prev.findIndex((item: any) => item.name === currentPhase)
+
+      const etapaIndex = prev[index].etapa.findIndex(
+        (item: any) => item.name === currentEtapa
+      )
+      const elementIndex = prev[index].etapa[etapaIndex].elements.findIndex(
+        (element: any) => element.item === currentItem
+      )
+
+      let sum = 0
+      quantityOrValues.forEach((element: any) => {
+        sum += element.value
+      })
+
+      prev[index].etapa[etapaIndex].elements[elementIndex].quantity =
+        quantityOrValues
+
+      return [...prev]
+    })
+
     createInventory(inventoryStage)
 
     navigate("/inventory/5")
@@ -142,7 +166,6 @@ export default function EightaETP() {
                       <Select
                         onValueChange={(value) => {
                           setValue("unit", value)
-
                           setUnit(value)
                         }}
                         defaultValue={getValues("unit")}
@@ -207,7 +230,14 @@ export default function EightaETP() {
                 Adicionar novo item ao inventario?
               </Label>
               <Link to={"/inventory/3"}>
-                <Button>Sim</Button>
+                <Button
+                  onClick={() => {
+                    setCurrentItem("")
+                    setCurrentQuemicalForm("")
+                  }}
+                >
+                  Sim
+                </Button>
               </Link>
               <Dialog>
                 <DialogTrigger asChild>
@@ -220,7 +250,12 @@ export default function EightaETP() {
                       Deseja adicionar uma nova etapa ao procedimento ?
                     </DialogDescription>
                     <DialogFooter className="inline-flex justify-end">
-                      <Button onClick={() => navigate("/inventory/2")}>
+                      <Button
+                        onClick={() => {
+                          setCurrentEtapa("")
+                          navigate("/inventory/2")
+                        }}
+                      >
                         Sim
                       </Button>
                       <Dialog>

@@ -33,6 +33,8 @@ export type ExperimentoContext = {
   setCurrentEtapa: Dispatch<SetStateAction<string>>
   setCurrentItem: Dispatch<SetStateAction<string>>
   setCurrentQuemicalForm: Dispatch<SetStateAction<string>>
+  setCurrentEspecifity: Dispatch<SetStateAction<string>>
+  currentEspecifity: string
   currentQuemicalForm: string
   inventoryStage: any
   setInventoryStage: Dispatch<SetStateAction<any>>
@@ -52,6 +54,7 @@ export const ExperimentoProvider = ({ children }: any) => {
   const [currentItem, setCurrentItem] = useState<string>("")
   const [currentNumOfReps, setCurrentNumOfReps] = useState<number>(0)
   const [currentQuemicalForm, setCurrentQuemicalForm] = useState<string>("")
+  const [currentEspecifity, setCurrentEspecifity] = useState<string>("")
   const [listItems, setListItems] = useState<any[]>([])
   const [isB, setIsB] = useState<boolean>(false)
 
@@ -78,7 +81,6 @@ export const ExperimentoProvider = ({ children }: any) => {
       setIsB(false)
     } else {
     }
-    console.log("sd")
   }, [isB])
 
   useEffect(() => {
@@ -200,10 +202,21 @@ export const ExperimentoProvider = ({ children }: any) => {
   const undoLastAction = () => {
     setIsB(true)
 
+    const url = window.location.href.split("localhost:5173")
+
     if (previousStates.length > 1) {
       setInventoryStage(
         JSON.parse(JSON.stringify(previousStates[previousStates.length - 2]))
       )
+    }
+
+    console.log(url[1])
+
+    if (url[1] == "/inventory/4") {
+      setListItems((prev) => {
+        prev.pop()
+        return [...prev]
+      })
     }
   }
 
@@ -231,6 +244,8 @@ export const ExperimentoProvider = ({ children }: any) => {
         setCurrentItem,
         setCurrentQuemicalForm,
         currentQuemicalForm,
+        currentEspecifity,
+        setCurrentEspecifity,
       }}
     >
       {children}

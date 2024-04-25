@@ -38,7 +38,17 @@ export function SixaETP() {
 
   const navigate = useNavigate()
 
-  const { setNewItem, currentEtapa, currentPhase } = useExpContext()
+  const {
+    setNewItem,
+    currentEtapa,
+    currentPhase,
+    setCurrentItem,
+    currentItem,
+    setCurrentQuemicalForm,
+    currentQuemicalForm,
+    setCurrentEspecifity,
+    currentEspecifity,
+  } = useExpContext()
 
   const [isDegradable, setIsDegradable] = useState(false)
 
@@ -58,6 +68,9 @@ export function SixaETP() {
           ]
         : undefined
     )
+
+    setCurrentItem(data.item)
+    setCurrentQuemicalForm(data.formula)
 
     navigate("/inventory/4")
   }
@@ -85,6 +98,7 @@ export function SixaETP() {
                     <Select
                       onValueChange={(value) => {
                         setValue("specificity", value)
+                        setCurrentEspecifity(value)
                       }}
                       required
                     >
@@ -106,7 +120,6 @@ export function SixaETP() {
                         </SelectItem>
                         <SelectItem value="aatodo">Catodo</SelectItem>
                         <SelectItem value="anodo">Anodo</SelectItem>
-
                         <SelectItem value="gas-emissor">
                           Emissões de Gases
                         </SelectItem>
@@ -125,6 +138,7 @@ export function SixaETP() {
                     <Input
                       id="Item"
                       placeholder="Item"
+                      defaultValue={currentItem}
                       {...register("item")}
                       required
                     />
@@ -134,6 +148,7 @@ export function SixaETP() {
                     <Input
                       id="Formula"
                       placeholder="Formula"
+                      defaultValue={currentQuemicalForm}
                       {...register("formula")}
                       required
                     />
