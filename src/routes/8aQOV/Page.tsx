@@ -73,7 +73,7 @@ export default function EightaETP() {
 
   const navigate = useNavigate()
 
-  const handleFormSubmit = (data: any) => {
+  const createItemData = () => {
     setInventoryStage((prev: any) => {
       const index = prev.findIndex((item: any) => item.name === currentPhase)
 
@@ -99,6 +99,10 @@ export default function EightaETP() {
 
       return [...prev]
     })
+  }
+
+  const handleFormSubmit = (data: any) => {
+    createItemData()
 
     createInventory(inventoryStage)
 
@@ -237,7 +241,9 @@ export default function EightaETP() {
               </Label>
               <Link to={"/inventory/3"}>
                 <Button
+                  type="submit"
                   onClick={() => {
+                    createItemData()
                     setCurrentItem("")
                     setCurrentQuemicalForm("")
                   }}
@@ -257,7 +263,9 @@ export default function EightaETP() {
                     </DialogDescription>
                     <DialogFooter className="inline-flex justify-end">
                       <Button
+                        type="submit"
                         onClick={() => {
+                          createItemData()
                           setCurrentEtapa("")
                           navigate("/inventory/2")
                         }}
@@ -276,10 +284,21 @@ export default function EightaETP() {
                             Deseja adicionar uma nova Fase ao procedimento ?
                           </DialogDescription>
                           <DialogFooter className="inline-flex justify-end">
-                            <Button onClick={() => navigate("/inventory/1")}>
+                            <Button
+                              type="submit"
+                              onClick={() => {
+                                createItemData()
+                                navigate("/inventory/1")
+                              }}
+                            >
                               Sim
                             </Button>
-                            <Button onClick={() => navigate("/inventory/5")}>
+                            <Button
+                              onClick={() => {
+                                createItemData()
+                                navigate("/inventory/5")
+                              }}
+                            >
                               Não
                             </Button>
                           </DialogFooter>
