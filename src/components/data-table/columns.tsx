@@ -22,96 +22,6 @@ export type ExpItems = {
   status: "selected" | "not-selected"
 }
 
-export type compostItem = {
-  id: number
-  status: "selected" | "not-selected"
-  composto: string
-  currentPhase: string
-  currentEtapa: string
-}
-
-export const columnsResidue: ColumnDef<Item>[] = [
-  {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-  },
-  {
-    accessorKey: "status",
-    header: "Status",
-  },
-  {
-    accessorKey: "residuo",
-    header: "Residuo",
-  },
-  {
-    accessorKey: "currentEtapa",
-    header: "Etapa Atual",
-  },
-  {
-    accessorKey: "currentPhase",
-    header: "Fase Atual",
-  },
-  {
-    accessorKey: "amount",
-    header: "Amount",
-  },
-]
-
-export const columnsCompost: ColumnDef<compostItem>[] = [
-  {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-  },
-  {
-    accessorKey: "status",
-    header: "Status",
-  },
-  {
-    accessorKey: "composto",
-    header: "Composto",
-  },
-  {
-    accessorKey: "currentEtapa",
-    header: "Etapa Atual",
-  },
-  {
-    accessorKey: "currentPhase",
-    header: "Fase Atual",
-  },
-]
-
 export const columnsItems: ColumnDef<ExpItems>[] = [
   {
     id: "select",
@@ -139,15 +49,19 @@ export const columnsItems: ColumnDef<ExpItems>[] = [
   },
   {
     accessorKey: "items",
-    header: "Item",
+    header: "Nome do item",
+  },
+  {
+    accessorKey: "formula",
+    header: "Formula Química",
   },
   {
     accessorKey: "especificidade",
-    header: "Especificidade associada",
+    header: "Especificidade",
   },
   {
     accessorKey: "currentEtapa",
-    header: "Etapa associada",
+    header: "Etapa",
   },
   {
     accessorKey: "currentPhase",

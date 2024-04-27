@@ -3,6 +3,13 @@ import { DataTable } from "@/components/data-table/data-table"
 import NextPageButton from "@/components/next-page-button"
 import { Button } from "@/components/ui/button"
 import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import {
   Dialog,
   DialogContent,
   DialogFooter,
@@ -16,6 +23,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import {
+  Table,
+  TableHeader,
+  TableRow,
+  TableHead,
+  TableBody,
+  TableCell,
+} from "@/components/ui/table"
+import { Badge } from "@/components/ui/badge"
+import { Tabs, TabsContent } from "@/components/ui/tabs"
 import { useExpContext } from "@/context/ExperimentoContext"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Label } from "@radix-ui/react-dropdown-menu"
@@ -23,6 +40,7 @@ import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
 import { z } from "zod"
+import { Checkbox } from "@/components/ui/checkbox"
 
 const PpwgSchema = z.object({
   mrr: z.string(),
@@ -46,11 +64,6 @@ export default function TenaPPWG() {
   const { handleSubmit, setValue, register } = useForm({
     resolver: zodResolver(PpwgSchema),
   })
-
-  const [itemsMRR, setItemsMRR] = useState<string[]>([])
-  const [itemsMTAD, setItemsMTAD] = useState<string[]>([])
-  const [itemsMTDR, setItemsMTDR] = useState<string[]>([])
-  const [itemsTD, setItemsTD] = useState<string[]>([])
 
   const navigate = useNavigate()
   const handleFormSubmit = (data: any) => {
@@ -244,27 +257,18 @@ function ShowTable({ name }: { name: string }) {
           {name}
         </Button>
       </DialogTrigger>
-      <DialogContent className="min-h-[450px] max-w-[1000px] ">
-        <div className="container mx-auto py-10">
-          <DataTable columns={columnsItems} data={data} />
-        </div>
-        <DialogFooter className="flex justify-end px-10">
-          <Button
-            onClick={() => {
-              console.log("linhas selecionadas: ", selectedRows)
-
-              selectedRows.forEach((element: any) => {
-                setMrrItems(
-                  element.original.currentEtapa,
-                  element.original.currentPhase,
-                  element.original.items
-                )
-              })
-            }}
-          >
-            Selecionar
-          </Button>
-        </DialogFooter>
+      <DialogContent className="min-h-[500px] max-w-[1000px] pt-12">
+        <Card>
+          <CardHeader className="px-7">
+            <CardTitle>Aqui vai ficar o nome do experimento</CardTitle>
+            <CardDescription>
+              Listagem de todos os itens adicionados ao experimento
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <DataTable data={data} columns={columnsItems} />
+          </CardContent>
+        </Card>
       </DialogContent>
     </Dialog>
   )
