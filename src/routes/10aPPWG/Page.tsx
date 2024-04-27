@@ -41,6 +41,7 @@ import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
 import { z } from "zod"
 import { Checkbox } from "@/components/ui/checkbox"
+import { ChevronRight } from "lucide-react"
 
 const PpwgSchema = z.object({
   mrr: z.string(),
@@ -237,13 +238,22 @@ export default function TenaPPWG() {
   )
 }
 
+const MyComponent = () => {
+  return (
+    <Dialog>
+      <DialogTrigger>asd</DialogTrigger>
+      <DialogContent>asdd</DialogContent>
+    </Dialog>
+  )
+}
+
 function ShowTable({ name }: { name: string }) {
-  const { listItems, selectedRows, setMrrItems } = useExpContext()
+  const { listItems, selectedRows, setMtadItems, setMtdrItems } =
+    useExpContext()
 
   let data: ExpItems[] = listItems.map((e: any) => {
     return {
       ...e,
-      status: "not-selected",
     }
   })
 
@@ -251,13 +261,13 @@ function ShowTable({ name }: { name: string }) {
     <Dialog>
       <DialogTrigger asChild>
         <Button
-          className="h-9 w-20 max-w-[100px] border bg-white text-slate-700 hover:bg-green-300 hover:before:transition-transform"
+          className="h-9 w-full max-w-[120px] border text-slate-700 hover:bg-green-300 hover:before:transition-transform"
           variant="secondary"
         >
-          {name}
+          selecionar {name}
         </Button>
       </DialogTrigger>
-      <DialogContent className="min-h-[500px] max-w-[1000px] pt-12">
+      <DialogContent className="flex min-h-[500px] max-w-[1000px] flex-col justify-between border-gray-200 bg-gray-100 pt-12">
         <Card>
           <CardHeader className="px-7">
             <CardTitle>Aqui vai ficar o nome do experimento</CardTitle>
@@ -269,7 +279,125 @@ function ShowTable({ name }: { name: string }) {
             <DataTable data={data} columns={columnsItems} />
           </CardContent>
         </Card>
+        <DialogFooter className="flex h-fit w-full rounded-b-md border-t ">
+          {name === "MTDR" ? (
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button
+                  variant="default"
+                  className="flex items-center justify-between"
+                >
+                  <p>Avançar</p>
+                  <ChevronRight />
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="max-h-[600px] overflow-y-scroll pt-12">
+                {selectedRows.map((item, idCard) => {
+                  return (
+                    <CardComponent
+                      name={item.original.items}
+                      idCard={idCard}
+                      currentEtapa={item.original.currentEtapa}
+                      currentPhase={item.original.currentPhase}
+                    />
+                  )
+                })}
+              </DialogContent>
+            </Dialog>
+          ) : (
+            <Button
+              onClick={() => {
+                if (name === "MTAD") {
+                  selectedRows.map((item) => {
+                    console.log(item.original)
+                    setMtadItems(
+                      item.original.currentEtapa,
+                      item.original.currentPhase,
+                      item.original.items
+                    )
+                  })
+                }
+
+                console.log(selectedRows)
+              }}
+            >
+              Adicionar
+            </Button>
+          )}
+        </DialogFooter>
       </DialogContent>
     </Dialog>
+  )
+}
+
+function CardComponent({
+  name,
+  idCard,
+  currentEtapa,
+  currentPhase,
+}: {
+  name: any
+  idCard: number
+  currentEtapa: any
+  currentPhase: any
+}) {
+  const [isOpen, setIsOpen] = useState(true)
+  const { setMtdrItems } = useExpContext()
+
+  return (
+    isOpen && (
+      <Card key={name}>
+        <CardHeader>
+          <CardTitle>Dados item {name}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-4">
+              <Label>Tempo de degradação</Label>
+              <Input
+                placeholder="Tempo de degradação"
+                id="tempo-de-degradacao"
+                defaultValue={0}
+                type="number"
+              />
+              <Label>Fonte bibliográfica</Label>
+              <Input placeholder="Fonte bibliográfica" id="fb" />
+            </div>
+            <div className="flex justify-end gap-4">
+              <Button variant="secondary">Cancelar</Button>
+              <Button
+                variant="secondary"
+                onClick={() => {
+                  let input = ""
+                  let fb = ""
+
+                  document
+                    .querySelectorAll("#tempo-de-degradacao")
+                    .forEach((e, idInput) => {
+                      if (idInput === idCard)
+                        input = (e as HTMLInputElement).value
+                    })
+
+                  document.querySelectorAll("#fb").forEach((e, idFb) => {
+                    if (idFb === idCard) fb = (e as HTMLInputElement).value
+                  })
+
+                  setMtdrItems(
+                    currentEtapa,
+                    currentPhase,
+                    name,
+                    Number(input),
+                    fb
+                  )
+                  setIsOpen(false)
+                }}
+              >
+                Adicionar
+              </Button>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    )
   )
 }

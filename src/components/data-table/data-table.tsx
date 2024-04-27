@@ -79,7 +79,7 @@ export function DataTable<TData, TValue>({
               {row.getVisibleCells().map((cell) =>
                 cell.column.columnDef.header == "Status" ? (
                   <TableCell key={cell.id}>
-                    <Badge className="text-xs" variant="outline">
+                    <Badge className="text-xs" variant="secondary">
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()

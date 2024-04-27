@@ -39,7 +39,14 @@ export type ExperimentoContext = {
   inventoryStage: any
   setInventoryStage: Dispatch<SetStateAction<any>>
   setListItems: Dispatch<SetStateAction<any[]>>
-  setMrrItems: (etapa: string, phase: string, itemName: string) => void
+  setMtadItems: (etapa: string, phase: string, itemName: string) => void
+  setMtdrItems: (
+    etapa: string,
+    phase: string,
+    itemName: string,
+    ft: number,
+    src: string
+  ) => void
 }
 
 export const ExperimentoContext = createContext<ExperimentoContext | null>(null)
@@ -60,6 +67,9 @@ export const ExperimentoProvider = ({ children }: any) => {
 
   //lista que armazena os estados anteriores da tabela
   const [previousStates, setPreviousStates] = useState<any[]>([])
+
+  //variavel que indica os valores da tabela selecionados
+  const [selectedRows, setSelectedRows] = useState<Array<any>>([])
 
   useEffect(() => {
     console.log("inventario mudou: ", inventoryStage)
@@ -86,9 +96,6 @@ export const ExperimentoProvider = ({ children }: any) => {
   useEffect(() => {
     console.log("previousStates mudou: ", previousStates)
   }, [previousStates])
-
-  //variavel que indica os valores da tabela selecionados
-  const [selectedRows, setSelectedRows] = useState<Array<any>>([])
 
   const setNewPhase = (nome: string) => {
     setCurrentPhase(nome)
@@ -160,6 +167,7 @@ export const ExperimentoProvider = ({ children }: any) => {
           quantity: [],
           total: 0,
         },
+        status: "not-selected",
       },
     ])
   }
@@ -183,7 +191,7 @@ export const ExperimentoProvider = ({ children }: any) => {
     })
   }
 
-  const setMrrItems = (etapa: string, phase: string, itemName: string) => {
+  const setMtadItems = (etapa: string, phase: string, itemName: string) => {
     setInventoryStage((prev: any) => {
       const index = prev.findIndex((item: any) => item.name === phase)
       const etapaIndex = prev[index].etapa.findIndex(
@@ -194,7 +202,52 @@ export const ExperimentoProvider = ({ children }: any) => {
       )
 
       //mudando valor de isRecyclable
-      prev[index].etapa[etapaIndex].elements[elementIndex].isRecyclable = true
+      prev[index].etapa[etapaIndex].elements[elementIndex].isBioDeposited = true
+      //garantindo que o valor de isDegradable seja false
+      prev[index].etapa[etapaIndex].elements[elementIndex].isDegradable = false
+
+      listItems.forEach((item: any) => {
+        if (item.items === itemName && item.currentEtapa === etapa) {
+          item.status = "selected"
+        }
+      })
+
+      return [...prev]
+    })
+  }
+
+  const setMtdrItems = (
+    etapa: string,
+    phase: string,
+    itemName: string,
+    ft: number,
+    src: string
+  ) => {
+    setInventoryStage((prev: any) => {
+      const index = prev.findIndex((item: any) => item.name === phase)
+      const etapaIndex = prev[index].etapa.findIndex(
+        (item: any) => item.name === etapa
+      )
+      const elementIndex = prev[index].etapa[etapaIndex].elements.findIndex(
+        (element: any) => element.item === itemName
+      )
+
+      //mudando valor de isRecyclable
+      prev[index].etapa[etapaIndex].elements[elementIndex].isDegradable = [
+        {
+          ft: ft,
+          src: src,
+        },
+      ]
+      prev[index].etapa[etapaIndex].elements[elementIndex].isBioDeposited =
+        false
+
+      listItems.forEach((item: any) => {
+        if (item.items === itemName && item.currentEtapa === etapa) {
+          item.status = "selected"
+        }
+      })
+
       return [...prev]
     })
   }
@@ -235,7 +288,7 @@ export const ExperimentoProvider = ({ children }: any) => {
         listItems,
         inventoryStage,
         setListItems,
-        setMrrItems,
+        setMtadItems,
         undoLastAction,
         setInventoryStage,
         currentNumOfReps,
@@ -246,6 +299,7 @@ export const ExperimentoProvider = ({ children }: any) => {
         currentQuemicalForm,
         currentEspecifity,
         setCurrentEspecifity,
+        setMtdrItems,
       }}
     >
       {children}
