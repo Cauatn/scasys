@@ -39,7 +39,7 @@ const InvSchema = z.object({
 })
 type InvSchema = z.infer<typeof InvSchema>
 
-import { Item, columnsResidue } from "@/components/data-table/columns"
+import { Item } from "@/components/data-table/columns"
 import { DataTable } from "@/components/data-table/data-table"
 import { useConjContext } from "@/context/ConjuntoContext"
 import { useExpContext } from "@/context/ExperimentoContext"
@@ -147,9 +147,7 @@ export default function EightaPerg() {
                   </Button>
                 </DialogTrigger>
                 <DialogContent className="min-h-[450px] max-w-[1000px]">
-                  <div className="container mx-auto py-10">
-                    <DataTable columns={columnsResidue} data={data} />
-                  </div>
+                  <div className="container mx-auto py-10"></div>
                   <DialogFooter className="flex items-center">
                     <Button variant="default">Cancelar</Button>
                     <Button

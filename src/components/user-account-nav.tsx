@@ -7,7 +7,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
 
 export type NormalizedUser = {
@@ -24,16 +24,11 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
   //const { signOut } = useClerk()
   //const router = useRouter()
 
+  const navigate = useNavigate()
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        {/*<UserAvatar
-          user={{
-            username: user.name,
-            imageUrl: user.imageUrl,
-          }}
-          className="h-8 w-8"
-        /> */}
         <Avatar>
           <AvatarImage src={user.imageUrl} alt="@shadcn" />
           <AvatarFallback>CN</AvatarFallback>
@@ -57,12 +52,6 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
             <p className="text-sm">Dashboard</p>
           </Link>
         </DropdownMenuItem>
-        {/* <DropdownMenuItem asChild>
-          <Link href="/dashboard2" className="flex items-center space-x-2.5">
-            <LayoutDashboard className="h-4 w-4" />
-            <p className="text-sm">Another layout</p>
-          </Link>
-        </DropdownMenuItem> */}
         <DropdownMenuItem asChild>
           <Link to="" className="flex items-center space-x-2.5">
             <CreditCard className="h-4 w-4" />
@@ -76,15 +65,7 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem
-          className="cursor-pointer"
-          /*
-          onSelect={(event) => {
-            event.preventDefault()
-            //signOut(() => router.push("/"))
-          }}
-        */
-        >
+        <DropdownMenuItem className="cursor-pointer">
           <div className="flex items-center space-x-2.5">
             <LogOut className="h-4 w-4" />
             <button
@@ -92,6 +73,8 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
                 localStorage.removeItem("token")
                 localStorage.removeItem("user_id")
                 window.location.reload()
+
+                navigate("/")
               }}
             >
               <p className="text-sm">Log Out</p>
