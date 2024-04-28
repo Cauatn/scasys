@@ -77,16 +77,7 @@ export function DataTable<TData, TValue>({
               data-state={row.getIsSelected() && "selected"}
             >
               {row.getVisibleCells().map((cell) =>
-                cell.column.columnDef.header == "Status" ? (
-                  <TableCell key={cell.id}>
-                    <Badge className="text-xs" variant="secondary">
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </Badge>
-                  </TableCell>
-                ) : cell.column.columnDef.header == "Nome do item" ? (
+                cell.column.columnDef.header == "Nome do item" ? (
                   <TableCell key={cell.id} className="font-medium">
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>

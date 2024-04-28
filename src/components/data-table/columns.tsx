@@ -1,6 +1,7 @@
 import { ColumnDef } from "@tanstack/react-table"
 
 import { Checkbox } from "@/components/ui/checkbox"
+import { Badge } from "../ui/badge"
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -38,7 +39,9 @@ export const columnsItems: ColumnDef<ExpItems>[] = [
     cell: ({ row }) => (
       <Checkbox
         checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        onCheckedChange={(value) => {
+          row.toggleSelected(!!value)
+        }}
         aria-label="Select row"
       />
     ),
@@ -46,6 +49,13 @@ export const columnsItems: ColumnDef<ExpItems>[] = [
   {
     accessorKey: "status",
     header: "Status",
+    cell: ({ row }) => {
+      if (row.original.status == "selected") {
+        return <Badge variant="green">Feita operação</Badge>
+      } else {
+        return <Badge variant="default">Não selecionado</Badge>
+      }
+    },
   },
   {
     accessorKey: "items",
