@@ -6,6 +6,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { useConjContext } from "@/context/ConjuntoContext"
 import { useExpContext } from "@/context/ExperimentoContext"
 import { useEffect, useState } from "react"
 import { set } from "react-hook-form"
@@ -24,6 +25,7 @@ export function ItemsTable(props: any) {
   >([])
 
   const { listItems } = useExpContext()
+  const { setResiduos } = useConjContext()
 
   useEffect(() => {
     setRows(() => {
@@ -43,8 +45,6 @@ export function ItemsTable(props: any) {
 
       return rows
     })
-
-    console.log("linhas:", rows)
   }, [listItems])
 
   return (
