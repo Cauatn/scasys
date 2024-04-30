@@ -32,6 +32,7 @@ import { Trash2 } from "lucide-react"
 import { createInventory } from "@/hooks/create-inventory"
 import { get } from "http"
 import { v4 as uuidv4 } from "uuid"
+import { useConjContext } from "@/context/ConjuntoContext"
 
 const InvSchema = z.object({
   quantitys: z
@@ -73,6 +74,8 @@ export default function EightaETP() {
 
   const navigate = useNavigate()
 
+  const { setResiduos } = useConjContext()
+
   const createItemData = () => {
     setInventoryStage((prev: any) => {
       const index = prev.findIndex((item: any) => item.name === currentPhase)
@@ -97,6 +100,22 @@ export default function EightaETP() {
         observation
       prev[index].etapa[etapaIndex].elements[elementIndex].total = sum
 
+      if (
+        prev[index].etapa[etapaIndex].elements[elementIndex].especifity ===
+        "residue"
+      ) {
+        setResiduos((prev: any) => {
+          prev.push({
+            item: currentItem,
+            quantity: quantityOrValues,
+            unit: unit,
+            stage: currentEtapa,
+            phase: currentPhase,
+            total: sum,
+          })
+          return [...prev]
+        })
+      }
       return [...prev]
     })
   }

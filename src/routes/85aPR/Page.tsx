@@ -12,10 +12,9 @@ import {
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { SVGProps, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
-import { JSX } from "react/jsx-runtime"
 import { z } from "zod"
 import { toast } from "@/components/ui/use-toast"
 import { ToastAction } from "@/components/ui/toast"
@@ -39,10 +38,18 @@ const InvSchema = z.object({
 })
 type InvSchema = z.infer<typeof InvSchema>
 
-import { Item } from "@/components/data-table/columns"
+import { ResidueItem, columnsResidue } from "@/components/data-table/columns"
 import { DataTable } from "@/components/data-table/data-table"
 import { useConjContext } from "@/context/ConjuntoContext"
 import { useExpContext } from "@/context/ExperimentoContext"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import { PlusIcon } from "lucide-react"
 
 export default function EightaPerg() {
   const checkboxes = [
@@ -59,12 +66,9 @@ export default function EightaPerg() {
   ]
   const [isOpen, setIsOpen] = useState(false)
 
-  const [bombonaResiduos, setBombonaResiduos] = useState<Array<Array<Item>>>([
-    [],
-  ])
-
-  const {} = useConjContext()
-  const { selectedRows } = useExpContext()
+  const [bombonaResiduos, setBombonaResiduos] = useState<
+    Array<Array<ResidueItem>>
+  >([[]])
 
   const { handleSubmit, setValue, register } = useForm({
     resolver: zodResolver(InvSchema),
@@ -77,13 +81,16 @@ export default function EightaPerg() {
     navigate("/ppwg")
   }
 
-  let data: Item[] = []
-
   const [selectedConjunto, setSelectedConjunto] = useState<number>(0)
 
-  useEffect(() => {
-    console.log("bombonaResiduos: ", bombonaResiduos)
-  }, [bombonaResiduos])
+  const addResidue = (residues: ResidueItem[], index: number) => {
+    setBombonaResiduos((prev: any) => {
+      let newBombona = [...prev]
+      newBombona[index] = residues
+
+      return newBombona
+    })
+  }
 
   return (
     <form
@@ -131,53 +138,17 @@ export default function EightaPerg() {
                   />
                 </SelectTrigger>
                 <SelectContent position="popper">
-                  <SelectItem value="kg">Kilogramas</SelectItem>
-                  <SelectItem value="gramas">Gramas</SelectItem>
-                  <SelectItem value="liters">Litros</SelectItem>
-                  <SelectItem value="mols">Mols</SelectItem>
+                  <SelectItem value="kilograma">Kilogramas</SelectItem>
+                  <SelectItem value="grama">Gramas</SelectItem>
+                  <SelectItem value="liter">Litros</SelectItem>
+                  <SelectItem value="mol">Mols</SelectItem>
                 </SelectContent>
               </Select>
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button
-                    className="col-span-3 bg-green-400"
-                    variant="secondary"
-                  >
-                    Adicionar novos resíduos ao conjunto selecionado
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="min-h-[450px] max-w-[1000px]">
-                  <div className="container mx-auto py-10"></div>
-                  <DialogFooter className="flex items-center">
-                    <Button variant="default">Cancelar</Button>
-                    <Button
-                      variant="default"
-                      className="bg-green-500"
-                      onClick={() => {
-                        // adiciona os resíduos selecionados
-                        setBombonaResiduos((prev: any) => {
-                          prev[selectedConjunto] = selectedRows.filter(
-                            (row: any) => row.original.status !== "selected"
-                          )
-                          return [...prev]
-                        })
-
-                        selectedRows.forEach((row: any) => {
-                          console.log("row: ", row)
-
-                          if (row.original.status === "selected") {
-                            // não faz nada
-                          } else {
-                            row.original.status = "selected"
-                          }
-                        })
-                      }}
-                    >
-                      Adicionar
-                    </Button>
-                  </DialogFooter>
-                </DialogContent>
-              </Dialog>
+              <ShowTable
+                addResidue={addResidue}
+                bombonaIndex={selectedConjunto}
+                bombonas={bombonaResiduos}
+              />
             </div>
             <Button
               className="flex w-full items-center space-x-2"
@@ -290,7 +261,6 @@ export default function EightaPerg() {
               </div>
             </div>
             <div className="flex items-center space-x-4">
-              <FileQuestionIcon className="h-5 w-5" />
               <Label>
                 Quantos interferentes há <br />
                 no procedimento?
@@ -311,47 +281,55 @@ export default function EightaPerg() {
   )
 }
 
-function FileQuestionIcon(
-  props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>
-) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <title>{""}</title>
-      <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
-      <path d="M10 10.3c.2-.4.5-.8.9-1a2.1 2.1 0 0 1 2.6.4c.3.4.5.8.5 1.3 0 1.3-2 2-2 2" />
-      <path d="M12 17h.01" />
-    </svg>
-  )
-}
+function ShowTable({
+  addResidue,
+  bombonaIndex,
+  bombonas,
+}: {
+  addResidue: (residue: ResidueItem[], index: number) => void
+  bombonaIndex: number
+  bombonas: any
+}) {
+  const { selectedRows } = useExpContext()
+  const { residuos } = useConjContext()
 
-function PlusIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
+  let data: ResidueItem[] = residuos
+
+  useEffect(() => {
+    console.log("Bombonas atualiazdas:", bombonas)
+  }, [bombonas])
+
   return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <title>{""}</title>
-      <path d="M5 12h14" />
-      <path d="M12 5v14" />
-    </svg>
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button className="col-span-3 bg-green-400" variant="secondary">
+          Adicionar novos resíduos ao conjunto selecionado
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="flex min-h-[500px] max-w-[1000px] flex-col justify-between border-gray-200 bg-gray-100 pt-12">
+        <Card>
+          <CardHeader className="px-7">
+            <CardTitle>Aqui vai ficar o nome do experimento</CardTitle>
+            <CardDescription>
+              Listagem de todos os residuos adicionados ao experimento
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <DataTable data={data} columns={columnsResidue} />
+          </CardContent>
+        </Card>
+        <DialogFooter className="flex h-fit w-full rounded-b-md border-t ">
+          {
+            <Button
+              onClick={() => {
+                addResidue(selectedRows, bombonaIndex)
+              }}
+            >
+              Adicionar
+            </Button>
+          }
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   )
 }
