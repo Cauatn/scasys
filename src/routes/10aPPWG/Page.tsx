@@ -42,6 +42,13 @@ import { useNavigate } from "react-router-dom"
 import { z } from "zod"
 import { Checkbox } from "@/components/ui/checkbox"
 import { ChevronRight } from "lucide-react"
+import { get_result } from "@/hooks/get_result"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 const PpwgSchema = z.object({
   mrr: z.string(),
@@ -66,10 +73,16 @@ export default function TenaPPWG() {
     resolver: zodResolver(PpwgSchema),
   })
 
+  const { inventoryStage } = useExpContext()
+
   const navigate = useNavigate()
+
+  const teste = async () => {
+    console.log(JSON.stringify(inventoryStage))
+  }
+
   const handleFormSubmit = (data: any) => {
-    console.log(data)
-    navigate("/etc")
+    //navigate("/etc")
   }
 
   return (
@@ -90,13 +103,23 @@ export default function TenaPPWG() {
               </p>
             </div>
           </div>
-
           <div className="flex w-full flex-1 flex-col flex-wrap items-center gap-4 sm:flex sm:flex-row sm:justify-center">
             <div className="flex items-center">
               <Label className="w-16">MRR</Label>
-              <div>
-                <Button variant="secondary">?</Button>
-              </div>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <Button variant="secondary">?</Button>
+                  </TooltipTrigger>
+                  <TooltipContent className="max-w-[300px] bg-black text-base font-medium">
+                    <p>
+                      {" "}
+                      mrr é a massa de material armazenado para reuso ou
+                      efetivamente reciclado, que não foi descartado.
+                    </p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             </div>
             <div className="flex w-2/3 flex-wrap justify-start gap-4">
               <div className="flex-col space-y-4 sm:flex sm:flex-row sm:gap-10 sm:space-y-0">
@@ -135,9 +158,21 @@ export default function TenaPPWG() {
           <div className="flex w-full flex-1 flex-col flex-wrap items-center gap-4 sm:flex sm:flex-row sm:justify-center">
             <div className="flex items-center">
               <Label className="w-16">MTAD</Label>
-              <div>
-                <Button variant="secondary">?</Button>
-              </div>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <Button variant="secondary">?</Button>
+                  </TooltipTrigger>
+                  <TooltipContent className="max-w-[300px] bg-black text-base font-medium">
+                    <p>
+                      {" "}
+                      mtad é a massa de materiais que foram purificados e cuja
+                      disposição no meio ambiente foi realizada no mesmo local
+                      de extração de forma a não configurar poluição ambiental.
+                    </p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             </div>
             <div className="flex w-2/3 flex-wrap justify-start gap-4">
               <div className="flex-col gap-5 space-y-4 sm:flex sm:flex-row sm:gap-10 sm:space-y-0">
@@ -176,9 +211,20 @@ export default function TenaPPWG() {
           <div className="flex w-full flex-1 flex-col flex-wrap items-center gap-4 sm:flex sm:flex-row sm:justify-center">
             <div className="flex items-center">
               <Label className="w-16">MTDR</Label>
-              <div>
-                <Button variant="secondary">?</Button>
-              </div>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <Button variant="secondary">?</Button>
+                  </TooltipTrigger>
+                  <TooltipContent className="max-w-[300px] bg-black text-base font-medium">
+                    <p>
+                      {" "}
+                      mtdr é a massa de materiais degradáveis que não são
+                      armazenados para reuso nem são reciclados.
+                    </p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             </div>
             <div className="flex w-2/3 flex-wrap justify-start gap-4">
               <div className="flex-col gap-5 space-y-4 sm:flex sm:flex-row sm:gap-10 sm:space-y-0">
@@ -214,36 +260,11 @@ export default function TenaPPWG() {
               </div>
             </div>
           </div>
-          <div className="mt-6 w-full pl-24">
-            <label
-              className="mt-2 block text-sm font-medium text-gray-700"
-              htmlFor="fonte-bibliografica"
-            >
-              Fonte bibliográfica relacionada ao TD
-            </label>
-            <div className="mt-1">
-              <Input
-                required
-                id="fonte-bibliografica"
-                className="max-w-[400px]"
-                placeholder="Insira a fonte bibliográfica"
-                {...register("bibliographical_source_td")}
-              />
-            </div>
-          </div>
         </div>
       </div>
       <NextPageButton />
+      <button onClick={teste}>teste</button>
     </form>
-  )
-}
-
-const MyComponent = () => {
-  return (
-    <Dialog>
-      <DialogTrigger>asd</DialogTrigger>
-      <DialogContent>asdd</DialogContent>
-    </Dialog>
   )
 }
 

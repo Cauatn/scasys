@@ -78,7 +78,7 @@ export default function EightaETP() {
 
   const createItemData = () => {
     setInventoryStage((prev: any) => {
-      const index = prev.findIndex((item: any) => item.name === currentPhase)
+      const index = prev.findIndex((item: any) => item.stage === currentPhase)
 
       const etapaIndex = prev[index].etapa.findIndex(
         (item: any) => item.name === currentEtapa
@@ -100,6 +100,11 @@ export default function EightaETP() {
         observation
       prev[index].etapa[etapaIndex].elements[elementIndex].total = sum
 
+      //novos campos
+      prev[index].etapa[etapaIndex].elements[elementIndex].density = 0
+      prev[index].etapa[etapaIndex].elements[elementIndex].concentrationInSet =
+        0
+
       if (
         prev[index].etapa[etapaIndex].elements[elementIndex].especifity ===
         "residue"
@@ -112,6 +117,9 @@ export default function EightaETP() {
             stage: currentEtapa,
             phase: currentPhase,
             total: sum,
+            status: "not-selected",
+            density: 0,
+            concentrationInSet: 0,
           })
           return [...prev]
         })

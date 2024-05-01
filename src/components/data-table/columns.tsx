@@ -104,7 +104,7 @@ export const columnsResidue: ColumnDef<ResidueItem>[] = [
     header: "Status",
     cell: ({ row }) => {
       if (row.original.status == "selected") {
-        return <Badge variant="green">Feita operação</Badge>
+        return <Badge variant="green">Adicionado a uma bombona</Badge>
       } else {
         return <Badge variant="default">Não selecionado</Badge>
       }
