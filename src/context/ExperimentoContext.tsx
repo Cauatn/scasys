@@ -93,10 +93,6 @@ export const ExperimentoProvider = ({ children }: any) => {
     }
   }, [isB])
 
-  useEffect(() => {
-    console.log("previousStates mudou: ", previousStates)
-  }, [previousStates])
-
   const setNewPhase = (nome: string) => {
     setCurrentPhase(nome)
 
@@ -104,7 +100,7 @@ export const ExperimentoProvider = ({ children }: any) => {
       return [
         ...prev,
         {
-          name: nome,
+          stage: nome,
           etapa: [],
         },
       ]
@@ -113,7 +109,7 @@ export const ExperimentoProvider = ({ children }: any) => {
 
   const setNewEtapa = (nome: string, num_of_reps: number) => {
     setInventoryStage((prev: any) => {
-      const index = prev.findIndex((item: any) => item.name === currentPhase)
+      const index = prev.findIndex((item: any) => item.stage === currentPhase)
       const newEtapa = {
         name: nome,
         num_of_reps: num_of_reps,
@@ -136,7 +132,7 @@ export const ExperimentoProvider = ({ children }: any) => {
     setCurrentItem(item)
 
     setInventoryStage((prev: any) => {
-      const index = prev.findIndex((item: any) => item.name === currentPhase)
+      const index = prev.findIndex((item: any) => item.stage === currentPhase)
       const etapaIndex = prev[index].etapa.findIndex(
         (item: any) => item.name === currentEtapa
       )
@@ -167,6 +163,7 @@ export const ExperimentoProvider = ({ children }: any) => {
           quantity: [],
           total: 0,
         },
+
         status: "not-selected",
       },
     ])
@@ -193,7 +190,7 @@ export const ExperimentoProvider = ({ children }: any) => {
 
   const setMtadItems = (etapa: string, phase: string, itemName: string) => {
     setInventoryStage((prev: any) => {
-      const index = prev.findIndex((item: any) => item.name === phase)
+      const index = prev.findIndex((item: any) => item.stage === phase)
       const etapaIndex = prev[index].etapa.findIndex(
         (item: any) => item.name === etapa
       )
@@ -224,7 +221,7 @@ export const ExperimentoProvider = ({ children }: any) => {
     src: string
   ) => {
     setInventoryStage((prev: any) => {
-      const index = prev.findIndex((item: any) => item.name === phase)
+      const index = prev.findIndex((item: any) => item.stage === phase)
       const etapaIndex = prev[index].etapa.findIndex(
         (item: any) => item.name === etapa
       )

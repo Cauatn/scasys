@@ -50,6 +50,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { PlusIcon } from "lucide-react"
+import { register_bombonas } from "@/hooks/register-bombonas"
 
 export default function EightaPerg() {
   const checkboxes = [
@@ -66,13 +67,19 @@ export default function EightaPerg() {
   ]
   const [isOpen, setIsOpen] = useState(false)
 
-  const [bombonaResiduos, setBombonaResiduos] = useState<
-    Array<Array<ResidueItem>>
-  >([[]])
+  const [bombonaResiduos, setBombonaResiduos] = useState<any>([
+    {
+      name: "Bombona 1",
+      bombona: [],
+      isToxic: false,
+    },
+  ])
 
   const { handleSubmit, setValue, register } = useForm({
     resolver: zodResolver(InvSchema),
   })
+
+  const { residuos } = useConjContext()
 
   const navigate = useNavigate()
   const handleFormSubmit = (data: any) => {
@@ -83,10 +90,24 @@ export default function EightaPerg() {
 
   const [selectedConjunto, setSelectedConjunto] = useState<number>(0)
 
-  const addResidue = (residues: ResidueItem[], index: number) => {
+  const addResidue = (residues: any[], index: number) => {
     setBombonaResiduos((prev: any) => {
       let newBombona = [...prev]
-      newBombona[index] = residues
+      let array: any[] = []
+
+      residues.forEach((item) => {
+        item.status = "selected"
+
+        let aux = {
+          quim_component: item.item,
+          value: item.total,
+          unit: item.unit,
+        }
+
+        array.push(aux)
+      })
+
+      newBombona[index].bombona = array
 
       return newBombona
     })
@@ -111,7 +132,7 @@ export default function EightaPerg() {
                   <SelectValue placeholder="Conjunto de resíduos na bombona e:" />
                 </SelectTrigger>
                 <SelectContent position="popper">
-                  {bombonaResiduos.map((conjunto, index) => {
+                  {bombonaResiduos.map((conjunto: any, index: number) => {
                     return (
                       <SelectItem key={index} value={index.toString()}>
                         {"Conjunto " + (index + 1)}
@@ -165,7 +186,14 @@ export default function EightaPerg() {
                   ),
                 })
 
-                setBombonaResiduos((prev: any) => [...prev, []])
+                setBombonaResiduos((prev: any) => [
+                  ...prev,
+                  {
+                    name: "Bombona " + (prev.length + 1),
+                    bombona: [],
+                    isToxic: false,
+                  },
+                ])
               }}
             >
               <PlusIcon className="h-5 w-5" />
@@ -276,7 +304,13 @@ export default function EightaPerg() {
         )}
       </div>
       <NextPageButton />
-      <button onClick={() => navigate("/ppwg")}>PASSAR</button>
+      <button
+        onClick={() => {
+          register_bombonas(bombonaResiduos)
+        }}
+      >
+        TESTAR REGISTRO
+      </button>
     </form>
   )
 }
@@ -322,7 +356,13 @@ function ShowTable({
           {
             <Button
               onClick={() => {
-                addResidue(selectedRows, bombonaIndex)
+                let FilterRows: any[] = []
+
+                selectedRows.forEach((row) => {
+                  FilterRows.push(row.original)
+                })
+
+                addResidue(FilterRows, bombonaIndex)
               }}
             >
               Adicionar
