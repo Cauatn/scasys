@@ -9,17 +9,9 @@ Trata-se de um software intuitivo, que, de acordo com etapas pré-definidas, per
 
 ## Stack utilizada
 
-**Front-end:** React + Ts +Vite, TailwindCSS
+**Front-end:** React + Ts + Vite, TailwindCSS
 
 **Back-end:** Node
-
-### TODOS
->Lista de tarefas a fazer discutidas em reunião
-
-- [ ] Template 1
-- [ ] Template 2
-- [ ] Template 3
-- [ ] Template 4
 
 ## Instalando localmente
 
