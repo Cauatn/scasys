@@ -9,7 +9,6 @@ import {
 import { useConjContext } from "@/context/ConjuntoContext"
 import { useExpContext } from "@/context/ExperimentoContext"
 import { useEffect, useState } from "react"
-import { set } from "react-hook-form"
 import { v4 as uuidv4 } from "uuid"
 
 export function ItemsTable(props: any) {
@@ -62,36 +61,33 @@ export function ItemsTable(props: any) {
         </TableHeader>
         <TableBody>
           {rows.length > 0 ? (
-            rows.map((e: any, index: number) => {
+            rows.map((e: any, rowIndex: number) => {
               return (
-                <TableRow key={uuidv4()}>
+                <TableRow key={e.id || rowIndex}>
                   <TableCell className="font-medium">{e.fase}</TableCell>
                   <TableCell className="font-medium">{e.etapa}</TableCell>
                   <TableCell className="font-medium">
                     {e.especificidade}
                   </TableCell>
-                  <TableCell className="font-medium">{e.item || ""}</TableCell>
-                  {
-                    <TableCell className="font-medium">
-                      {e.properties.quantity.map((a: any, index: number) => {
-                        if (e.properties.quantity.length === 1)
-                          return <>{`[${a.value}]`}</>
-                        if (index === 0) return <>{`[${a.value},`}</>
-                        if (index === e.properties.quantity.length - 1)
-                          return <>{`${a.value}]`}</>
-                        return <>{`${a.value},`}</>
-                      })}
-                    </TableCell>
-                  }
-                  {
-                    <TableCell className="font-medium">
-                      {e.properties.unit == "undefined"
-                        ? e.properties.total.toFixed(3).toString()
-                        : e.properties.total.toFixed(3).toString() +
-                          " " +
-                          e.properties.unit}
-                    </TableCell>
-                  }
+                  <TableCell className="font-medium">{e.item}</TableCell>
+                  <TableCell className="font-medium">
+                    {e.properties.quantity.map((a: any, index: number) => {
+                      if (e.properties.quantity.length === 1)
+                        return <span key={index}>{`[${a.value}]`}</span>
+                      if (index === 0)
+                        return <span key={index}>{`[${a.value},`}</span>
+                      if (index === e.properties.quantity.length - 1)
+                        return <span key={index}>{`${a.value}]`}</span>
+                      return <span key={index}>{`${a.value},`}</span>
+                    })}
+                  </TableCell>
+                  <TableCell className="font-medium">
+                    {e.properties.unit === "undefined"
+                      ? e.properties.total.toFixed(3).toString()
+                      : e.properties.total.toFixed(3).toString() +
+                        " " +
+                        e.properties.unit}
+                  </TableCell>
                 </TableRow>
               )
             })
