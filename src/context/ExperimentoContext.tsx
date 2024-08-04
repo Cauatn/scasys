@@ -79,6 +79,10 @@ export const ExperimentoProvider = ({ children }: any) => {
     })
   }, [inventoryStage])
 
+  /* 
+    Essa função existe para a lógica botão Retornar,
+    ela garante que o estado anterior seja o estado anterior
+  */
   useEffect(() => {
     if (isB) {
       setPreviousStates((prev) => {
@@ -107,6 +111,10 @@ export const ExperimentoProvider = ({ children }: any) => {
     })
   }
 
+  /*
+    Função que adiciona uma nova etapa ao array de etapas
+    de uma determinada fase
+  */
   const setNewEtapa = (nome: string, num_of_reps: number) => {
     setInventoryStage((prev: any) => {
       const index = prev.findIndex((item: any) => item.stage === currentPhase)
@@ -121,6 +129,10 @@ export const ExperimentoProvider = ({ children }: any) => {
     })
   }
 
+  /* 
+    Função que adiciona um novo item ao array de elementos
+    de uma determinada etapa
+  */
   const setNewItem = (
     item: string,
     especificidade: string,
@@ -169,6 +181,9 @@ export const ExperimentoProvider = ({ children }: any) => {
     ])
   }
 
+  /*
+    Função que seta a quantidade de um item em uma determinada etapa
+  */
   const setQuantity = (obj: any) => {
     setListItems((prev: any) => {
       const index = prev.findIndex(

@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button"
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 
 import { ItemsTable } from "@/components/Items-table"
@@ -25,12 +25,11 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { set, useForm } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { useExpContext } from "@/context/ExperimentoContext"
 import { Trash2 } from "lucide-react"
 import { createInventory } from "@/hooks/create-inventory"
-import { get } from "http"
 import { v4 as uuidv4 } from "uuid"
 import { useConjContext } from "@/context/ConjuntoContext"
 

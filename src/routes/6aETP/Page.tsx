@@ -95,43 +95,7 @@ export function SixaETP() {
                 <div>
                   <div>
                     <Label htmlFor="especificidade">Especificidade :</Label>
-                    <Select
-                      onValueChange={(value) => {
-                        setValue("specificity", value)
-                        setCurrentEspecifity(value)
-                      }}
-                      required
-                    >
-                      <SelectTrigger className="w-80" id="phase-select">
-                        <SelectValue placeholder="selecione aqui" />
-                      </SelectTrigger>
-                      <SelectContent position="popper">
-                        <SelectItem value="auxiliary">Auxiliar</SelectItem>
-                        <SelectItem value="reagent">Reagente</SelectItem>
-                        <SelectItem value="solvent">Solvente</SelectItem>
-                        <SelectItem value="residue">Resíduo</SelectItem>
-                        <SelectItem value="water">Água</SelectItem>
-                        <SelectItem value="product">Produto</SelectItem>
-                        <SelectItem value="energetic-waste">
-                          Gasto Energetico
-                        </SelectItem>
-                        <SelectItem value="electrolyte-support">
-                          Eletrólito de suporte
-                        </SelectItem>
-                        <SelectItem value="aatodo">Catodo</SelectItem>
-                        <SelectItem value="anodo">Anodo</SelectItem>
-                        <SelectItem value="gas-emissor">
-                          Emissões de Gases
-                        </SelectItem>
-                        <SelectItem value="chemical-compost">
-                          Composto Químico
-                        </SelectItem>
-                        <SelectItem value="electric-power-consumption">
-                          Consumo de Energia Elétrica
-                        </SelectItem>
-                        <SelectItem value="others">Outros</SelectItem>
-                      </SelectContent>
-                    </Select>
+                    <SpecificitySelector />
                   </div>
                   <div>
                     <Label htmlFor="Item">Item:</Label>
@@ -214,5 +178,47 @@ export function SixaETP() {
       </div>
       <NextPageButton />
     </form>
+  )
+}
+
+function SpecificitySelector() {
+  const { setValue } = useForm({
+    resolver: zodResolver(InvSchema),
+  })
+
+  const { setCurrentEspecifity } = useExpContext()
+
+  return (
+    <Select
+      onValueChange={(value) => {
+        setValue("specificity", value)
+        setCurrentEspecifity(value)
+      }}
+      required
+    >
+      <SelectTrigger className="w-80" id="phase-select">
+        <SelectValue placeholder="selecione aqui" />
+      </SelectTrigger>
+      <SelectContent position="popper">
+        <SelectItem value="auxiliary">Auxiliar</SelectItem>
+        <SelectItem value="reagent">Reagente</SelectItem>
+        <SelectItem value="solvent">Solvente</SelectItem>
+        <SelectItem value="residue">Resíduo</SelectItem>
+        <SelectItem value="water">Água</SelectItem>
+        <SelectItem value="product">Produto</SelectItem>
+        <SelectItem value="energetic-waste">Gasto Energetico</SelectItem>
+        <SelectItem value="electrolyte-support">
+          Eletrólito de suporte
+        </SelectItem>
+        <SelectItem value="aatodo">Catodo</SelectItem>
+        <SelectItem value="anodo">Anodo</SelectItem>
+        <SelectItem value="gas-emissor">Emissões de Gases</SelectItem>
+        <SelectItem value="chemical-compost">Composto Químico</SelectItem>
+        <SelectItem value="electric-power-consumption">
+          Consumo de Energia Elétrica
+        </SelectItem>
+        <SelectItem value="others">Outros</SelectItem>
+      </SelectContent>
+    </Select>
   )
 }

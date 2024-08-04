@@ -25,7 +25,6 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { createExperiment } from "@/hooks/create-experiment"
-import { useEffect, useState } from "react"
 
 const NmSchema = z.object({
   procedureName: z.string().nonempty("O nome do procedimento é obrigatório"),
@@ -35,7 +34,7 @@ const NmSchema = z.object({
 type NmSchema = z.infer<typeof NmSchema>
 
 export default function TrheeaNDP() {
-  const { register, handleSubmit, setValue } = useForm({
+  const { register, handleSubmit } = useForm({
     resolver: zodResolver(NmSchema),
   })
 
@@ -74,41 +73,57 @@ export default function TrheeaNDP() {
             </div>
             <div className="flex w-full max-w-2xl flex-col justify-between gap-4">
               <p>Escolha um modo de cálculo:</p>
-              <Select
-                onValueChange={(value) => setValue("calculusMethod", value)}
-                required
-              >
-                <SelectTrigger className="flex w-full flex-row justify-between gap-1 rounded-md border pl-2 pr-2">
-                  <SelectValue placeholder="Selecione o modo de cálculo" />
-                </SelectTrigger>
-                <SelectContent className="w-48">
-                  <SelectItem value="Reducionista">Reducionista</SelectItem>
-                  <SelectSeparator />
-                  <SelectItem value="Guiado">Guiado</SelectItem>
-                  <SelectSeparator />
-                  <SelectItem value="Expandido">Expandido</SelectItem>
-                  <SelectSeparator />
-                  <SelectItem value="Exaustivo">Exaustivo</SelectItem>
-                </SelectContent>
-              </Select>
+              <ModeCalculationSelect />
             </div>
           </div>
           <div className="flex h-full w-full max-w-2xl flex-col justify-between">
-            <Card className="w-full">
-              <CardHeader className="flex content-start items-start justify-start">
-                <CardTitle className="">Exemplos:</CardTitle>
-                <CardDescription className="">
-                  Síntese de polietileno - Reducionista
-                </CardDescription>
-                <CardDescription className="">
-                  Isolamento do ácido fórmico - Guiado
-                </CardDescription>
-              </CardHeader>
-            </Card>
+            <ExampleCard />
           </div>
         </div>
         <NextPageButton />
       </form>
     </>
+  )
+}
+
+function ModeCalculationSelect() {
+  const { setValue } = useForm({
+    resolver: zodResolver(NmSchema),
+  })
+
+  return (
+    <Select
+      onValueChange={(value) => setValue("calculusMethod", value)}
+      required
+    >
+      <SelectTrigger className="flex w-full flex-row justify-between gap-1 rounded-md border pl-2 pr-2">
+        <SelectValue placeholder="Selecione o modo de cálculo" />
+      </SelectTrigger>
+      <SelectContent className="w-48">
+        <SelectItem value="Reducionista">Reducionista</SelectItem>
+        <SelectSeparator />
+        <SelectItem value="Guiado">Guiado</SelectItem>
+        <SelectSeparator />
+        <SelectItem value="Expandido">Expandido</SelectItem>
+        <SelectSeparator />
+        <SelectItem value="Exaustivo">Exaustivo</SelectItem>
+      </SelectContent>
+    </Select>
+  )
+}
+
+function ExampleCard() {
+  return (
+    <Card className="w-full">
+      <CardHeader className="flex content-start items-start justify-start">
+        <CardTitle className="">Exemplos:</CardTitle>
+        <CardDescription className="">
+          Síntese de polietileno - Reducionista
+        </CardDescription>
+        <CardDescription className="">
+          Isolamento do ácido fórmico - Guiado
+        </CardDescription>
+      </CardHeader>
+    </Card>
   )
 }
