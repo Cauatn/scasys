@@ -18,7 +18,7 @@ export default function Home() {
           </li>
         </ul>
       </header>
-      <main className="inline-flex justify-between w-full">
+      <main className="inline-flex justify-between w-full items-center mt-10">
         <div className="max-w-[420px] space-y-8">
           <div className="inline-flex items-center py-2 px-2 bg-gray-100 h-10 w-fit space-x-2 rounded-lg">
             <p className="text-gray-custom ">
@@ -28,7 +28,7 @@ export default function Home() {
           </div>
           <div className="flex flex-col space-y-8">
             <span className="text-4xl inline-block items-center text-justify">
-              <B>Software</B> com confiabilidade.
+              <B>Software</B> <p>com confiabilidade.</p>
             </span>
             <span className="text-justify">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
@@ -47,7 +47,7 @@ export default function Home() {
         <img
           src="https://via.placeholder.com/150"
           alt="Placeholder Image"
-          className="h-[500px] w-[600px]"
+          className="h-[400px] w-[600px]"
         />
       </main>
     </div>
