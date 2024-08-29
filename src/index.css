@@ -2,11 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-#root {
-  width: 100%;
-  height: 100svh;
-}
-
 @layer base {
   :root {
     --background: 0 0% 100%;
