@@ -1,7 +1,6 @@
-import useBearStore from "@/context/teste";
 import Page from "@/pages/3A/Page";
 import Home from "@/pages/Home/Home";
-import { Switch, Route, Link } from "wouter";
+import { Switch, Route } from "wouter";
 
 const Routes = () => {
   return (
