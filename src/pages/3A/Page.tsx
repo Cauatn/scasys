@@ -19,7 +19,7 @@ import Experiment from "@/context/experiment";
 
 import { useLocation } from "wouter";
 
-export default function Page() {
+export default function ThreePage() {
   const sidebar = useStore(useSidebarToggle, (state) => state);
   const addName = Experiment((state) => state.addExperimentName);
   const addExperimentType = Experiment((state) => state.addExperimentType);

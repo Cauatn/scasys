@@ -23,10 +23,6 @@ export default function FourPage() {
   const sidebar = useStore(useSidebarToggle, (state) => state);
   const [selectedPhase, setSelectedPhase] = useState("");
 
-  const handleSelectChange = (value: string) => {
-    setSelectedPhase(value);
-  };
-
   // const [location, setLocation] = useLocation();
 
   if (!sidebar) return null;
@@ -48,7 +44,7 @@ export default function FourPage() {
                 <label htmlFor="procedure">
                   Informe a fase ao qual o experimento está
                 </label>
-                <Select onValueChange={handleSelectChange}>
+                <Select onValueChange={(value) => setSelectedPhase(value)}>
                   <SelectTrigger className="w-full rounded-none border-black">
                     <SelectValue placeholder="Selecione uma fase" />
                   </SelectTrigger>
