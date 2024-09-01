@@ -14,7 +14,7 @@ import { cn } from "@/lib/utils";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Navbar } from "@/components/navbar";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import Experiment from "@/context/experiment";
 
 import { useLocation } from "wouter";
@@ -22,6 +22,15 @@ import { useLocation } from "wouter";
 export default function FourPage() {
   const sidebar = useStore(useSidebarToggle, (state) => state);
   const [selectedPhase, setSelectedPhase] = useState("");
+
+  const addInventoryPhase = Experiment((state) => state.addInventoryPhase);
+  const inventory = Experiment((state) => state.inventory);
+
+  const [location, setLocation] = useLocation();
+
+  useEffect(() => {
+    console.log(inventory);
+  }, [inventory]);
 
   // const [location, setLocation] = useLocation();
 
@@ -44,7 +53,11 @@ export default function FourPage() {
                 <label htmlFor="procedure">
                   Informe a fase ao qual o experimento está
                 </label>
-                <Select onValueChange={(value) => setSelectedPhase(value)}>
+                <Select
+                  onValueChange={(value) =>
+                    addInventoryPhase({ name: value, steps: [] })
+                  }
+                >
                   <SelectTrigger className="w-full rounded-none border-black">
                     <SelectValue placeholder="Selecione uma fase" />
                   </SelectTrigger>
@@ -78,7 +91,12 @@ export default function FourPage() {
             )}
           </div>
           <div className="flex justify-end w-full">
-            <Button className="bg-emerald-600">Proximo</Button>
+            <Button
+              className="bg-emerald-600"
+              onClick={() => setLocation("/5a")}
+            >
+              Proximo
+            </Button>
           </div>
         </form>
       </main>

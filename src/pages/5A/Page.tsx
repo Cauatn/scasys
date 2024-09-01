@@ -1,35 +1,29 @@
 import { Sidebar } from "@/components/sidebar/Sidebar";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-
 import { Input } from "@/components/ui/input";
 import { useSidebarToggle } from "@/hooks/use-side-bar-toggle";
-import { useStore } from "@/hooks/use-store";
+import { useStore } from "zustand";
 import { cn } from "@/lib/utils";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Navbar } from "@/components/navbar";
-import { FormEvent, useState } from "react";
+import { useEffect, useState } from "react";
 import Experiment from "@/context/experiment";
 
-import { useLocation } from "wouter";
-
 export default function FivePage() {
+  const [phaseInput, setPhaseInput] = useState("");
   const sidebar = useStore(useSidebarToggle, (state) => state);
-  const [stepCount, setStepCount] = useState(0);
+  const [repetitions, setRepetitions] = useState(1);
 
-  const incrementStepCount = () => {
-    setStepCount((prevCount) => prevCount + 1);
+  const addStepOnPhase = Experiment((state) => state.addStepOnPhase); // Corrigido para usar Experiment
+  const inventory = Experiment((state) => state.inventory);
+
+  const handleAddStep = () => {
+    addStepOnPhase("inicial", { name: phaseInput, repetitions: repetitions });
   };
 
-  const decrementStepCount = () => {
-    setStepCount((prevCount) => (prevCount > 0 ? prevCount - 1 : 0));
-  };
+  useEffect(() => {
+    console.log(inventory);
+  }, [inventory]);
 
   // const [location, setLocation] = useLocation();
 
@@ -56,6 +50,7 @@ export default function FivePage() {
                   id="phase"
                   className="rounded-none border-black"
                   placeholder="Informe o nome da fase"
+                  onChange={(e) => setPhaseInput(e.target.value)}
                 />
               </CardContent>
             </Card>
@@ -68,13 +63,15 @@ export default function FivePage() {
                   <Input
                     id="procedure"
                     className="rounded-none border-black text-center"
-                    value={stepCount}
+                    value={repetitions}
                     readOnly
                   />
                   <div className="inline-flex space-x-1">
                     <Button
                       className="rounded-none font-semibold"
-                      onClick={decrementStepCount}
+                      onClick={() =>
+                        setRepetitions(repetitions > 1 ? repetitions - 1 : 1)
+                      }
                       type="button"
                       variant="outline"
                     >
@@ -82,7 +79,7 @@ export default function FivePage() {
                     </Button>
                     <Button
                       className="rounded-none font-semibold"
-                      onClick={incrementStepCount}
+                      onClick={() => setRepetitions(repetitions + 1)}
                       type="button"
                       variant="outline"
                     >
@@ -93,10 +90,13 @@ export default function FivePage() {
               </CardContent>
             </Card>
           </div>
-          <div className="flex justify-end w-full">
-            <Button className="bg-emerald-600">Proximo</Button>
-          </div>
+          <pre>{JSON.stringify(inventory, null, 2)}</pre>
         </form>
+        <div className="flex justify-end w-full">
+          <Button className="bg-emerald-600" onClick={handleAddStep}>
+            Proximo
+          </Button>
+        </div>
       </main>
     </>
   );
