@@ -14,7 +14,7 @@ interface Step {
   items: Item[];
 }
 
-interface Item {
+export interface Item {
   itemName: string;
   formula: string;
   especificidade: string;
@@ -29,6 +29,12 @@ interface ExperimentState {
   addInventoryPhase: (phase: Phase) => void;
   addStepOnPhase: (phaseName: string, step: Step) => void;
   addItemOnStep: (stepName: string, phaseName: string, item: Item) => void;
+  editItem: (
+    stepName: string,
+    phaseName: string,
+    itemName: string,
+    newItem: Item
+  ) => void;
 }
 
 const Experiment = create<ExperimentState>((set) => ({
@@ -64,6 +70,28 @@ const Experiment = create<ExperimentState>((set) => ({
           const step = phase.steps.find((s) => s.name === stepName);
           if (step) {
             step.items.push(item);
+          }
+        }
+      })
+    ),
+  editItem: (
+    stepName: string,
+    phaseName: string,
+    itemName: string,
+    newItem: Item
+  ) =>
+    set(
+      produce((state: ExperimentState) => {
+        const phase = state.inventory.find((p) => p.name === phaseName);
+        if (phase) {
+          const step = phase.steps.find((s) => s.name === stepName);
+          if (step) {
+            const itemIndex = step.items.findIndex(
+              (i) => i.itemName === itemName
+            );
+            if (itemIndex !== -1) {
+              step.items[itemIndex] = newItem;
+            }
           }
         }
       })

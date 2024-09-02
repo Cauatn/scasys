@@ -9,6 +9,8 @@ import { Navbar } from "@/components/navbar";
 import { useEffect, useState } from "react";
 import Experiment from "@/context/experiment";
 import { useLocation } from "wouter";
+import { Table } from "@/components/ui/table";
+import { DataTable } from "@/components/items/data-table";
 
 export default function SixPage() {
   const sidebar = useStore(useSidebarToggle, (state) => state);
@@ -96,6 +98,7 @@ export default function SixPage() {
               </CardContent>
             </Card>
           </div>
+          <DataTable />
           <pre>{JSON.stringify(inventory, null, 2)}</pre>
           <div className="flex justify-end w-full">
             <Button className="bg-emerald-600" type="submit">
