@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { create } from "zustand";
 
+import { produce } from "immer";
+
 interface Step {
   name: string;
   repetitions: number;
@@ -34,17 +36,25 @@ const Experiment = create<ExperimentState>((set) => ({
       experimentType: type,
     })),
   addInventoryPhase: (phase: Phase) =>
-    set((state) => ({
-      inventory: [...state.inventory, { ...phase, steps: phase.steps || [] }],
-    })),
+    set(
+      produce((state: ExperimentState) => {
+        state.inventory.push(phase);
+      })
+    ),
   addStepOnPhase: (phaseName: string, step: Step) =>
-    set((state) => ({
-      inventory: state.inventory.map((phase) =>
-        phase.name === phaseName
-          ? { ...phase, steps: [...(phase.steps || []), step] }
-          : phase
-      ),
-    })),
+    // set((state) => ({
+    //   inventory: state.inventory.map((phase) =>
+    //     phase.name === phaseName
+    //       ? { ...phase, steps: [...(phase.steps || []), step] }
+    //       : phase
+    //   ),
+    // })),
+    set(
+      produce((state: ExperimentState) => {
+        const phase = state.inventory.find((p) => p.name === phaseName);
+        if (phase) phase.steps.push(step);
+      })
+    ),
 }));
 
 export default Experiment;
