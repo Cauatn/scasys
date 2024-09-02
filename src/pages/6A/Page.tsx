@@ -10,28 +10,30 @@ import { useEffect, useState } from "react";
 import Experiment from "@/context/experiment";
 import { useLocation } from "wouter";
 
-export default function FivePage() {
-  const [phaseInput, setPhaseInput] = useState("");
+export default function SixPage() {
   const sidebar = useStore(useSidebarToggle, (state) => state);
-  const [repetitions, setRepetitions] = useState(1);
 
-  const [location, setLocation] = useLocation();
+  //const [location, setLocation] = useLocation();
 
-  const addStepOnPhase = Experiment((state) => state.addStepOnPhase); // Corrigido para usar Experiment
   const inventory = Experiment((state) => state.inventory);
+  const addItemOnStep = Experiment((state) => state.addItemOnStep);
+
+  const [itemName, setItemName] = useState("");
+  const [formula, setFormula] = useState("");
+  const [especificidade, setEspecificidade] = useState("");
 
   useEffect(() => {
     console.log(inventory);
   }, [inventory]);
 
   const handleSubmit = (event) => {
-    addStepOnPhase("inicial", {
-      name: phaseInput,
-      repetitions: repetitions,
-      items: [],
+    event.preventDefault();
+
+    addItemOnStep("fase 1", "inicial", {
+      itemName,
+      formula,
+      especificidade,
     });
-    setLocation("/6a");
-    console.log("ad");
   };
 
   if (!sidebar) return null;
@@ -54,49 +56,43 @@ export default function FivePage() {
             <Card className="rounded-none flex justify-center items-center max-w-[400px] max-h-[150px] w-full p-4">
               <CardContent className="w-full space-y-2">
                 <div className="flex flex-col">
-                  <label htmlFor="name">Nome da etapa procedimental</label>
+                  <label htmlFor="itemName">Item</label>
                 </div>
                 <Input
-                  id="phase"
+                  id="itemName"
                   className="rounded-none border-black"
-                  placeholder="Informe o nome da fase"
-                  onChange={(e) => setPhaseInput(e.target.value)}
+                  placeholder="Informe o nome do item"
+                  value={itemName}
+                  onChange={(e) => setItemName(e.target.value)}
                 />
               </CardContent>
             </Card>
-            <Card className="rounded-none flex justify-center items-center max-w-[400px] max-h-[150px] w-full h-full p-7">
-              <CardContent className="w-full h-full space-y-2">
-                <label htmlFor="etapas">
-                  Número de repetições da etapa procedimental
-                </label>
-                <div className="flex items-center justify-start space-x-2">
-                  <Input
-                    id="procedure"
-                    className="rounded-none border-black text-center"
-                    value={repetitions}
-                    readOnly
-                  />
-                  <div className="inline-flex space-x-1">
-                    <Button
-                      className="rounded-none font-semibold"
-                      onClick={() =>
-                        setRepetitions(repetitions > 1 ? repetitions - 1 : 1)
-                      }
-                      type="button"
-                      variant="outline"
-                    >
-                      -
-                    </Button>
-                    <Button
-                      className="rounded-none font-semibold"
-                      onClick={() => setRepetitions(repetitions + 1)}
-                      type="button"
-                      variant="outline"
-                    >
-                      +
-                    </Button>
-                  </div>
+            <Card className="rounded-none flex justify-center items-center max-w-[400px] max-h-[150px] w-full p-4">
+              <CardContent className="w-full space-y-2">
+                <div className="flex flex-col">
+                  <label htmlFor="formula">Fórmula química</label>
                 </div>
+                <Input
+                  id="formula"
+                  className="rounded-none border-black"
+                  placeholder="Informe a fórmula química"
+                  value={formula}
+                  onChange={(e) => setFormula(e.target.value)}
+                />
+              </CardContent>
+            </Card>
+            <Card className="rounded-none flex justify-center items-center max-w-[400px] max-h-[150px] w-full p-4">
+              <CardContent className="w-full space-y-2">
+                <div className="flex flex-col">
+                  <label htmlFor="especificidade">Especificidade</label>
+                </div>
+                <Input
+                  id="especificidade"
+                  className="rounded-none border-black"
+                  placeholder="Informe a especificidade"
+                  value={especificidade}
+                  onChange={(e) => setEspecificidade(e.target.value)}
+                />
               </CardContent>
             </Card>
           </div>

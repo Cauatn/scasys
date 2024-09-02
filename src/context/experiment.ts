@@ -3,14 +3,21 @@ import { create } from "zustand";
 
 import { produce } from "immer";
 
-interface Step {
-  name: string;
-  repetitions: number;
-}
-
 interface Phase {
   name: string;
   steps: Step[];
+}
+
+interface Step {
+  name: string;
+  repetitions: number;
+  items: Item[];
+}
+
+interface Item {
+  itemName: string;
+  formula: string;
+  especificidade: string;
 }
 
 interface ExperimentState {
@@ -21,6 +28,7 @@ interface ExperimentState {
   addExperimentType: (type: string) => void;
   addInventoryPhase: (phase: Phase) => void;
   addStepOnPhase: (phaseName: string, step: Step) => void;
+  addItemOnStep: (stepName: string, phaseName: string, item: Item) => void;
 }
 
 const Experiment = create<ExperimentState>((set) => ({
@@ -42,17 +50,22 @@ const Experiment = create<ExperimentState>((set) => ({
       })
     ),
   addStepOnPhase: (phaseName: string, step: Step) =>
-    // set((state) => ({
-    //   inventory: state.inventory.map((phase) =>
-    //     phase.name === phaseName
-    //       ? { ...phase, steps: [...(phase.steps || []), step] }
-    //       : phase
-    //   ),
-    // })),
     set(
       produce((state: ExperimentState) => {
         const phase = state.inventory.find((p) => p.name === phaseName);
         if (phase) phase.steps.push(step);
+      })
+    ),
+  addItemOnStep: (stepName: string, phaseName: string, item: Item) =>
+    set(
+      produce((state: ExperimentState) => {
+        const phase = state.inventory.find((p) => p.name === phaseName);
+        if (phase) {
+          const step = phase.steps.find((s) => s.name === stepName);
+          if (step) {
+            step.items.push(item);
+          }
+        }
       })
     ),
 }));
