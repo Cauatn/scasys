@@ -11,6 +11,7 @@ import Experiment from "@/context/experiment";
 import { useLocation } from "wouter";
 import { Table } from "@/components/ui/table";
 import { DataTable } from "@/components/items/data-table";
+import { useNavigate } from "react-router-dom";
 
 export default function SixPage() {
   //const [location, setLocation] = useLocation();
@@ -21,6 +22,8 @@ export default function SixPage() {
   const [itemName, setItemName] = useState("");
   const [formula, setFormula] = useState("");
   const [especificidade, setEspecificidade] = useState("");
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     console.log(inventory);
@@ -35,6 +38,8 @@ export default function SixPage() {
       especificidade,
       quantitys: [],
     });
+
+    navigate("/app/7a");
   };
 
   return (

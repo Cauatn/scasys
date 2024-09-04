@@ -2,7 +2,7 @@ import { Input } from "@/components/ui/input";
 import { useSidebarToggle } from "@/hooks/use-side-bar-toggle";
 import { useStore } from "zustand";
 import { Card, CardContent } from "@/components/ui/card";
-import { FormEvent } from "react";
+import { FormEvent, useEffect } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -24,6 +24,8 @@ export default function SevenPage() {
   const sidebar = useStore(useSidebarToggle, (state) => state);
   const addItemQuantity = Experiment((state) => state.addItemQuantity);
 
+  const inventory = Experiment((state) => state.inventory);
+
   if (!sidebar) return null;
 
   const handleSubmit = (event: FormEvent) => {
@@ -31,6 +33,10 @@ export default function SevenPage() {
 
     addItemQuantity("fase 1", "inicial", "teste 1", [1, 2, 3]);
   };
+
+  useEffect(() => {
+    console.log(inventory);
+  }, [inventory]);
 
   return (
     <>

@@ -5,10 +5,10 @@ import { useStore } from "zustand";
 import { cn } from "@/lib/utils";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Navbar } from "@/components/navbar";
 import { FormEvent, useEffect, useState } from "react";
 import Experiment from "@/context/experiment";
 import { useLocation } from "wouter";
+import { useNavigate } from "react-router-dom";
 
 export default function FivePage() {
   const [phaseInput, setPhaseInput] = useState("");
@@ -18,6 +18,8 @@ export default function FivePage() {
 
   const addStepOnPhase = Experiment((state) => state.addStepOnPhase); // Corrigido para usar Experiment
   const inventory = Experiment((state) => state.inventory);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     console.log(inventory);
@@ -29,8 +31,8 @@ export default function FivePage() {
       repetitions: repetitions,
       items: [],
     });
-    setLocation("/6a");
-    console.log("ad");
+
+    navigate("/app/6a");
   };
 
   return (

@@ -97,7 +97,7 @@ const Experiment = create<ExperimentState>((set) => ({
               (i) => i.itemName === itemName
             );
             if (itemIndex !== -1) {
-              step.items[itemIndex] = newItem;
+              step.items[itemIndex].itemName = newItem.itemName;
             }
           }
         }

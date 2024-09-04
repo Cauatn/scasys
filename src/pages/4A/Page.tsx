@@ -18,6 +18,7 @@ import { FormEvent, useEffect, useState } from "react";
 import Experiment from "@/context/experiment";
 
 import { useLocation } from "wouter";
+import { redirect, useNavigate } from "react-router-dom";
 
 export default function FourPage() {
   const [selectedPhase, setSelectedPhase] = useState("");
@@ -25,13 +26,11 @@ export default function FourPage() {
   const addInventoryPhase = Experiment((state) => state.addInventoryPhase);
   const inventory = Experiment((state) => state.inventory);
 
-  const [location, setLocation] = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     console.log(inventory);
   }, [inventory]);
-
-  // const [location, setLocation] = useLocation();
 
   return (
     <>
@@ -80,7 +79,10 @@ export default function FourPage() {
           )}
         </div>
         <div className="flex justify-end w-full">
-          <Button className="bg-emerald-600" onClick={() => setLocation("/5a")}>
+          <Button
+            className="bg-emerald-600"
+            onClick={() => navigate("/app/5a")}
+          >
             Proximo
           </Button>
         </div>
