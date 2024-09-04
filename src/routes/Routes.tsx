@@ -17,7 +17,7 @@ const AppRoutes = () => {
         <Route path="4a" element={<FourPage />} />
         <Route path="5a" element={<FivePage />} />
         <Route path="6a" element={<SixPage />} />
-        <Route path="7a" element={<></>} />
+        <Route path="7a" element={<SevenPage />} />
       </Route>
     </Switch>
   );

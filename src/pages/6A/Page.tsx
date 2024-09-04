@@ -33,6 +33,7 @@ export default function SixPage() {
       itemName,
       formula,
       especificidade,
+      quantitys: [],
     });
   };
 
