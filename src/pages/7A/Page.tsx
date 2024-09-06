@@ -2,7 +2,7 @@ import { Input } from "@/components/ui/input";
 import { useSidebarToggle } from "@/hooks/use-side-bar-toggle";
 import { useStore } from "zustand";
 import { Card, CardContent } from "@/components/ui/card";
-import { FormEvent, useEffect } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,17 +21,15 @@ import Experiment from "@/context/experiment";
 import { Button } from "@/components/ui/button";
 
 export default function SevenPage() {
-  const sidebar = useStore(useSidebarToggle, (state) => state);
   const addItemQuantity = Experiment((state) => state.addItemQuantity);
+  const [observation, setObservation] = useState("");
 
   const inventory = Experiment((state) => state.inventory);
-
-  if (!sidebar) return null;
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
 
-    addItemQuantity("fase 1", "inicial", "teste 1", [1, 2, 3]);
+    addItemQuantity("fase 1", "inicial", "teste 1", [1, 2, 3], observation);
   };
 
   useEffect(() => {
@@ -83,7 +81,8 @@ export default function SevenPage() {
                   id="itemName"
                   className="rounded-none border-black"
                   placeholder="Observações"
-                  type="number"
+                  type="text"
+                  onChange={(e) => setObservation(e.target.value)}
                 />
               </div>
             </CardContent>

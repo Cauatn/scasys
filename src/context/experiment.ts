@@ -19,6 +19,7 @@ export interface Item {
   formula: string;
   especificidade: string;
   quantitys: [];
+  observation: string;
 }
 
 interface ExperimentState {
@@ -40,7 +41,8 @@ interface ExperimentState {
     stepName: string,
     phaseName: string,
     itemName: string,
-    quantity: any
+    quantity: any,
+    observation: string
   ) => void;
 }
 
@@ -107,7 +109,8 @@ const Experiment = create<ExperimentState>((set) => ({
     stepName: string,
     phaseName: string,
     itemName: string,
-    quantitys: any
+    quantitys: any,
+    observation: string
   ) =>
     set(
       produce((state: ExperimentState) => {
@@ -120,6 +123,7 @@ const Experiment = create<ExperimentState>((set) => ({
             );
             if (itemIndex !== -1) {
               step.items[itemIndex].quantitys = quantitys;
+              step.items[itemIndex].observation = observation;
             }
           }
         }
