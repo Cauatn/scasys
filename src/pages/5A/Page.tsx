@@ -1,8 +1,4 @@
-import { Sidebar } from "@/components/sidebar/Sidebar";
 import { Input } from "@/components/ui/input";
-import { useSidebarToggle } from "@/hooks/use-side-bar-toggle";
-import { useStore } from "zustand";
-import { cn } from "@/lib/utils";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { FormEvent, useEffect, useState } from "react";
@@ -10,8 +6,10 @@ import Experiment from "@/context/experiment";
 import { useLocation } from "wouter";
 import { useNavigate } from "react-router-dom";
 
+import { buffer } from "@/context/buffer";
+
 export default function FivePage() {
-  const [phaseInput, setPhaseInput] = useState("");
+  const [stepInput, setStepInput] = useState("");
   const [repetitions, setRepetitions] = useState(1);
 
   const [location, setLocation] = useLocation();
@@ -26,11 +24,13 @@ export default function FivePage() {
   }, [inventory]);
 
   const handleSubmit = (event: FormEvent) => {
-    addStepOnPhase("inicial", {
-      name: phaseInput,
+    addStepOnPhase(buffer.get("lastPhase"), {
+      name: stepInput,
       repetitions: repetitions,
       items: [],
     });
+
+    buffer.set("lastStep", stepInput);
 
     navigate("/app/6a");
   };
@@ -51,7 +51,7 @@ export default function FivePage() {
                 id="phase"
                 className="rounded-none border-black"
                 placeholder="Informe o nome da fase"
-                onChange={(e) => setPhaseInput(e.target.value)}
+                onChange={(e) => setStepInput(e.target.value)}
               />
             </CardContent>
           </Card>

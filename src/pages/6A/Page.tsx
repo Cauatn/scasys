@@ -1,17 +1,12 @@
-import { Sidebar } from "@/components/sidebar/Sidebar";
 import { Input } from "@/components/ui/input";
-import { useSidebarToggle } from "@/hooks/use-side-bar-toggle";
-import { useStore } from "zustand";
-import { cn } from "@/lib/utils";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Navbar } from "@/components/navbar";
 import { FormEvent, useEffect, useState } from "react";
 import Experiment from "@/context/experiment";
-import { useLocation } from "wouter";
-import { Table } from "@/components/ui/table";
 import { DataTable } from "@/components/items/data-table";
 import { useNavigate } from "react-router-dom";
+
+import { buffer } from "@/context/buffer";
 
 export default function SixPage() {
   //const [location, setLocation] = useLocation();
@@ -32,11 +27,14 @@ export default function SixPage() {
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
 
-    addItemOnStep("fase 1", "inicial", {
+    buffer.set("lastItem", itemName);
+
+    addItemOnStep(buffer.get("lastStep"), buffer.get("lastPhase"), {
       itemName,
       formula,
       especificidade,
       quantitys: [],
+      observation: "",
     });
 
     navigate("/app/7a");

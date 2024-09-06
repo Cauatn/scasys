@@ -1,4 +1,3 @@
-import { Sidebar } from "@/components/sidebar/Sidebar";
 import {
   Select,
   SelectContent,
@@ -8,17 +7,14 @@ import {
 } from "@/components/ui/select";
 
 import { Input } from "@/components/ui/input";
-import { useSidebarToggle } from "@/hooks/use-side-bar-toggle";
-import { useStore } from "@/hooks/use-store";
-import { cn } from "@/lib/utils";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Navbar } from "@/components/navbar";
-import { FormEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Experiment from "@/context/experiment";
 
-import { useLocation } from "wouter";
-import { redirect, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
+import { buffer } from "@/context/buffer";
 
 export default function FourPage() {
   const [selectedPhase, setSelectedPhase] = useState("");
@@ -42,9 +38,10 @@ export default function FourPage() {
                 Informe a fase ao qual o experimento está
               </label>
               <Select
-                onValueChange={(value) =>
-                  addInventoryPhase({ name: value, steps: [] })
-                }
+                onValueChange={(value) => {
+                  addInventoryPhase({ name: value, steps: [] });
+                  buffer.set("lastPhase", value);
+                }}
               >
                 <SelectTrigger className="w-full rounded-none border-black">
                   <SelectValue placeholder="Selecione uma fase" />

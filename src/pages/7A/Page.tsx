@@ -20,6 +20,8 @@ import { DataTable } from "@/components/items/data-table";
 import Experiment from "@/context/experiment";
 import { Button } from "@/components/ui/button";
 
+import { buffer } from "@/context/buffer";
+
 export default function SevenPage() {
   const addItemQuantity = Experiment((state) => state.addItemQuantity);
   const [observation, setObservation] = useState("");
@@ -29,7 +31,13 @@ export default function SevenPage() {
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
 
-    addItemQuantity("fase 1", "inicial", "teste 1", [1, 2, 3], observation);
+    addItemQuantity(
+      buffer.get("lastPhase"),
+      buffer.get("lastStep"),
+      buffer.get("lastItem"),
+      [1, 2, 3],
+      observation
+    );
   };
 
   useEffect(() => {
