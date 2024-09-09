@@ -24,9 +24,34 @@ import { cn } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
+//TODO : ABSTRAIR ESSAS FUNCOES PARA TORNAR MAIS LEGIVEL
+//UTLIZANDO ZUSTAND OU UM CUSTOM HOOK
+
 export default function SevenPage() {
   const addItemQuantity = Experiment((state) => state.addItemQuantity);
   const [observation, setObservation] = useState("");
+
+  const [quantities, setQuantities] = useState<[number, string][]>([]);
+
+  const addNewValue = (value: string, index: number) => {
+    setQuantities((prevQuantities) =>
+      prevQuantities.map((quantity, i) =>
+        i === index ? [parseFloat(value), quantity[1]] : quantity
+      )
+    );
+  };
+
+  const addUnity = (value: string, index: number) => {
+    setQuantities((prevQuantities) =>
+      prevQuantities.map((quantity, i) =>
+        i === index ? [quantity[0], value] : quantity
+      )
+    );
+  };
+
+  const handleAddCard = () => {
+    setQuantities([...quantities, [0, ""]]);
+  };
 
   const inventory = Experiment((state) => state.inventory);
 
@@ -43,7 +68,7 @@ export default function SevenPage() {
       buffer.get("lastStep"),
       buffer.get("lastPhase"),
       buffer.get("lastItem"),
-      [1, 2, 3],
+      quantities,
       observation
     );
   }
@@ -59,34 +84,42 @@ export default function SevenPage() {
         onSubmit={handleSubmit}
       >
         <div className="flex flex-row justify-between">
-          <Card className="rounded-none flex justify-center items-center max-w-[400px] max-h-[150px] w-full p-4">
-            <CardContent className="w-full space-y-2">
-              <div className="flex flex-col">
-                <label htmlFor="itemName">Quantidade ou valor</label>
-              </div>
-              <div className="inline-flex space-x-2 items-center ">
-                <Input
-                  id="itemName"
-                  className="rounded-none border-black"
-                  placeholder="Informe a quantidade"
-                  type="number"
-                />
-                <Select>
-                  <SelectTrigger className="w-[180px] rounded-none border-black">
-                    <SelectValue placeholder="Unidade" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="kg">Kg</SelectItem>
-                    <SelectItem value="g">g</SelectItem>
-                    <SelectItem value="l">L</SelectItem>
-                    <SelectItem value="mol">Mol</SelectItem>
-                    <SelectItem value="mol/l">Mol/L</SelectItem>
-                    <SelectItem value="%">%</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </CardContent>
-          </Card>
+          {quantities.map((quantity, index) => (
+            <Card
+              key={index}
+              className="rounded-none flex justify-center items-center max-w-[400px] max-h-[150px] w-full p-4"
+            >
+              <CardContent className="w-full space-y-2">
+                <div className="flex flex-col">
+                  <label htmlFor={`itemName-${index}`}>
+                    Quantidade ou valor
+                  </label>
+                </div>
+                <div className="inline-flex space-x-2 items-center ">
+                  <Input
+                    id={`itemName-${index}`}
+                    className="rounded-none border-black"
+                    placeholder="Informe a quantidade"
+                    type="number"
+                    onChange={(e) => addNewValue(e.target.value, index)}
+                  />
+                  <Select onValueChange={(value) => addUnity(value, index)}>
+                    <SelectTrigger className="w-[180px] rounded-none border-black">
+                      <SelectValue placeholder="Unidade" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="kg">Kg</SelectItem>
+                      <SelectItem value="g">g</SelectItem>
+                      <SelectItem value="l">L</SelectItem>
+                      <SelectItem value="mol">Mol</SelectItem>
+                      <SelectItem value="mol/l">Mol/L</SelectItem>
+                      <SelectItem value="%">%</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
           <Card className="rounded-none flex justify-center items-center max-w-[400px] max-h-[150px] w-full p-4">
             <CardContent className="w-full space-y-2">
               <div className="flex flex-col">
@@ -101,6 +134,16 @@ export default function SevenPage() {
                   onChange={(e) => setObservation(e.target.value)}
                 />
               </div>
+            </CardContent>
+          </Card>
+          <Card className="rounded-none flex justify-center items-center max-w-[400px] max-h-[150px] w-full p-4 mt-4">
+            <CardContent className="w-full space-y-2">
+              <Button
+                onClick={handleAddCard}
+                className="bg-blue-500 text-white"
+              >
+                Adicionar um novo valor
+              </Button>
             </CardContent>
           </Card>
         </div>
