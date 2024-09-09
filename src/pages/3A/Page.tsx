@@ -18,6 +18,7 @@ import { FormEvent, useState } from "react";
 import Experiment from "@/context/experiment";
 
 import { useLocation } from "wouter";
+import { useNavigate } from "react-router-dom";
 
 export default function ThreePage() {
   const addName = Experiment((state) => state.addExperimentName);
@@ -25,7 +26,7 @@ export default function ThreePage() {
   const [name, setName] = useState("");
   const [type, setType] = useState("");
 
-  const [location, setLocation] = useLocation();
+  const navigate = useNavigate();
 
   function handleSubmit(event: FormEvent) {
     event.preventDefault();
@@ -35,7 +36,7 @@ export default function ThreePage() {
     setName("");
     setType("");
 
-    //setLocation("/");
+    navigate("/app/4a");
   }
 
   return (
@@ -65,7 +66,6 @@ export default function ThreePage() {
                 <SelectTrigger className="w-full rounded-none border-black">
                   {type != "" ? <SelectValue /> : "Escolha o modo de cálculo"}
                 </SelectTrigger>
-
                 <SelectContent>
                   <SelectItem value="reducionista">Reducionista</SelectItem>
                   <SelectItem value="guiado">Guiado</SelectItem>

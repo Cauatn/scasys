@@ -33,10 +33,11 @@ function transformInventory(inventory) {
         result.push({
           phase: inv.name,
           step: step.name,
-          repeticoes: step.repetitions,
           item: item.itemName,
           specificity: item.especificidade,
           formula: item.formula,
+          observation: item.observation,
+          quantitys: item.quantitys,
         });
       });
     });

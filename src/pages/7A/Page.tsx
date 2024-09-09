@@ -31,7 +31,7 @@ export default function SevenPage() {
   const addItemQuantity = Experiment((state) => state.addItemQuantity);
   const [observation, setObservation] = useState("");
 
-  const [quantities, setQuantities] = useState<[number, string][]>([]);
+  const [quantities, setQuantities] = useState<[number, string][]>([[0, ""]]);
 
   const addNewValue = (value: string, index: number) => {
     setQuantities((prevQuantities) =>
@@ -83,7 +83,7 @@ export default function SevenPage() {
         className="flex flex-col w-full max-w-6xl mx-auto h-full space-y-6 pt-10"
         onSubmit={handleSubmit}
       >
-        <div className="flex flex-row justify-between">
+        <div className="flex flex-row justify-between overflow-auto space-x-4">
           {quantities.map((quantity, index) => (
             <Card
               key={index}
@@ -120,6 +120,8 @@ export default function SevenPage() {
               </CardContent>
             </Card>
           ))}
+        </div>
+        <div className="flex flex-row justify-between">
           <Card className="rounded-none flex justify-center items-center max-w-[400px] max-h-[150px] w-full p-4">
             <CardContent className="w-full space-y-2">
               <div className="flex flex-col">
@@ -136,8 +138,8 @@ export default function SevenPage() {
               </div>
             </CardContent>
           </Card>
-          <Card className="rounded-none flex justify-center items-center max-w-[400px] max-h-[150px] w-full p-4 mt-4">
-            <CardContent className="w-full space-y-2">
+          <Card className="rounded-none flex justify-center items-center max-w-[400px] max-h-[150px] w-full p-4">
+            <CardContent className="w-full space-y-2 justify-center items-center flex p-0">
               <Button
                 onClick={handleAddCard}
                 className="bg-blue-500 text-white"
