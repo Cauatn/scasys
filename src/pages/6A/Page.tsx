@@ -46,7 +46,7 @@ export default function SixPage() {
         className="flex flex-col w-full max-w-6xl mx-auto h-full"
         onSubmit={handleSubmit}
       >
-        <div className="flex flex-row justify-between w-full my-20">
+        <div className="flex flex-row justify-between w-full my-20 space-x-2">
           <Card className="rounded-none flex justify-center items-center max-w-[400px] max-h-[150px] w-full p-4">
             <CardContent className="w-full space-y-2">
               <div className="flex flex-col">

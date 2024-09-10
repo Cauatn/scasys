@@ -164,8 +164,8 @@ export default function SevenPage() {
                   Escolha aonde deseja adicionar o novo item
                 </DialogTitle>
                 <DialogDescription>
-                  Make changes to your profile here. Click save when you're
-                  done.
+                  Selecione a qual "passo" do procedimento você quer voltar a
+                  preencher o inventario.
                 </DialogDescription>
               </DialogHeader>
               <div className="grid gap-4 py-4">
