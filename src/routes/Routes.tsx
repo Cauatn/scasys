@@ -4,6 +4,7 @@ import FourPage from "@/pages/4A/Page";
 import FivePage from "@/pages/5A/Page";
 import SixPage from "@/pages/6A/Page";
 import SevenPage from "@/pages/7A/Page";
+import Auth from "@/pages/Auth/Auth";
 import Home from "@/pages/Home/Home";
 
 import { Routes as Switch, Route, Navigate } from "react-router-dom";
@@ -12,6 +13,7 @@ const AppRoutes = () => {
   return (
     <Switch>
       <Route path="/" element={<Home />} />
+      <Route path="/auth" element={<Auth />} />
       <Route path="/app" element={<Layout />}>
         <Route path="3a" element={<ThreePage />} />
         <Route path="4a" element={<FourPage />} />
