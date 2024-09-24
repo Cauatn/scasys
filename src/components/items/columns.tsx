@@ -6,21 +6,32 @@ export const columns: ColumnDef<Item>[] = [
   {
     accessorKey: "phase",
     header: "Fase",
-    cell: ({ row }) => <div className="size-12">{row.getValue("phase")}</div>,
+    // cell: ({ row }) => <div className="size-12">{row.getValue("phase")}</div>,
+    cell: (props) => <EditableCell {...props} />,
   },
   {
     accessorKey: "step",
     header: "Etapa",
-    cell: ({ row }) => <div>{row.getValue("step")}</div>,
+    cell: (props) => <EditableCell {...props} />,
+  },
+  {
+    accessorKey: "specificity",
+    header: "especificidade",
+    cell: (props) => <EditableCell {...props} />,
   },
   {
     accessorKey: "formula",
     header: "formula",
-    cell: ({ row }) => <div>{row.getValue("formula")}</div>,
+    cell: (props) => <EditableCell {...props} />,
   },
   {
     accessorKey: "item",
     header: "item",
+    cell: (props) => <EditableCell {...props} />,
+  },
+  {
+    accessorKey: "quantitys",
+    header: "quantitys",
     cell: (props) => <EditableCell {...props} />,
   },
 ];

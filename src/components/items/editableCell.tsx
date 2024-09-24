@@ -15,10 +15,17 @@ function EditableCell({ getValue, row, column, table }: any) {
   const onBlur = () => {
     table.options.meta?.updateData(row.index, column.id, value);
 
+    console.log(column.id);
+    console.log(row.original);
+
     editItem(row.original.step, row.original.phase, row.original.item, {
-      itemName: value,
-      formula: "string",
-      especificidade: "string",
+      itemName: column.id === "item" ? value : row.original.item,
+      formula: column.id === "formula" ? value : row.original.formula,
+      especificidade:
+        column.id === "especificidade" ? value : row.original.especificidade,
+      quantitys: column.id === "quantitys" ? value : row.original.quantitys,
+      observation:
+        column.id === "observation" ? value : row.original.observation,
     });
   };
 
