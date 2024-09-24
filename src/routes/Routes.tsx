@@ -7,7 +7,7 @@ import SevenPage from "@/pages/7A/Page";
 import Auth from "@/pages/Auth/Auth";
 import Home from "@/pages/Home/Home";
 
-import { Routes as Switch, Route, Navigate } from "react-router-dom";
+import { Routes as Switch, Route } from "react-router-dom";
 
 const AppRoutes = () => {
   return (
