@@ -87,7 +87,7 @@ export default function SevenPage() {
           {quantities.map((quantity, index) => (
             <Card
               key={index}
-              className="rounded-none flex justify-center items-center max-w-[400px] max-h-[150px] w-full p-4"
+              className="rounded-none flex justify-center items-center max-w-[400px] max-h-[150px] w-full p-4 mb-3"
             >
               <CardContent className="w-full space-y-2">
                 <div className="flex flex-col">
