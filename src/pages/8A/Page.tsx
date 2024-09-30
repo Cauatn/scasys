@@ -12,6 +12,12 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { Trash2, Plus, Edit2 } from "lucide-react";
 import Bombona from "./components/Bombona";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+  PopoverClose,
+} from "@radix-ui/react-popover";
 
 export default function EigthPage() {
   const { toast } = useToast();
@@ -74,7 +80,7 @@ export default function EigthPage() {
                   <Card className="rounded-none flex flex-col  justify-center items-start w-fit h-full p-7">
                     <div className="flex flex-row justify-between w-full">
                       <div className="flex flex-col">
-                        <CardHeader>
+                        <CardHeader className="p-0">
                           {editingId === bombona.id ? (
                             <Input
                               ref={editInputRef}
@@ -95,7 +101,7 @@ export default function EigthPage() {
                           ) : (
                             <CardTitle
                               onClick={() => startEditing(bombona.id)}
-                              className="cursor-pointer hover:text-primary transition-colors flex items-center"
+                              className="cursor-pointer hover:text-primary transition-colors flex items-center pb-5"
                             >
                               {bombona.title}
                               <Edit2 className="ml-2 h-4 w-4" />
@@ -107,13 +113,56 @@ export default function EigthPage() {
                           Informe o conjunto de resíduos da bombona
                         </label>
                       </div>
-                      <Button
-                        type="button"
-                        className="bg-red-500 mb-5 "
-                        onClick={() => deleteCard(bombona.id)}
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button
+                            size="icon"
+                            type="button"
+                            className="bg-red-500 mb-5 "
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent>
+                          <Card className="border-gray-300">
+                            <CardHeader>
+                              <h4 className="fonnClick={() => deleteCard(bombona.id)}t-medium leading-none">
+                                Confirmar exclusão
+                              </h4>
+                            </CardHeader>
+                            <CardContent>
+                              <div className="grid gap-4">
+                                <div className="space-y-2">
+                                  <p className="text-sm text-muted-foreground">
+                                    Tem certeza que deseja excluir{" "}
+                                    {bombona.title}?
+                                  </p>
+                                </div>
+                                <div className="flex justify-end space-x-2">
+                                  <PopoverClose>
+                                    <Button
+                                      variant="outline"
+                                      size="sm"
+                                      type="button"
+                                    >
+                                      Cancelar
+                                    </Button>
+                                  </PopoverClose>
+
+                                  <Button
+                                    variant="destructive"
+                                    size="sm"
+                                    type="button"
+                                    onClick={() => deleteCard(bombona.id)}
+                                  >
+                                    Excluir
+                                  </Button>
+                                </div>
+                              </div>
+                            </CardContent>
+                          </Card>
+                        </PopoverContent>
+                      </Popover>
                     </div>
 
                     <CardContent className="w-full h-full space-y-2 p-0">
