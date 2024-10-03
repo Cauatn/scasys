@@ -7,6 +7,17 @@ import { DataTable } from "@/components/items/data-table";
 import { useNavigate } from "react-router-dom";
 
 import { buffer } from "@/context/buffer";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectSeparator,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { ChevronDown } from "lucide-react";
 
 export default function SixPage() {
   //const [location, setLocation] = useLocation();
@@ -80,13 +91,36 @@ export default function SixPage() {
               <div className="flex flex-col">
                 <label htmlFor="especificidade">Especificidade</label>
               </div>
-              <Input
-                id="especificidade"
-                className="rounded-none border-black"
-                placeholder="Informe a especificidade"
-                value={especificidade}
-                onChange={(e) => setEspecificidade(e.target.value)}
-              />
+              <Select onValueChange={(e) => setEspecificidade(e)}>
+                <SelectTrigger className="rounded-none border-black">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="w-72">
+                  <SelectItem value="residuo">Residuo</SelectItem>
+                  <SelectItem value="reagente_inicial">
+                    Reagente inicial
+                  </SelectItem>
+                  <SelectItem value="corretor_de_ph">Corretor de pH</SelectItem>
+                  <SelectItem value="eletrolito_de_suporte">
+                    Eletrólito de suporte
+                  </SelectItem>
+                  <SelectItem value="agua">Água</SelectItem>
+                  <SelectItem value="material_de_partida">
+                    Material de partida
+                  </SelectItem>
+                  <SelectItem value="auxiliar">Auxiliar</SelectItem>
+                  <SelectItem value="catodo">Catodo</SelectItem>
+                  <SelectItem value="gasto_energetico">
+                    Gasto energético
+                  </SelectItem>
+                  <SelectItem value="residuo_da_eletrolise">
+                    Resíduo da eletrólise
+                  </SelectItem>
+                  <SelectItem value="emissoes_de_gases">
+                    Emissões de gases
+                  </SelectItem>
+                </SelectContent>
+              </Select>
             </CardContent>
           </Card>
         </div>
