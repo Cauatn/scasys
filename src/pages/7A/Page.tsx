@@ -61,6 +61,8 @@ export default function SevenPage() {
     event.preventDefault();
 
     addData();
+
+    navigate("/app/8a")
   };
 
   function addData() {
