@@ -44,9 +44,12 @@ interface ExperimentState {
     quantity: any,
     observation: string
   ) => void;
+  getItemsByEspecificidade: (
+    especificidade: string
+  ) => Item[]
 }
 
-const Experiment = create<ExperimentState>((set) => ({
+const Experiment = create<ExperimentState>((set, get) => ({
   experimentName: "",
   experimentType: "",
   inventory: [],
@@ -129,6 +132,13 @@ const Experiment = create<ExperimentState>((set) => ({
         }
       })
     ),
+  getItemsByEspecificidade: (especificidade: string) => {
+    return get().inventory.flatMap(phase =>
+      phase.steps.flatMap(step =>
+        step.items.filter(item => item.especificidade === especificidade)
+      )
+    );
+  },
 }));
 
 export default Experiment;
