@@ -144,7 +144,7 @@ export default function SevenPage() {
             <CardContent className="w-full space-y-2 justify-center items-center flex p-0">
               <Button
                 onClick={handleAddCard}
-                className="bg-blue-500 text-white"
+                className="bg-blue-500 text-white" type="button"
               >
                 Adicionar um novo valor
               </Button>
