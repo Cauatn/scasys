@@ -18,14 +18,64 @@ import {
   PopoverTrigger,
   PopoverClose,
 } from "@radix-ui/react-popover";
+import Experiment, { Item } from "@/context/experiment";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { DataTable } from "./components/Residuos/data-table";
+import { columns } from "./components/Residuos/columns";
 
 export default function EigthPage() {
+  const tableRef = useRef<any>(null);
   const { toast } = useToast();
-  const cojunto_residuos: string[] = ["Conjunto1", "Conjunto2", "Conjunto3"];
   const [bombonas, setBombonas] = useState<Bombona[]>([
-    { id: 1, title: "Bombona 1" },
+    {
+      id: 1,
+      title: "Bombona 1",
+      residuos: [
+        {
+          itemName: "residuo de ferro",
+          formula: "formula",
+          especificidade: "residuo",
+          quantitys: [],
+          observation: "obs",
+        },
+      ],
+    },
   ]);
   // const [selectedGroup, setselectedGroup] = useState("");
+  const getItemsByEspecificidade = Experiment(
+    (state) => state.getItemsByEspecificidade
+  );
+  // const residuos = getItemsByEspecificidade("residuo");
+  const residuos = [
+    {
+      itemName: "residuo de ferro",
+      formula: "formula",
+      especificidade: "residuo",
+      quantitys: [],
+      observation: "obs",
+    },
+    {
+      itemName: "residuo de cobre",
+      formula: "formula",
+      especificidade: "residuo",
+      quantitys: [],
+      observation: "obs",
+    },
+    {
+      itemName: "residuo de ouro",
+      formula: "formula",
+      especificidade: "residuo",
+      quantitys: [],
+      observation: "obs",
+    },
+  ];
 
   const [editingId, setEditingId] = useState<number | null>(null);
   const editInputRef = useRef<HTMLInputElement>(null);
@@ -39,14 +89,23 @@ export default function EigthPage() {
   const addBombona = () => {
     const newId =
       bombonas.length > 0 ? Math.max(...bombonas.map((b) => b.id)) + 1 : 1;
-    setBombonas([...bombonas, { id: newId, title: `Bombona ${newId}` }]);
+    setBombonas([
+      ...bombonas,
+      { id: newId, title: `Bombona ${newId}`, residuos: [] },
+    ]);
   };
 
   const deleteCard = (id: number) => {
     if (bombonas.length > 1) {
       setBombonas(bombonas.filter((bombona) => bombona.id !== id));
+      toast({
+        variant: "default",
+        title: "Bombona deletada",
+        description:
+          "Bombona deletada com sucesso",
+      });
     } else {
-      console.log("impossível ficar com menos de uma bombona ! :(");
+      // console.log("impossível ficar com menos de uma bombona ! :(");
       toast({
         variant: "default",
         title: "Impossível deletar",
@@ -68,6 +127,11 @@ export default function EigthPage() {
     );
     setEditingId(null);
   };
+
+  // Função para adicionar residuos à uma bombona
+  const addResiduosToBombona = (bombona: Bombona, residuos: Item[]) => {
+    console.log(residuos);
+  }
 
   return (
     <>
@@ -176,9 +240,9 @@ export default function EigthPage() {
                             <SelectValue placeholder="Conjunto de resíduos" />
                           </SelectTrigger>
                           <SelectContent>
-                            {cojunto_residuos.map((conjunto, index) => (
-                              <SelectItem key={index} value={conjunto}>
-                                {conjunto}
+                            {bombona.residuos.map((residuo, index) => (
+                              <SelectItem key={index} value={residuo.itemName}>
+                                {residuo.itemName}
                               </SelectItem>
                             ))}
                           </SelectContent>
@@ -201,10 +265,35 @@ export default function EigthPage() {
                             <SelectItem value="mol">Mol</SelectItem>
                           </SelectContent>
                         </Select>
-                        <Button type="button" className="bg-blue-500 ">
-                          <Plus className="mr-2 h-4 w-4" />
-                          Adicionar resíduos ao conjunto
-                        </Button>
+                        <Dialog>
+                          <DialogTrigger asChild>
+                            <Button type="button" className="bg-blue-500 ">
+                              <Plus className="mr-2 h-4 w-4" />
+                              Adicionar resíduos ao conjunto
+                            </Button>
+                          </DialogTrigger>
+                          <DialogContent className="max-w-fit">
+                            <DialogHeader>
+                              <DialogTitle>
+                                {" "}
+                                Adicionar novo(s) resíduo(s) à {
+                                  bombona.title
+                                }{" "}
+                              </DialogTitle>
+                              <DialogDescription>
+                                {" "}
+                                Adicione resíduos à bombona{" "}
+                              </DialogDescription>
+                            </DialogHeader>
+                            <div>
+                            <DataTable data={residuos} columns={columns} ref={tableRef}></DataTable>
+                            </div>
+                            <div className="flex justify-end">
+                            <Button className="bg-emerald-600 w-52 " onClick={() => addResiduosToBombona(bombona, tableRef.current.getSelectedRowModel().rows.map((row: any) => row.original))}> Adicionar </Button>
+                            </div>
+                            
+                          </DialogContent>
+                        </Dialog>
                       </div>
                     </CardContent>
                   </Card>
@@ -229,7 +318,7 @@ export default function EigthPage() {
           </div>
         </form>
 
-        <div>
+        {/* <div>
           <Card className="rounded-none w-fit ">
             <CardContent className="p-4">
               <Button type="button" className="bg-blue-500">
@@ -238,7 +327,7 @@ export default function EigthPage() {
               </Button>
             </CardContent>
           </Card>
-        </div>
+        </div> */}
       </div>
     </>
   );
