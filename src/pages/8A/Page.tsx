@@ -18,7 +18,7 @@ import {
   PopoverTrigger,
   PopoverClose,
 } from "@radix-ui/react-popover";
-// import Experiment from "@/context/experiment";
+import Experiment from "@/context/experiment";
 import {
   Dialog,
   DialogContent,
@@ -42,35 +42,48 @@ export default function EigthPage() {
     },
   ]);
   // const [selectedGroup, setselectedGroup] = useState("");
-  // const getItemsByEspecificidade = Experiment(
-  //   (state) => state.getItemsByEspecificidade
-  // );
-  // const residuos = getItemsByEspecificidade("residuo");
+
+  const getItemsByEspecificidade = Experiment(
+    (state) => state.getItemsByEspecificidade
+  );
+
+  const [residuos, setResiduos] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchedResiduos = getItemsByEspecificidade("residuo");
+    setResiduos(fetchedResiduos);
+  }, []);
 
   // residuos de teste
-  const [residuos, setResiduos] = useState<Residuo[]>([
-    {
-      itemName: "residuo de ferro",
-      formula: "formula",
-      especificidade: "residuo",
-      quantitys: [],
-      observation: "obs",
-    },
-    {
-      itemName: "residuo de cobre",
-      formula: "formula",
-      especificidade: "residuo",
-      quantitys: [],
-      observation: "obs",
-    },
-    {
-      itemName: "residuo de ouro",
-      formula: "formula",
-      especificidade: "residuo",
-      quantitys: [],
-      observation: "obs",
-    },
-  ]);
+  // const [residuos, setResiduos] = useState<Residuo[]>([
+  //   {
+  //     itemName: "residuo de ferro",
+  //     formula: "formula",
+  //     especificidade: "residuo",
+  //     quantitys: [],
+  //     observation: "obs",
+  //     phaseName: 'phase',
+  //     stepName: 'step',
+  //   },
+  //   {
+  //     itemName: "residuo de cobre",
+  //     formula: "formula",
+  //     especificidade: "residuo",
+  //     quantitys: [],
+  //     observation: "obs",
+  //     phaseName: 'phase',
+  //     stepName: 'step',
+  //   },
+  //   {
+  //     itemName: "residuo de ouro",
+  //     formula: "formula",
+  //     especificidade: "residuo",
+  //     quantitys: [],
+  //     observation: "obs",
+  //     phaseName: 'phase',
+  //     stepName: 'step',
+  //   },
+  // ]);
 
   // hooks para edição do nome das bombonas
   const [editingId, setEditingId] = useState<number | null>(null);
@@ -151,11 +164,16 @@ export default function EigthPage() {
   const addResiduosToBombona = (bombona: Bombona, residuos: Residuo[]) => {
     if (residuos.length > 0) {
       residuos.forEach((newResiduo) => {
-        // Verificar se o resíduo já existe em qualquer outra bombona
+        // Verificar se o resíduo já existe em qualquer outra bombona com base em itemName, phaseName e stepName
         const existsInAnyBombona: boolean = bombonas.some((b) =>
-          b.residuos.some((residuo) => residuo.itemName === newResiduo.itemName)
+          b.residuos.some(
+            (residuo) =>
+              residuo.itemName === newResiduo.itemName &&
+              residuo.phaseName === newResiduo.phaseName &&
+              residuo.stepName === newResiduo.stepName
+          )
         );
-
+  
         if (!existsInAnyBombona) {
           // Atualizar o estado das bombonas
           setBombonas((prev) => {
@@ -173,7 +191,7 @@ export default function EigthPage() {
           // Associar a bombona ao novo resíduo
           newResiduo.bombona = bombona;
         } else {
-          // throw new Error("Esse resíduo já existe em alguma bombona.");
+          // Exibir uma mensagem de erro se o resíduo já existir
           toast({
             variant: "destructive",
             title: "Erro ao adicionar resíduo",
