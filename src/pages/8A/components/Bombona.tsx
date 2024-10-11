@@ -3,16 +3,21 @@ import { Item } from "@/context/experiment";
 interface Bombona {
   id: number;
   title: string;
-  residuos: Item[];
+  residuos: Residuo[];
 }
 
-export function addResiduo(bombona: Bombona, newResiduo: Item): void {
+export interface Residuo extends Item {
+  bombona?: Bombona;
+}
+
+export function addResiduo(bombona: Bombona, newResiduo: Residuo): void {
   const exists = bombona.residuos.some(
     (item) => item.itemName === newResiduo.itemName
   );
 
   if (!exists) {
     bombona.residuos.push(newResiduo);
+    newResiduo.bombona = bombona;
   } else {
     throw new Error("That residuo already exists in this bombona");
   }
