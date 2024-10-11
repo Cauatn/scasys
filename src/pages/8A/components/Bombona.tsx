@@ -8,6 +8,8 @@ interface Bombona {
 
 export interface Residuo extends Item {
   bombona?: Bombona;
+  phaseName: string;
+  stepName: string;
 }
 
 export function addResiduo(bombona: Bombona, newResiduo: Residuo): void {
