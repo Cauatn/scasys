@@ -16,7 +16,7 @@ import {
 import React, { forwardRef, useImperativeHandle } from "react";
 
 interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
+  columns: ColumnDef<any, TValue>[];
   data: TData[];
 }
 
