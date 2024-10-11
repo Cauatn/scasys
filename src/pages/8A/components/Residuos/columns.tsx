@@ -50,7 +50,7 @@ export const columns: ColumnDef<any>[] = [
           </>
         );
       }
-    },
+     },
   },
   {
     accessorKey: "formula",
