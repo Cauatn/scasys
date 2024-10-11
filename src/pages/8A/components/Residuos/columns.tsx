@@ -57,7 +57,16 @@ export const columns: ColumnDef<any>[] = [
     header: "Fórmula",
     cell: ({ row }) => <div className="">{row.getValue("formula")}</div>,
   },
-
+  {
+    accessorKey: "phaseName",
+    header: "Fase",
+    cell: ({ row }) => <div className="">{row.getValue("phaseName")}</div>,
+  },
+  {
+    accessorKey: "stepName",
+    header: "Etapa",
+    cell: ({ row }) => <div className="">{row.getValue("stepName")}</div>,
+  },
   {
     accessorKey: "quantitys",
     header: "Quantidades",
