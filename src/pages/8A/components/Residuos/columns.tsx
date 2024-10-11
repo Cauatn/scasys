@@ -1,9 +1,10 @@
-
 import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Item } from "@/context/experiment";
+// import { Item } from "@/context/experiment";
+import { Badge } from "@/components/ui/badge";
+import Bombona from "../Bombona";
 
-export const columns: ColumnDef<Item>[] = [
+export const columns: ColumnDef<any>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -27,20 +28,36 @@ export const columns: ColumnDef<Item>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "especificidade",
-    header: "Especificidade",
-    cell: ({ row }) => <div className="">{row.getValue("especificidade")}</div>,
+    accessorKey: "itemName",
+    header: "Nome do item",
+    cell: ({ row }) => <div className="">{row.getValue("itemName")}</div>,
+  },
+  {
+    accessorKey: "bombona",
+    header: "Bombona",
+    cell: ({ row }) => {
+      const bombona: Bombona | null = row.getValue("bombona");
+      if (bombona != null) {
+        return (
+          <>
+            <Badge className="bg-emerald-500">{bombona.title}</Badge>
+          </>
+        );
+      } else {
+        return (
+          <>
+            <Badge variant="outline">Sem bombona</Badge>
+          </>
+        );
+      }
+    },
   },
   {
     accessorKey: "formula",
     header: "Fórmula",
     cell: ({ row }) => <div className="">{row.getValue("formula")}</div>,
   },
-  {
-    accessorKey: "itemName",
-    header: "Nome do item",
-    cell: ({ row }) => <div className="">{row.getValue("itemName")}</div>,
-  },
+
   {
     accessorKey: "quantitys",
     header: "Quantidades",
@@ -50,5 +67,5 @@ export const columns: ColumnDef<Item>[] = [
     accessorKey: "observation",
     header: "Observação",
     cell: ({ row }) => <div className="">{row.getValue("observation")}</div>,
-  }
+  },
 ];
