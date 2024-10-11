@@ -132,13 +132,23 @@ const Experiment = create<ExperimentState>((set, get) => ({
         }
       })
     ),
-  getItemsByEspecificidade: (especificidade: string) => {
-    return get().inventory.flatMap(phase =>
-      phase.steps.flatMap(step =>
-        step.items.filter(item => item.especificidade === especificidade)
-      )
-    );
-  },
+    getItemsByEspecificidade: (especificidade: string) => {
+      return get().inventory.flatMap(phase =>
+        phase.steps.flatMap(step =>
+          step.items
+            .filter(item => item.especificidade === especificidade)
+            .map(item => ({
+              itemName: item.itemName,
+              formula: item.formula,
+              especificidade: item.especificidade,
+              quantitys: item.quantitys,
+              observation: item.observation,
+              phaseName: phase.name,
+              stepName: step.name,
+            }))
+        )
+      );
+    },    
 }));
 
 export default Experiment;
