@@ -3,29 +3,28 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
+
+import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 
-interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface SignInUserAuthFormProps
+  extends React.HTMLAttributes<HTMLDivElement> {}
 
 // interface to represent the user data in the form
 interface FormData {
-  email: string;
   password: string;
-  confirmPassword: string;
   name: string;
-  institution: string;
 }
 
-function UserAuthForm({ className, ...props }: UserAuthFormProps) {
+function SignInUserAuthForm({ className, ...props }: SignInUserAuthFormProps) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [, setCookie] = useCookies(["user"]);
+
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState<FormData>({
-    email: "",
     password: "",
-    confirmPassword: "",
     name: "",
-    institution: "",
   });
 
   // function to update the balue of the data based on some event
@@ -43,11 +42,10 @@ function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     event.preventDefault();
     setIsLoading(true);
 
-    const url = "http://localhost:8000/accounts/register/";
+    const url = "http://localhost:8000/auth/";
     const data = {
       username: formData.name,
       password: formData.password,
-      email: formData.email,
     };
 
     try {
@@ -64,8 +62,19 @@ function UserAuthForm({ className, ...props }: UserAuthFormProps) {
       }
 
       const result = await response.json();
+
+      setCookie(
+        "user",
+        JSON.stringify({
+          access: result.access,
+          refresh: result.refresh,
+        }),
+        { path: "/" }
+      );
+
       console.log("Success:", result);
-      navigate("/");
+
+      navigate("/app/3a");
     } catch (error) {
       console.error("Error:", error);
     } finally {
@@ -79,7 +88,7 @@ function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         <div className="grid gap-2">
           <div className="grid gap-2">
             <Label className="sr-only" htmlFor="NomeCompleto">
-              Nome Completo
+              Nome de usuário
             </Label>
             <Input
               id="NomeCompleto"
@@ -95,7 +104,7 @@ function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                 handleFormEdit(e, "name");
               }}
             />
-            <Label className="sr-only" htmlFor="email">
+            {/* <Label className="sr-only" htmlFor="email">
               Email
             </Label>
             <Input
@@ -111,24 +120,7 @@ function UserAuthForm({ className, ...props }: UserAuthFormProps) {
               onChange={(e) => {
                 handleFormEdit(e, "email");
               }}
-            />
-            <Label className="sr-only" htmlFor="Instituition">
-              Instituição
-            </Label>
-            <Input
-              id="Institution"
-              placeholder="UNIVASF"
-              type="institution"
-              autoCapitalize="none"
-              autoComplete="institution"
-              autoCorrect="off"
-              disabled={isLoading}
-              required
-              value={formData.institution}
-              onChange={(e) => {
-                handleFormEdit(e, "institution");
-              }}
-            />
+            /> */}
             <Label className="sr-only" htmlFor="password">
               Senha
             </Label>
@@ -146,42 +138,18 @@ function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                 handleFormEdit(e, "password");
               }}
             />
-            <Label className="sr-only" htmlFor="confPass">
-              Confirm Password
-            </Label>
-            <Input
-              id="confPass"
-              placeholder="Confirme a senha"
-              type="password"
-              autoCapitalize="none"
-              autoComplete="new-password"
-              autoCorrect="off"
-              disabled={isLoading}
-              required
-              value={formData.confirmPassword}
-              onChange={(e) => {
-                handleFormEdit(e, "confirmPassword");
-              }}
-            />
           </div>
-
           <Button disabled={isLoading}>
             {/*isLoading && (
 							//<Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
 							<div>{""}</div>
 						)*/}
-            Registrar
+            Entrar
           </Button>
-          <small className="flex space-x-1">
-            <p>Já possui uma conta ?</p>
-            <a className="underline text-blue-500" href="/signin">
-              Clique aqui !
-            </a>
-          </small>
         </div>
       </form>
     </div>
   );
 }
 
-export { UserAuthForm };
+export { SignInUserAuthForm };

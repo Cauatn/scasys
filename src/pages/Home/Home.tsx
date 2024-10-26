@@ -1,7 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRightIcon } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
+  const navigate = useNavigate();
   return (
     <div className="max-w-7xl mx-auto">
       <header className="inline-flex items-center justify-between w-full py-6">
@@ -14,7 +16,12 @@ export default function Home() {
             <a href="#">Documentação</a>
           </li>
           <li>
-            <Button className="bg-emerald-600">Comece a utilizar</Button>
+            <Button
+              className="bg-emerald-600"
+              onClick={() => navigate("/auth")}
+            >
+              Comece a utilizar
+            </Button>
           </li>
         </ul>
       </header>
@@ -39,7 +46,10 @@ export default function Home() {
             <Button className="max-w-[200px] w-full" variant="outline">
               Nossa equipe
             </Button>
-            <Button className="bg-emerald-600 max-w-[200px] w-full">
+            <Button
+              className="bg-emerald-600 max-w-[200px] w-full"
+              onClick={() => navigate("/app/3a")}
+            >
               Comece a utilizar
             </Button>
           </div>
