@@ -5,6 +5,7 @@ import { Sidebar } from "./sidebar/Sidebar";
 import { Navbar } from "./navbar";
 import { Outlet } from "react-router-dom";
 import { Toaster } from "./ui/toaster";
+import { CookiesProvider } from "react-cookie";
 
 function Layout() {
   const sidebar = useStore(useSidebarToggle, (state) => state);
@@ -12,7 +13,7 @@ function Layout() {
   if (!sidebar) return null;
 
   return (
-    <>
+    <CookiesProvider>
       <Sidebar />
       <main
         className={cn(
@@ -24,7 +25,7 @@ function Layout() {
         <Navbar title="Telas inicial" />
         <Outlet />
       </main>
-    </>
+    </CookiesProvider>
   );
 }
 
