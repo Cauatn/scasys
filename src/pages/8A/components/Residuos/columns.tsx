@@ -1,8 +1,5 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/checkbox";
-// import { Item } from "@/context/experiment";
-import { Badge } from "@/components/ui/badge";
-import Bombona from "../Bombona";
 
 export const columns: ColumnDef<any>[] = [
   {
@@ -33,24 +30,12 @@ export const columns: ColumnDef<any>[] = [
     cell: ({ row }) => <div className="">{row.getValue("itemName")}</div>,
   },
   {
-    accessorKey: "bombona",
+    accessorKey: "bombona_id",
     header: "Bombona",
     cell: ({ row }) => {
-      const bombona: Bombona | null = row.getValue("bombona");
-      if (bombona != null) {
-        return (
-          <>
-            <Badge className="bg-emerald-500">{bombona.title}</Badge>
-          </>
-        );
-      } else {
-        return (
-          <>
-            <Badge variant="outline">Sem bombona</Badge>
-          </>
-        );
-      }
-     },
+      // A bombona vai ser renderizada no componente DataTable
+      return <div>{row.getValue("bombona_id")}</div>;
+    },
   },
   {
     accessorKey: "formula",
