@@ -11,14 +11,14 @@ import {
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { Trash2, Plus, Edit2 } from "lucide-react";
-import Bombona, { Residuo } from "./components/Bombona";
+import { Bombona, Residuo, BombonaResiduoRelation } from "./components/Bombona";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
   PopoverClose,
 } from "@radix-ui/react-popover";
-import Experiment from "@/context/experiment";
+// import Experiment from "@/context/experiment";
 import {
   Dialog,
   DialogContent,
@@ -38,52 +38,81 @@ export default function EigthPage() {
     {
       id: 1,
       title: "Bombona 1",
-      residuos: [],
     },
   ]);
-  // const [selectedGroup, setselectedGroup] = useState("");
 
-  const getItemsByEspecificidade = Experiment(
-    (state) => state.getItemsByEspecificidade
-  );
+  const [selectedResiduos, setSelectedResiduos] = useState<{
+    [bombonaId: number]: number | null;
+  }>({});
 
-  const [residuos, setResiduos] = useState<any[]>([]);
 
-  useEffect(() => {
-    const fetchedResiduos = getItemsByEspecificidade("residuo");
-    setResiduos(fetchedResiduos);
-  }, []);
+  // Recuperando os residuos do contexto do aplicativo
+  // const getItemsByEspecificidade = Experiment(
+  //   (state) => state.getItemsByEspecificidade
+  // );
+
+  // const [residuos, setResiduos] = useState<any[]>([]);
+
+  // useEffect(() => {
+  //   const fetchedResiduos = getItemsByEspecificidade("residuo");
+
+  //   // Assign unique numeric IDs to each residuo
+  //   const residuoWithIds = fetchedResiduos.map((residuo, index) => ({
+  //     ...residuo,
+  //     id: index + 1, // Use index + 1 for unique ID starting from 1
+  //   }));
+
+  //   setResiduos(residuoWithIds);
+  // }, []);
 
   // residuos de teste
-  // const [residuos, setResiduos] = useState<Residuo[]>([
-  //   {
-  //     itemName: "residuo de ferro",
-  //     formula: "formula",
-  //     especificidade: "residuo",
-  //     quantitys: [],
-  //     observation: "obs",
-  //     phaseName: 'phase',
-  //     stepName: 'step',
-  //   },
-  //   {
-  //     itemName: "residuo de cobre",
-  //     formula: "formula",
-  //     especificidade: "residuo",
-  //     quantitys: [],
-  //     observation: "obs",
-  //     phaseName: 'phase',
-  //     stepName: 'step',
-  //   },
-  //   {
-  //     itemName: "residuo de ouro",
-  //     formula: "formula",
-  //     especificidade: "residuo",
-  //     quantitys: [],
-  //     observation: "obs",
-  //     phaseName: 'phase',
-  //     stepName: 'step',
-  //   },
-  // ]);
+  const [residuos, setResiduos] = useState<Residuo[]>([
+    {
+      id: 1,
+      itemName: "residuo de ferro",
+      formula: "formula",
+      especificidade: "residuo",
+      quantitys: [],
+      observation: "obs",
+      phaseName: "phase",
+      stepName: "step",
+    },
+    {
+      id: 2,
+      itemName: "residuo de ferro",
+      formula: "formula",
+      especificidade: "residuo",
+      quantitys: [],
+      observation: "obs",
+      phaseName: "phase2",
+      stepName: "step2",
+    },
+    {
+      id: 3,
+      itemName: "residuo de cobre",
+      formula: "formula",
+      especificidade: "residuo",
+      quantitys: [],
+      observation: "obs",
+      phaseName: "phase",
+      stepName: "step",
+    },
+    {
+      id: 4,
+      itemName: "residuo de ouro",
+      formula: "formula",
+      especificidade: "residuo",
+      quantitys: [],
+      observation: "obs",
+      phaseName: "phase",
+      stepName: "step",
+    },
+  ]);
+
+  // hook para o link entre bombonas e residuos
+  const [bombonaResiduoRelations, setBombonaResiduoRelations] = useState<
+    BombonaResiduoRelation[]
+  >([]);
 
   // hooks para edição do nome das bombonas
   const [editingId, setEditingId] = useState<number | null>(null);
@@ -98,39 +127,129 @@ export default function EigthPage() {
   const addBombona = () => {
     const newId =
       bombonas.length > 0 ? Math.max(...bombonas.map((b) => b.id)) + 1 : 1;
-    setBombonas([
-      ...bombonas,
-      { id: newId, title: `Bombona ${newId}`, residuos: [] },
-    ]);
+    setBombonas([...bombonas, { id: newId, title: `Bombona ${newId}` }]);
   };
 
-  // função para deletar uma bombona da página
-  const deleteBombona = (id: number) => {
+  // funcao para deletar uma bombona
+  const deleteBombona = (bombonaId: number) => {
+    // nao permitir deletar a ultima bombona 
     if (bombonas.length > 1) {
-      // Find the bombona to delete
-      const bombonaToDelete = bombonas.find((bombona) => bombona.id === id);
+      // removendo a bombona da lista de bombonas
+      setBombonas((prevBombonas) =>
+        prevBombonas.filter((b) => b.id !== bombonaId)
+      );
 
-      if (bombonaToDelete) {
-        // Remove the bombona reference from all its residuos
-        bombonaToDelete.residuos.forEach((residuo) => {
-          residuo.bombona = undefined; // Or null, depending on your preference
-        });
+      // Removendo todas as relacoes entre a bombona e os residuos
+      setBombonaResiduoRelations((prevRelations) =>
+        prevRelations.filter((relation) => relation.bombonaId !== bombonaId)
+      );
 
-        // Remove the bombona from the list of bombonas
-        setBombonas(bombonas.filter((bombona) => bombona.id !== id));
-
-        toast({
-          variant: "default",
-          title: "Bombona deletada",
-          description: "Bombona deletada com sucesso",
-        });
-      }
+      // Mostrando uma notificao para informar o usuario da operação realizada
+      toast({
+        title: "Bombona removida",
+        description: `A bombona foi removida com sucesso.`,
+        variant: "default",
+      });
     } else {
       toast({
         variant: "default",
         title: "Impossível deletar",
         description:
           "É necessário haver pelo menos uma bombona para os resíduos",
+      });
+    }
+  };
+
+  // adicionando um link entre bombona e residuo
+  const addResiduosToBombona = (
+    bombonaId: number,
+    residuosToAdd: Residuo[]
+  ) => {
+    if (residuosToAdd.length > 0) {
+      const newRelations: { bombonaId: number; residuoId: number }[] = [];
+
+      residuosToAdd.forEach((newResiduo) => {
+        // Cchecando se o residuo ja nao está presente em alguma outra bombona
+        const existsInAnyBombona = bombonaResiduoRelations.some(
+          (relation) => relation.residuoId === newResiduo.id
+        );
+
+        if (!existsInAnyBombona) {
+          // Criando uma nova relacao entre bombona e residuo
+          newRelations.push({ bombonaId, residuoId: newResiduo.id });
+        } else {
+          // Mostrando uma moessagem de erro para informar que o residuo já está presente em uma bombona
+          toast({
+            variant: "destructive",
+            title: "Erro ao adicionar resíduo",
+            description: `O resíduo ${newResiduo.itemName} já está presente em alguma bombona.`,
+          });
+        }
+      });
+
+      if (newRelations.length > 0) {
+        //atualizando as relações 
+        setBombonaResiduoRelations((prevRelations) => [
+          ...prevRelations,
+          ...newRelations,
+        ]);
+        // informando o usuário do sucesso na operação
+        toast({
+          variant: "default",
+          title: "Resíduos adicionados",
+          description: `${newRelations.length} resíduos foram adicionados à bombona.`,
+        });
+      }
+    }
+  };
+
+  // função para recuperar os residuos que estão presentes em uma bombona
+  const getResiduosForBombona = (bombonaId: number) => {
+    const residuoIds = bombonaResiduoRelations
+      .filter((relation) => relation.bombonaId === bombonaId)
+      .map((relation) => relation.residuoId);
+
+    return residuos.filter((residuo) => residuoIds.includes(residuo.id));
+  };
+
+  // funcao para deletar um residuo de uma bombona
+  const removeResiduoFromBombona = (bombonaId: number, residuoId: number) => {
+    setBombonaResiduoRelations((prev) =>
+      prev.filter(
+        (relation) =>
+          !(
+            relation.bombonaId === bombonaId && relation.residuoId === residuoId
+          )
+      )
+    );
+  };
+
+  // fncao que gerencia o click no botao de deletar residuo selecionado de uma bombona
+  const handleResiduoRemoval = (bombonaId: number) => {
+    if (
+      selectedResiduos[bombonaId] !== undefined &&
+      selectedResiduos[bombonaId] !== null && 
+      bombonaResiduoRelations.length > 0
+    ) {
+      const residuoId = selectedResiduos[bombonaId]!;
+
+      removeResiduoFromBombona(bombonaId, residuoId);
+
+      setSelectedResiduos((prev) => ({
+        ...prev,
+        [bombonaId]: null, // Clear selection after deletion
+      }));
+
+      toast({
+        variant: "default",
+        title: "Resíduo removido",
+        description: "O resíduo foi removido da bombona com sucesso.",
+      });
+    } else {
+      toast({
+        variant: "destructive",
+        title: "Erro ao remover",
+        description: "Nenhum resíduo foi selecionado para remoção.",
       });
     }
   };
@@ -142,64 +261,14 @@ export default function EigthPage() {
 
   // função para terminar a edição do nome de uma bombona
   const finishEditing = (id: number, newTitle: string) => {
+    // Atualizar o nome da bombona no array no bombonas
     setBombonas((prevBombonas) =>
       prevBombonas.map((bombona) =>
         bombona.id === id ? { ...bombona, title: newTitle } : bombona
       )
     );
 
-    // atualizando o nome da bombona na tabela de residuos
-    setResiduos((prevResiduos) =>
-      prevResiduos.map((residuo) =>
-        residuo.bombona?.id === id
-          ? { ...residuo, bombona: { ...residuo.bombona, title: newTitle } }
-          : residuo
-      )
-    );
-
     setEditingId(null);
-  };
-
-  // Função para adicionar residuos à uma bombona
-  const addResiduosToBombona = (bombona: Bombona, residuos: Residuo[]) => {
-    if (residuos.length > 0) {
-      residuos.forEach((newResiduo) => {
-        // Verificar se o resíduo já existe em qualquer outra bombona com base em itemName, phaseName e stepName
-        const existsInAnyBombona: boolean = bombonas.some((b) =>
-          b.residuos.some(
-            (residuo) =>
-              residuo.itemName === newResiduo.itemName &&
-              residuo.phaseName === newResiduo.phaseName &&
-              residuo.stepName === newResiduo.stepName
-          )
-        );
-  
-        if (!existsInAnyBombona) {
-          // Atualizar o estado das bombonas
-          setBombonas((prev) => {
-            return prev.map((b) => {
-              if (b.id === bombona.id) {
-                // Retornar uma nova bombona com o array de resíduos atualizado
-                return {
-                  ...b,
-                  residuos: [...b.residuos, newResiduo], // Adicionar o novo resíduo ao array
-                };
-              }
-              return b; // Retornar outras bombonas inalteradas
-            });
-          });
-          // Associar a bombona ao novo resíduo
-          newResiduo.bombona = bombona;
-        } else {
-          // Exibir uma mensagem de erro se o resíduo já existir
-          toast({
-            variant: "destructive",
-            title: "Erro ao adicionar resíduo",
-            description: `O resíduo selecionado para adicionar já está presente em alguma bombona.`,
-          });
-        }
-      });
-    }
   };
 
   return (
@@ -301,23 +370,33 @@ export default function EigthPage() {
                     <CardContent className="w-full h-full space-y-2 p-0">
                       <div className="flex flex-row gap-4">
                         <Select
-                        // onValueChange={(value) => {
-                        //   setselectedGroup(value);
-                        // }}
+                          value={
+                            selectedResiduos[bombona.id]
+                              ? selectedResiduos[bombona.id]?.toString()
+                              : ""
+                          }
+                          onValueChange={(value) => {
+                            setSelectedResiduos((prev) => ({
+                              ...prev,
+                              [bombona.id]: parseInt(value),
+                            }));
+                          }}
                         >
-                          <SelectTrigger className="w-[220px] rounded-none border-black">
+                          <SelectTrigger className="w-[500px] rounded-none border-black">
                             <SelectValue placeholder="Conjunto de resíduos" />
                           </SelectTrigger>
                           <SelectContent>
-                            {bombona.residuos.length > 0 ? (
-                              bombona.residuos.map((residuo, index) => (
-                                <SelectItem
-                                  key={index}
-                                  value={residuo.itemName}
-                                >
-                                  {residuo.itemName}
-                                </SelectItem>
-                              ))
+                            {getResiduosForBombona(bombona.id).length > 0 ? (
+                              getResiduosForBombona(bombona.id).map(
+                                (residuo, index) => (
+                                  <SelectItem
+                                    key={index}
+                                    value={residuo.id.toString()}
+                                  >
+                                    {`${residuo.itemName} (${residuo.stepName} - ${residuo.phaseName})`}
+                                  </SelectItem>
+                                )
+                              )
                             ) : (
                               <SelectItem value="no-residuo">
                                 Sem resíduos na bombona
@@ -325,6 +404,16 @@ export default function EigthPage() {
                             )}
                           </SelectContent>
                         </Select>
+
+                        <Button
+                          size="icon"
+                          type="button"
+                          className="bg-red-500 mb-5"
+                          onClick={() => handleResiduoRemoval(bombona.id)}
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+
                         <Input
                           id={`itemName-${bombona.id}`}
                           className="rounded-none border-black w-[130px]"
@@ -368,6 +457,8 @@ export default function EigthPage() {
                                 data={residuos}
                                 columns={columns}
                                 ref={tableRef}
+                                bombonas={bombonas}
+                                bombonaResiduoRelation={bombonaResiduoRelations}
                               ></DataTable>
                             </div>
                             <DialogClose asChild>
@@ -376,7 +467,7 @@ export default function EigthPage() {
                                   className="bg-emerald-600 w-52 "
                                   onClick={() =>
                                     addResiduosToBombona(
-                                      bombona,
+                                      bombona.id,
                                       tableRef.current
                                         .getSelectedRowModel()
                                         .rows.map((row: any) => row.original)
@@ -413,6 +504,12 @@ export default function EigthPage() {
             </Button>
           </div>
         </form>
+      </div>
+      {/* Logging os dados da tela para entneder o que está acontecendo */}
+      <div>
+        <pre>{JSON.stringify(bombonas, null, 2)}</pre>
+        <pre>{JSON.stringify(residuos, null, 2)}</pre>
+        <pre>{JSON.stringify(bombonaResiduoRelations, null, 2)}</pre>
       </div>
     </>
   );
