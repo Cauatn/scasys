@@ -28,6 +28,7 @@ export default function SixPage() {
   const [itemName, setItemName] = useState("");
   const [formula, setFormula] = useState("");
   const [especificidade, setEspecificidade] = useState("");
+  const [purity, setPurity] = useState(100);
 
   const navigate = useNavigate();
 
@@ -46,6 +47,7 @@ export default function SixPage() {
       especificidade,
       quantitys: [],
       observation: "",
+      purity
     });
 
     navigate("/app/7a");
@@ -83,6 +85,29 @@ export default function SixPage() {
                 placeholder="Informe a fórmula química"
                 value={formula}
                 onChange={(e) => setFormula(e.target.value)}
+              />
+            </CardContent>
+          </Card>
+          <Card className="rounded-none flex justify-center items-center max-w-[400px] max-h-[150px] w-full p-4">
+            <CardContent className="w-full space-y-2">
+              <div className="flex flex-col">
+                <label htmlFor="itemName">Pureza</label>
+              </div>
+              <Input
+                id="itemName"
+                className="rounded-none border-black"
+                placeholder="Informe a pureza do item"
+                type="number"
+                min={0}
+                max={100}
+                value={purity}
+                onChange={(e) => {
+                  const value = parseFloat(e.target.value); // Parse to float
+                  // Only update if the value is a valid number and within the range
+                  if (!isNaN(value) && value >= 0 && value <= 100) {
+                    setPurity(value);
+                  }
+                }}
               />
             </CardContent>
           </Card>
