@@ -2,36 +2,37 @@ import { Item } from "@/context/experiment";
 import { ColumnDef } from "@tanstack/react-table";
 import EditableCell from "./editableCell";
 
-export const columns: ColumnDef<Item>[] = [
+export const columns = [
   {
+    header: "Phase",
     accessorKey: "phase",
-    header: "Fase",
-    // cell: ({ row }) => <div className="size-12">{row.getValue("phase")}</div>,
-    cell: (props) => <EditableCell {...props} />,
   },
   {
+    header: "Step",
     accessorKey: "step",
-    header: "Etapa",
-    cell: (props) => <EditableCell {...props} />,
   },
   {
-    accessorKey: "specificity",
-    header: "especificidade",
-    cell: (props) => <EditableCell {...props} />,
-  },
-  {
-    accessorKey: "formula",
-    header: "formula",
-    cell: (props) => <EditableCell {...props} />,
-  },
-  {
+    header: "Item",
     accessorKey: "item",
-    header: "item",
-    cell: (props) => <EditableCell {...props} />,
   },
   {
+    header: "Specificity",
+    accessorKey: "specificity",
+  },
+  {
+    header: "Formula",
+    accessorKey: "formula",
+  },
+  {
+    header: "Observation",
+    accessorKey: "observation",
+  },
+  {
+    header: "Quantity",
     accessorKey: "quantitys",
-    header: "quantitys",
-    cell: (props) => <EditableCell {...props} />,
+  },
+  {
+    header: "Purity", // Add a new column for purity
+    accessorKey: "purity", // Ensure this matches the key in the transformed data
   },
 ];

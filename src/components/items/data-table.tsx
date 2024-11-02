@@ -38,6 +38,7 @@ function transformInventory(inventory) {
           formula: item.formula,
           observation: item.observation,
           quantitys: item.quantitys,
+          purity: item.purity, // Include purity field
         });
       });
     });
