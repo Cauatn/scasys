@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { create } from "zustand";
-
 import { produce } from "immer";
 
 interface Phase {
@@ -20,6 +19,7 @@ export interface Item {
   especificidade: string;
   quantitys: [];
   observation: string;
+  purity: number; // Ensure purity is defined here
 }
 
 interface ExperimentState {
@@ -41,12 +41,11 @@ interface ExperimentState {
     stepName: string,
     phaseName: string,
     itemName: string,
-    quantity: any,
-    observation: string
+    quantitys: any,
+    observation: string,
+    purity: number
   ) => void;
-  getItemsByEspecificidade: (
-    especificidade: string
-  ) => Item[]
+  getItemsByEspecificidade: (especificidade: string) => Item[];
 }
 
 const Experiment = create<ExperimentState>((set, get) => ({
@@ -54,11 +53,11 @@ const Experiment = create<ExperimentState>((set, get) => ({
   experimentType: "",
   inventory: [],
   addExperimentName: (name: string) =>
-    set((_) => ({
+    set(() => ({
       experimentName: name,
     })),
   addExperimentType: (type: string) =>
-    set((_) => ({
+    set(() => ({
       experimentType: type,
     })),
   addInventoryPhase: (phase: Phase) =>
@@ -81,7 +80,7 @@ const Experiment = create<ExperimentState>((set, get) => ({
         if (phase) {
           const step = phase.steps.find((s) => s.name === stepName);
           if (step) {
-            step.items.push(item);
+            step.items.push(item); // Purity included in the item
           }
         }
       })
@@ -102,7 +101,7 @@ const Experiment = create<ExperimentState>((set, get) => ({
               (i) => i.itemName === itemName
             );
             if (itemIndex !== -1) {
-              step.items[itemIndex].itemName = newItem.itemName;
+              step.items[itemIndex] = { ...step.items[itemIndex], ...newItem }; // Update the whole item
             }
           }
         }
@@ -113,7 +112,8 @@ const Experiment = create<ExperimentState>((set, get) => ({
     phaseName: string,
     itemName: string,
     quantitys: any,
-    observation: string
+    observation: string,
+    purity: number // Accept purity here
   ) =>
     set(
       produce((state: ExperimentState) => {
@@ -125,30 +125,33 @@ const Experiment = create<ExperimentState>((set, get) => ({
               (i) => i.itemName === itemName
             );
             if (itemIndex !== -1) {
+              // Update the item with new quantities, observation, and purity
               step.items[itemIndex].quantitys = quantitys;
               step.items[itemIndex].observation = observation;
+              step.items[itemIndex].purity = purity; // Set purity here
             }
           }
         }
       })
     ),
-    getItemsByEspecificidade: (especificidade: string) => {
-      return get().inventory.flatMap(phase =>
-        phase.steps.flatMap(step =>
-          step.items
-            .filter(item => item.especificidade === especificidade)
-            .map(item => ({
-              itemName: item.itemName,
-              formula: item.formula,
-              especificidade: item.especificidade,
-              quantitys: item.quantitys,
-              observation: item.observation,
-              phaseName: phase.name,
-              stepName: step.name,
-            }))
-        )
-      );
-    },    
+  getItemsByEspecificidade: (especificidade: string) => {
+    return get().inventory.flatMap((phase) =>
+      phase.steps.flatMap((step) =>
+        step.items
+          .filter((item) => item.especificidade === especificidade)
+          .map((item) => ({
+            itemName: item.itemName,
+            formula: item.formula,
+            especificidade: item.especificidade,
+            purity: item.purity,
+            quantitys: item.quantitys,
+            observation: item.observation,
+            phaseName: phase.name,
+            stepName: step.name,
+          }))
+      )
+    );
+  },
 }));
 
 export default Experiment;
