@@ -30,6 +30,7 @@ import {
 import { DataTable } from "./components/Residuos/data-table";
 import { columns } from "./components/Residuos/columns";
 import { DialogClose } from "@radix-ui/react-dialog";
+import { Label } from "@/components/ui/label";
 
 export default function EigthPage() {
   const tableRef = useRef<any>(null);
@@ -38,13 +39,13 @@ export default function EigthPage() {
     {
       id: 1,
       title: "Bombona 1",
+      total_quantity: 0,
     },
   ]);
 
   const [selectedResiduos, setSelectedResiduos] = useState<{
     [bombonaId: number]: number | null;
   }>({});
-
 
   // Recuperando os residuos do contexto do aplicativo
   // const getItemsByEspecificidade = Experiment(
@@ -66,46 +67,62 @@ export default function EigthPage() {
   // }, []);
 
   // residuos de teste
-  const [residuos, setResiduos] = useState<Residuo[]>([
+  const [residuos] = useState<Residuo[]>([
     {
       id: 1,
       itemName: "residuo de ferro",
       formula: "formula",
       especificidade: "residuo",
-      quantitys: [],
+      quantitys: [
+        [12, "kg"],
+        [12, "g"],
+      ],
       observation: "obs",
       phaseName: "phase",
       stepName: "step",
+      purity: 100,
     },
     {
       id: 2,
       itemName: "residuo de ferro",
       formula: "formula",
       especificidade: "residuo",
-      quantitys: [],
+      quantitys: [
+        [12, "kg"],
+        [12, "g"],
+      ],
       observation: "obs",
       phaseName: "phase2",
       stepName: "step2",
+      purity: 100,
     },
     {
       id: 3,
       itemName: "residuo de cobre",
       formula: "formula",
       especificidade: "residuo",
-      quantitys: [],
+      quantitys: [
+        [15, "kg"],
+        [15, "g"],
+      ],
       observation: "obs",
       phaseName: "phase",
       stepName: "step",
+      purity: 100,
     },
     {
       id: 4,
       itemName: "residuo de ouro",
       formula: "formula",
       especificidade: "residuo",
-      quantitys: [],
+      quantitys: [
+        [12, "kg"],
+        [15, "g"],
+      ],
       observation: "obs",
       phaseName: "phase",
       stepName: "step",
+      purity: 100,
     },
   ]);
 
@@ -123,36 +140,47 @@ export default function EigthPage() {
     }
   }, [editingId]);
 
+// hook utilizado para atualizar a quantidade total dos residuos
+  const [lastUpdatedBombonaId, setLastUpdatedBombonaId] = useState<
+    number | null
+  >(null);
+
+  // useEffect para atualizar a quantidade total de residuos quando as relações sao atualizadas
+  useEffect(() => {
+    if (lastUpdatedBombonaId !== null) {
+      updateBombonaTotalQuantity(lastUpdatedBombonaId);
+      setLastUpdatedBombonaId(null);
+    }
+  }, [bombonaResiduoRelations, lastUpdatedBombonaId]);
+
   // função para adicionar uma bombona na página
   const addBombona = () => {
     const newId =
       bombonas.length > 0 ? Math.max(...bombonas.map((b) => b.id)) + 1 : 1;
-    setBombonas([...bombonas, { id: newId, title: `Bombona ${newId}` }]);
+    setBombonas([
+      ...bombonas,
+      { id: newId, title: `Bombona ${newId}`, total_quantity: 0 },
+    ]);
   };
 
   // funcao para deletar uma bombona
   const deleteBombona = (bombonaId: number) => {
-    // nao permitir deletar a ultima bombona 
     if (bombonas.length > 1) {
-      // removendo a bombona da lista de bombonas
       setBombonas((prevBombonas) =>
         prevBombonas.filter((b) => b.id !== bombonaId)
       );
-
-      // Removendo todas as relacoes entre a bombona e os residuos
       setBombonaResiduoRelations((prevRelations) =>
         prevRelations.filter((relation) => relation.bombonaId !== bombonaId)
       );
-
-      // Mostrando uma notificao para informar o usuario da operação realizada
+      updateBombonaTotalQuantity(bombonaId);
       toast({
         title: "Bombona removida",
-        description: `A bombona foi removida com sucesso.`,
+        description: "A bombona foi removida com sucesso.",
         variant: "default",
       });
     } else {
       toast({
-        variant: "default",
+        variant: "destructive",
         title: "Impossível deletar",
         description:
           "É necessário haver pelo menos uma bombona para os resíduos",
@@ -160,25 +188,38 @@ export default function EigthPage() {
     }
   };
 
-  // adicionando um link entre bombona e residuo
+  // funcao para adicionar um array de residuos em uma bombona
   const addResiduosToBombona = (
     bombonaId: number,
     residuosToAdd: Residuo[]
   ) => {
     if (residuosToAdd.length > 0) {
-      const newRelations: { bombonaId: number; residuoId: number }[] = [];
+      const newRelations: {
+        bombonaId: number;
+        residuoId: number;
+        quantity: number;
+      }[] = [];
 
       residuosToAdd.forEach((newResiduo) => {
-        // Cchecando se o residuo ja nao está presente em alguma outra bombona
         const existsInAnyBombona = bombonaResiduoRelations.some(
           (relation) => relation.residuoId === newResiduo.id
         );
 
         if (!existsInAnyBombona) {
-          // Criando uma nova relacao entre bombona e residuo
-          newRelations.push({ bombonaId, residuoId: newResiduo.id });
+          const numericQuantities = newResiduo.quantitys
+            .map((q) => q[0])
+            .filter((val) => typeof val === "number");
+
+          const averageQuantity =
+            numericQuantities.reduce((acc, val) => acc + val, 0) /
+            numericQuantities.length;
+
+          newRelations.push({
+            bombonaId,
+            residuoId: newResiduo.id,
+            quantity: averageQuantity,
+          });
         } else {
-          // Mostrando uma moessagem de erro para informar que o residuo já está presente em uma bombona
           toast({
             variant: "destructive",
             title: "Erro ao adicionar resíduo",
@@ -188,12 +229,14 @@ export default function EigthPage() {
       });
 
       if (newRelations.length > 0) {
-        //atualizando as relações 
         setBombonaResiduoRelations((prevRelations) => [
           ...prevRelations,
           ...newRelations,
         ]);
-        // informando o usuário do sucesso na operação
+
+        // Store the bombonaId to call update function later
+        setLastUpdatedBombonaId(bombonaId);
+
         toast({
           variant: "default",
           title: "Resíduos adicionados",
@@ -214,12 +257,33 @@ export default function EigthPage() {
 
   // funcao para deletar um residuo de uma bombona
   const removeResiduoFromBombona = (bombonaId: number, residuoId: number) => {
-    setBombonaResiduoRelations((prev) =>
-      prev.filter(
+    // First, filter out the relation
+    setBombonaResiduoRelations((prev) => {
+      const updatedRelations = prev.filter(
         (relation) =>
           !(
             relation.bombonaId === bombonaId && relation.residuoId === residuoId
           )
+      );
+
+      // atualizando a quantidade total de residuos na bombona
+      setLastUpdatedBombonaId(bombonaId);
+
+      return updatedRelations;
+    });
+  };
+
+  // atualizar a quantidade total de resiudos em uma bombona
+  const updateBombonaTotalQuantity = (bombonaId: number) => {
+    const totalQuantity = bombonaResiduoRelations
+      .filter((relation) => relation.bombonaId === bombonaId)
+      .reduce((acc, relation) => acc + relation.quantity, 0);
+
+    setBombonas((prevBombonas) =>
+      prevBombonas.map((bombona) =>
+        bombona.id === bombonaId
+          ? { ...bombona, total_quantity: totalQuantity }
+          : bombona
       )
     );
   };
@@ -228,7 +292,7 @@ export default function EigthPage() {
   const handleResiduoRemoval = (bombonaId: number) => {
     if (
       selectedResiduos[bombonaId] !== undefined &&
-      selectedResiduos[bombonaId] !== null && 
+      selectedResiduos[bombonaId] !== null &&
       bombonaResiduoRelations.length > 0
     ) {
       const residuoId = selectedResiduos[bombonaId]!;
@@ -270,6 +334,46 @@ export default function EigthPage() {
 
     setEditingId(null);
   };
+
+  // funcao que atualiza a quantidade dos reisduso quando ela é mudada no input
+  const handleResiduoQuantityChange = (
+    bombonaId: number,
+    residuoId: number,
+    newQuantity: number
+  ) => {
+    setBombonaResiduoRelations((prevRelations) => {
+      const updatedRelations = prevRelations.map((relation) =>
+        relation.bombonaId === bombonaId && relation.residuoId === residuoId
+          ? { ...relation, quantity: newQuantity }
+          : relation
+      );
+  
+      const totalQuantity = updatedRelations
+        .filter((relation) => relation.bombonaId === bombonaId)
+        .reduce((acc, relation) => acc + relation.quantity, 0);
+
+      setBombonas((prevBombonas) =>
+        prevBombonas.map((bombona) =>
+          bombona.id === bombonaId
+            ? { ...bombona, total_quantity: totalQuantity }
+            : bombona
+        )
+      );
+  
+      return updatedRelations;
+    });
+  };
+
+  // funcao para calcular o valor medio das quantidades 
+  const calculateAverageQuantity = (quantities: number[][]): number => {
+    const numericValues = quantities.map((quantityArr) => quantityArr[0]);
+  
+    const total = numericValues.reduce((sum, value) => sum + value, 0);
+    const average = total / numericValues.length;
+  
+    return average;
+  };
+  
 
   return (
     <>
@@ -413,14 +517,55 @@ export default function EigthPage() {
                         >
                           <Trash2 className="h-4 w-4" />
                         </Button>
-
-                        <Input
-                          id={`itemName-${bombona.id}`}
-                          className="rounded-none border-black w-[130px]"
-                          placeholder="Quantidade"
-                          type="number"
-                          min={0}
-                        />
+                        <div className="flex flex-col gap-2">
+                          <Label>
+                            {`Quantidade total: ${bombona.total_quantity.toPrecision(3)}`}
+                          </Label>
+                          <div className="flex flex-col gap-1">
+                          <Label
+                            htmlFor={`quantity-${bombona.id}`}
+                          >
+                            Quantidade do resíduo:
+                          </Label>
+                          <Input
+                            id={`quantity-${bombona.id}`}
+                            type="number"
+                            className="w-[100px] h-[30px]"
+                            step={0.5}
+                            min={0}
+                            max={
+                              calculateAverageQuantity(
+                                residuos.find((residuo) => residuo.id === selectedResiduos[bombona.id])
+                                  ?.quantitys || []
+                              ) // Calculate the average quantity for the selected residuo
+                            }
+                            value={
+                              bombonaResiduoRelations.find(
+                                (relation) =>
+                                  relation.bombonaId === bombona.id &&
+                                  relation.residuoId ===
+                                    selectedResiduos[bombona.id]
+                              )?.quantity || 0
+                            }
+                            onChange={(e) => {
+                              const newQuantity = parseFloat(e.target.value);
+                              const selectedResiduoId =
+                                selectedResiduos[bombona.id];
+                              if (
+                                !isNaN(newQuantity) &&
+                                selectedResiduoId !== null
+                              ) {
+                                handleResiduoQuantityChange(
+                                  bombona.id,
+                                  selectedResiduoId,
+                                  newQuantity
+                                );
+                              }
+                            }}
+                          />
+                          </div>
+                          
+                        </div>
                         <Select>
                           <SelectTrigger className="w-[100px] rounded-none border-black">
                             <SelectValue placeholder="Unidade" />
@@ -465,14 +610,14 @@ export default function EigthPage() {
                               <div className="flex justify-end">
                                 <Button
                                   className="bg-emerald-600 w-52 "
-                                  onClick={() =>
+                                  onClick={() => {
                                     addResiduosToBombona(
                                       bombona.id,
                                       tableRef.current
                                         .getSelectedRowModel()
                                         .rows.map((row: any) => row.original)
-                                    )
-                                  }
+                                    );
+                                  }}
                                 >
                                   {" "}
                                   Adicionar{" "}
