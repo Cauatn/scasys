@@ -12,12 +12,11 @@ interface Step {
   repetitions: number;
   items: Item[];
 }
-
 export interface Item {
   itemName: string;
   formula: string;
   especificidade: string;
-  quantitys: [];
+  quantitys: any[];
   observation: string;
   purity: number; // Ensure purity is defined here
 }
@@ -113,7 +112,6 @@ const Experiment = create<ExperimentState>((set, get) => ({
     itemName: string,
     quantitys: any,
     observation: string,
-    purity: number // Accept purity here
   ) =>
     set(
       produce((state: ExperimentState) => {
@@ -128,7 +126,6 @@ const Experiment = create<ExperimentState>((set, get) => ({
               // Update the item with new quantities, observation, and purity
               step.items[itemIndex].quantitys = quantitys;
               step.items[itemIndex].observation = observation;
-              step.items[itemIndex].purity = purity; // Set purity here
             }
           }
         }
